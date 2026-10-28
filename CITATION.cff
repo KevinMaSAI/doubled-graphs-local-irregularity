@@ -1,0 +1,28 @@
+cff-version: 1.2.0
+message: "Please cite the accompanying research preprint when using these results, code or certificates."
+title: "Locally Irregular Two-Edge-Colourings of Doubled Graphs: Constructions, Extensions, and Obstructions"
+type: software
+authors:
+  - family-names: Ma
+    given-names: Qiyuan
+    affiliation: "Shanghai Jiao Tong University"
+    email: mqyqwerty@sjtu.edu.cn
+date-released: 2026-10-28
+url: "https://github.com/KevinMaSAI/doubled-graphs-local-irregularity"
+repository-code: "https://github.com/KevinMaSAI/doubled-graphs-local-irregularity"
+abstract: "Research preprint presenting a computer-assisted subcubic proof and further conditional constructions for locally irregular two-edge-colourings of doubled graphs. The unrestricted conjecture is not proved. Python code is separately licensed under MIT."
+keywords:
+  - graph theory
+  - locally irregular edge colouring
+  - doubled graphs
+  - subcubic graphs
+  - finite certificates
+preferred-citation:
+  type: article
+  authors:
+    - family-names: Ma
+      given-names: Qiyuan
+      affiliation: "Shanghai Jiao Tong University"
+  title: "Locally Irregular Two-Edge-Colourings of Doubled Graphs: Constructions, Extensions, and Obstructions"
+  year: 2026
+  url: "https://github.com/KevinMaSAI/doubled-graphs-local-irregularity/blob/main/paper.pdf"
