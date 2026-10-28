@@ -1,72 +1,60 @@
-# Locally irregular two-edge-colourings of doubled graphs
+# Locally irregular colourings of doubled graphs
 
 **Qiyuan Ma · Shanghai Jiao Tong University**  
-Contact: [mqyqwerty@sjtu.edu.cn](mailto:mqyqwerty@sjtu.edu.cn) · 28 October 2026  
-[中文说明](README_zh.md)
+[mqyqwerty@sjtu.edu.cn](mailto:mqyqwerty@sjtu.edu.cn) · [中文说明](README_zh.md)
 
-This repository accompanies the research preprint **Locally Irregular Two-Edge-Colourings of Doubled Graphs: Constructions, Extensions, and Obstructions**.
+This repository contains **one mathematical research preprint and its supporting proof artifacts**, organised as one problem family. It presents a computer-assisted subcubic proof and further conditional constructions for locally irregular two-edge-colourings of doubled graphs.
 
-**[Read the paper (PDF)](paper.pdf)** · **[Download the complete reproducibility archive](reproducibility.zip)** · **[Novelty and related work](NOVELTY_AND_RELATED_WORK.md)**
+## Navigating the collection
 
-## Mathematical scope
+- Start with the **[research overview (PDF)](overview.pdf)** for a concise statement of the principal result, further constructions and checking boundaries.
+- Use the **[manuscript map](CONTENTS.md)** to find results, source files and proof artifacts.
+- The **[preprints directory](preprints/)** contains the complete manuscript, editable TeX, build instructions and manuscript-specific BibTeX.
+- The **[proof artifacts](proof_artifacts/)** expose the A1 finite certificates and standard-library checkers. The **[complete reproducibility archive](reproducibility.zip)** preserves all 697 released files.
+- Read the **[verification status](VERIFICATION.md)** and **[release history](history.md)** for scope and revisions.
 
-For a finite connected simple graph G other than K2, replace each edge by two parallel copies. The doubled-graph conjecture asks whether the copies can always be coloured red and blue so that adjacent vertices have different degrees in each colour present on their connecting edge. The parallel copies are allowed to have different colours.
+## Principal result
 
-The manuscript presents a **computer-assisted proof for all subcubic underlying graphs** (maximum degree at most three), together with conditional constructions for several families of unbounded maximum degree. Two sufficient conditions considered are
+Let G be a finite connected simple graph other than K2, and double every original edge. The manuscript presents a locally irregular red/blue edge-colouring construction for **all subcubic underlying graphs**, meaning maximum degree at most three. Parallel copies may have different colours. Along every red edge, its endpoints have distinct red degrees; along every blue edge, their blue degrees are distinct.
 
-- delta(G) >= 8 chi(G) (2 chi(G) + 1) - 7;
-- 8 delta(G) >= 7 |V(G)| + 6, with all red vertex degrees distinct and all blue vertex degrees distinct.
+Further results give specified unbounded-degree constructions, prescribed interfaces and strategy obstructions. Two sufficient conditions are
 
-Here delta is minimum degree and chi is chromatic number. Further sections concern preserved boundary colours, clique interfaces, prescribed targets, signed-gap constructions and explicit obstructions to stronger proof strategies. The unrestricted conjecture for arbitrary connected graphs **is not proved**.
+$$\delta(G)\ge 8\chi(G)(2\chi(G)+1)-7,$$
 
-This is an AI-assisted research preprint. The submitted arguments and finite certificates have undergone internal computational checks; no independent expert peer review or proof-assistant verification is claimed. A bounded graph search alone is not a proof of an infinite-family statement. See [AI assistance](AI_ASSISTANCE.md) and [the literature-screening limits](NOVELTY_AND_RELATED_WORK.md).
+and
 
-## Files
+$$8\delta(G)\ge 7|V(G)|+6.$$
 
-| File | Contents |
+Here delta is minimum degree and chi is chromatic number. The second condition admits red degrees distinct on all vertices and blue degrees distinct on all vertices. The conjecture for **arbitrary connected graphs remains unproved**.
+
+## Verification
+
+| Layer | Status and meaning |
 |---|---|
-| [paper.pdf](paper.pdf) | Complete 64-page English manuscript, including proof and certificate appendices. |
-| [reproducibility.zip](reproducibility.zip) | All 697 released files: editable TeX, Python constructors and checkers, JSON certificates, examples, frozen research notes and validation reports. |
-| [verify_snapshot.py](verify_snapshot.py) | Standard-library launcher that verifies repository checksums, extracts a new local workspace and runs the archive's complete finite-certificate checker. |
-| [SHA256SUMS.txt](SHA256SUMS.txt) | SHA-256 hashes for the published top-level files. |
-| [CITATION.cff](CITATION.cff) | Author and citation metadata; no DOI is assigned here. |
-| [NOVELTY_AND_RELATED_WORK.md](NOVELTY_AND_RELATED_WORK.md) | Literature comparison, including known special cases and classical tools. |
+| Manuscript | Complete displayed arguments, including structural reductions and lifting. Research preprint; independent expert peer review is not claimed. |
+| Complete finite interfaces | Supplied certificate domains and independent local recalculations pass executable checks. |
+| Constructor tests | Documented implementation tests under their stated hypotheses; bounded/random tests are not universal proofs. |
+| Lean formalisation | None is included. Python certificates are not proof-assistant formalisation. |
 
-The archive preserves the exact prepared Zenodo files and their directory layout. Its internal README records the earlier local preparation status. This GitHub repository is a subsequent public deposit; no Zenodo record or DOI has yet been created.
-
-## Verify the finite certificates
-
-Download this repository using **Code → Download ZIP**, extract it, and run from its root with Python 3.10 or later:
+From this repository root, with Python 3.10 or later:
 
 ```sh
+python -I -B proof_artifacts/subcubic/verify.py
 python -I -B verify_snapshot.py
 ```
 
-No third-party packages, solver, network connection, Lean or account are required for this certificate verification. Do not use Python's `-O` option. The launcher keeps the extracted run and its report in a new `validation/snapshot_*` directory; it does not overwrite the released archive.
+These certificate commands need no third-party Python packages, network, solver or account. They do not replace the universal arguments. Constructor dependencies and commands are documented inside the full archive.
 
-Alternatively, extract `reproducibility.zip`, enter the extracted directory and run:
+## Provenance and related work
 
-```sh
-python -I -B verify.py
-```
+OpenAI Codex assisted extensively with mathematical exploration, proof development and checking, programming, literature screening and English exposition. See **[AI assistance](AI_ASSISTANCE.md)**. The manuscript and frozen research notes record the actual release scope; later notes lie outside that snapshot.
 
-The checker recomputes complete finite interfaces and the local two-mark kernel, checks saved witnesses by colour-copy degrees, checks additional certificate identities and audits the frozen manifest. These checks certify the specified finite data and implementation properties. The general lifting arguments are in the paper.
+The **[novelty and related-work note](NOVELTY_AND_RELATED_WORK.md)** distinguishes candidate contributions, known special cases and classical tools. No absolute historical-priority certificate is claimed. The A1–E4 labels are provenance groups, not a count of independent new theorems.
 
-## Constructors and editable source
+## Versions and citations
 
-Inside the extracted reproducibility archive:
+The initial public deposit remains accessible at [commit 07f1f72](https://github.com/KevinMaSAI/doubled-graphs-local-irregularity/tree/07f1f720200384990ef0c26540749c5d191b0e8b). Corrections and revisions are recorded in **[history.md](history.md)**; earlier Git versions remain accessible.
 
-```sh
-python -m pip install -r requirements.txt
-python -B run_checks.py
-```
+Use the manuscript's **[BibTeX](preprints/Locally-Irregular-Two-Edge-Colourings-of-Doubled-Graphs-October-28-2026/CITATION.bib)** or **[CITATION.cff](CITATION.cff)**. The current paper has no assigned DOI. Zenodo submission has not occurred.
 
-The constructive checks use additional dependencies; see the archive's README for supported Python versions, timeouts and scope gates. The A1 entry point is `construct.py`, other constructors and their independent checkers are in `artifact/`, and editable TeX is in `manuscript/`.
-
-Build the paper from that directory with `pdflatex main.tex` twice or `tectonic main.tex`. The source snapshot includes A1–A9, B1–B4, C1–C5, D1–D5 and E1–E4 through 10:25:33 CST on 28 October 2026. Those are provenance groups, not counts of independent new theorems. Later notes are outside this deposit.
-
-## Licence and citation
-
-Manuscript, documentation and JSON certificates: **CC BY 4.0**. Python code, including `verify_snapshot.py`: **MIT**. See [licence scope](LICENSES.md) and the full [CC BY 4.0](LICENSE_CC_BY_4_0.txt) and [MIT](LICENSE_MIT.txt) texts.
-
-Please cite Qiyuan Ma, *Locally Irregular Two-Edge-Colourings of Doubled Graphs: Constructions, Extensions, and Obstructions*, research preprint, 2026. This GitHub deposit does not constitute journal peer review or a historical-priority certificate.
+Manuscript, documentation and JSON certificates: **CC BY 4.0**. Python code: **MIT**, by material type. See **[licence scopes](LICENSES.md)**. Publication organisation is inspired by the public [OpenAI mathematics repository](https://github.com/openai/math); the source review is recorded in [LAYOUT_REFERENCE.md](LAYOUT_REFERENCE.md).

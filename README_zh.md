@@ -1,18 +1,30 @@
-# 倍边图局部不规则二染色：论文与复现材料
+# 倍边图局部不规则二染色：论文与证明材料
 
-作者：**Qiyuan Ma，上海交通大学**。英文署名和单位以论文为准。联系邮箱：[mqyqwerty@sjtu.edu.cn](mailto:mqyqwerty@sjtu.edu.cn)。
+**Qiyuan Ma · 上海交通大学**  
+联系：[mqyqwerty@sjtu.edu.cn](mailto:mqyqwerty@sjtu.edu.cn)
 
-**[阅读英文论文](paper.pdf)** · **[下载完整代码、源码和证书](reproducibility.zip)** · **[查新与相关工作](NOVELTY_AND_RELATED_WORK.md)**
+这个仓库按“研究总览 → 结果目录 → 论文及源码 → 证明材料 → 更新记录”组织。目前为 **1 篇论文、1 个问题家族**。A1–E4 是研究记录编号，不代表相互独立的新论文数量或学术评级。
 
-论文提出覆盖全部次三正则底图的计算机辅助证明，并整理若干无最大度上界的条件性构造、边界扩展和固定策略障碍。任意连通图的母猜想仍未解决。预印本尚未获得独立专家审稿或 Lean 等证明助手验证；有限枚举不替代论文中的一般论证。
+## 从哪里开始
 
-## 第一次使用这个仓库
+1. **[两页研究总览](overview.pdf)**：先看问题、主结果、其他构造和检查边界。
+2. **[完整英文论文](preprints/Locally-Irregular-Two-Edge-Colourings-of-Doubled-Graphs-October-28-2026/paper.pdf)**：64 页，包含证明和有限证书附录。
+3. **[结果与材料目录](CONTENTS.md)**：按 A1、A2–A9、B、C、D、E 导航。
+4. **[论文源码与构建说明](preprints/Locally-Irregular-Two-Edge-Colourings-of-Doubled-Graphs-October-28-2026/)**：TeX 源码已展开，可以在 GitHub 直接阅读。
+5. **[有限证书和检查程序](proof_artifacts/)**：A1 的关键数据和程序已展开；全部 697 个文件保留在 [完整复现 ZIP](reproducibility.zip) 中。
+6. **[验证范围](VERIFICATION.md)**、**[查新说明](NOVELTY_AND_RELATED_WORK.md)**、**[更新记录](history.md)**：分别说明检查了什么、新颖性结论的边界、版本如何变化。
 
-1. 只读论文：点击上面的 PDF 链接。
-2. 获取全部材料：点击仓库绿色 **Code → Download ZIP**，解压后即可看到本页文件；完整 697 文件的复现快照另保存在 `reproducibility.zip` 中。
-3. 检查有限证书：在本页文件所在目录运行 `python -I -B verify_snapshot.py`。需要 Python 3.10 或更新版本，不需要第三方依赖或联网。检查生成的工作目录保留在 `validation/`。
-4. 修改证明或运行构造程序：解压 `reproducibility.zip`。`manuscript/` 是 TeX 源码，`artifact/` 含各图族代码和 JSON 证书，根目录的 `README.md` 提供完整运行方法。
+## 运行检查
 
-论文和证书采用 CC BY 4.0；Python 代码采用 MIT。AI 协助、经典工具和查新的限制均公开说明。A1 等标签只是本项目追溯编号，不是数学界的评级。
+下载整个仓库（Code → Download ZIP）并解压，在仓库根目录执行：
 
-本次已准备为 GitHub 公开存档；Zenodo 发布和 DOI 将另行办理。后续有 DOI 后可补入引用信息。
+```sh
+python -I -B proof_artifacts/subcubic/verify.py
+python -I -B verify_snapshot.py
+```
+
+需要 Python 3.10 或更新版本。有限证书检查不需要第三方库、求解器或联网。第二条命令会解压完整快照，保留检查目录和输出。
+
+论文提出覆盖全部次三正则底图的计算机辅助证明，并给出若干无最大度上界的条件性构造。任意连通图的母猜想仍未解决。Python 证书检查与 Lean 形式化不同，独立专家审稿尚未获得。
+
+论文/说明/证书采用 CC BY 4.0；Python 代码采用 MIT。AI 协助和经典工具的来源均有说明。Zenodo 尚未上传，日后得到真实 DOI 再补入引用信息。

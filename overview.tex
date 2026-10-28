@@ -1,0 +1,122 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern,amsmath,amssymb,booktabs,array,microtype}
+\usepackage[left=22mm,right=22mm,top=20mm,bottom=20mm]{geometry}
+\usepackage{color}
+\definecolor{catalogueink}{RGB}{32,83,81}
+\usepackage[colorlinks=true,linkcolor=catalogueink,urlcolor=catalogueink]{hyperref}
+\hypersetup{pdftitle={Doubled Graphs: Research Catalogue},pdfauthor={Qiyuan Ma}}
+\setlength{\parindent}{0pt}\setlength{\parskip}{6pt}
+\setlength{\emergencystretch}{2em}
+\makeatletter
+\def\ps@catalogue{%
+\def\@oddhead{\small\rmfamily Doubled graphs\hfil\normalfont\small Qiyuan Ma}%
+\let\@evenhead\@oddhead
+\def\@oddfoot{\small One problem family\;\(\cdot\)\;one preprint\hfil\thepage\,/\,2}%
+\let\@evenfoot\@oddfoot}
+\makeatother
+\pagestyle{catalogue}
+\newcommand{\lir}{\operatorname{lir}}
+\newcommand{\entry}[2]{\par\vspace{4pt}{\large\bfseries #1}\par #2\par}
+\begin{document}
+\thispagestyle{plain}
+{\small\rmfamily Mathematics\hfill Qiyuan Ma}\par
+{\LARGE\bfseries Research catalogue}\par
+{\large Locally irregular colourings of doubled graphs}\par
+Shanghai Jiao Tong University\hfill 28 October 2026\par
+\href{mailto:mqyqwerty@sjtu.edu.cn}{mqyqwerty@sjtu.edu.cn}\par
+\hrule\vspace{7pt}
+\textbf{001. One manuscript, one problem family.}
+The catalogue number is a local navigation label. The internal A1--E4
+groups collect related assertions; they are not a count of separate papers
+or independently new theorems.
+
+\entry{The problem}{For a finite simple graph $G$, let ${}^{2}G$ replace each
+edge by two parallel copies. Each copy receives red or blue. Whenever a
+colour occurs on an edge, its two endpoints must have different degrees
+in that colour. The original conjecture asks for two colours for every
+connected $G\not\cong K_2$.}
+
+\entry{Principal result: the subcubic case}{The manuscript presents a
+computer-assisted proof of
+\[
+ G\text{ finite, connected, simple},\quad G\not\cong K_2,\quad
+ \Delta(G)\le3\quad\Longrightarrow\quad\lir({}^{2}G)\le2.
+\]
+The proof combines structural reductions, prescribed local interfaces,
+complete finite kernels and lifting arguments.}
+
+\entry{Further sufficient conditions}{For simple $G$, the paper also gives
+the following two sufficient conditions:
+\[
+ \delta(G)\ge8\chi(G)(2\chi(G)+1)-7,
+ \qquad 8\delta(G)\ge7|V(G)|+6.
+\]
+Here $\delta$ is minimum degree and $\chi$ is chromatic number. Under the
+second condition, the red degrees are distinct on all vertices and the
+blue degrees are distinct on all vertices. The hypotheses and small-order
+scope are exactly those in the full manuscript.}
+
+\entry{Constructions and interfaces}{Further sections address sparse
+branch cores, balanced subdivisions, clique root targets and block-tree
+capacity, preserved colour counts, dense forbidden targets, complement
+lifts, and signed-gap and parity-port constructions. Explicit examples
+describe obstacles to specified stronger strategies. They are not
+counterexamples to the original conjecture.}
+
+\textbf{Scope.} The unrestricted conjecture for arbitrary connected
+graphs is not proved. This is an AI-assisted research preprint, without
+independent expert peer review or proof-assistant verification claimed.
+\clearpage
+
+{\LARGE\bfseries Materials and verification}\par
+\entry{Read and build}{The complete 64-page manuscript, its sixteen TeX
+source files, bibliography, build instructions and BibTeX citation are in
+the \href{https://github.com/KevinMaSAI/doubled-graphs-local-irregularity/tree/main/preprints/Locally-Irregular-Two-Edge-Colourings-of-Doubled-Graphs-October-28-2026}{preprint directory}.
+Run \texttt{tectonic main.tex} there, or run \texttt{pdflatex main.tex}
+twice. The original PDF is unchanged by this catalogue update.}
+
+\entry{Complete finite proof data}{The directly browsable A1 subset
+contains five JSON certificates and six verifier modules. It covers
+tree/cactus ports, sparse cores, two-marked and marked-theta interfaces,
+fresh local checks and rejection of three deliberately damaged
+certificates. The weak-two-marked kernel has 4,256 cases.}
+
+\entry{The complete snapshot}{The frozen archive contains all 697
+released files, including constructors, other complete certificates,
+examples, provenance and previous reports. Additional checks cover 836
+clique bases, four E1--E4 auditors recounting 972 saved colour copies,
+and 1,114 bounded endpoint cases supporting the displayed general path
+argument. These different checking layers have different scopes.}
+
+\textbf{Standard-library commands, from the repository root:}
+\begin{quote}\ttfamily\small
+python -I -B proof\_artifacts/subcubic/verify.py\par
+python -I -B verify\_snapshot.py
+\end{quote}
+Python 3.10 or later is required. These commands need no third-party
+packages, network, solver or account. Do not use \texttt{-O}. Constructors
+have separate dependency and scope instructions in the archive.
+
+\entry{What the checks mean}{Complete finite calculations verify their
+specified domains and witnesses. Bounded or random tests check only
+their tested inputs. The infinite-family conclusions also depend on
+the manuscript's structural and lifting arguments. Python certificate
+checking is not Lean formalisation.}
+
+\entry{Provenance, novelty and revisions}{The source scope is frozen at
+10:25:33 CST on 28 October 2026. OpenAI Codex assisted with exploration,
+proof development and checking, programming, literature screening and
+writing. The novelty note distinguishes candidate contributions from
+known special cases and classical tools; no absolute-priority certificate
+is claimed. Corrections and versions are recorded in the public history.}
+
+\textbf{Citation.} Qiyuan Ma, \emph{Locally Irregular Two-Edge-Colourings
+of Doubled Graphs: Constructions, Extensions, and Obstructions},
+research preprint, 2026. Manuscript, documentation and certificates:
+CC BY 4.0. Python code: MIT. No DOI has yet been assigned.\par
+\href{https://github.com/KevinMaSAI/doubled-graphs-local-irregularity}{Repository}\quad
+\href{https://github.com/KevinMaSAI/doubled-graphs-local-irregularity/blob/main/CONTENTS.md}{Manuscript map}\quad
+\href{https://github.com/KevinMaSAI/doubled-graphs-local-irregularity/blob/main/VERIFICATION.md}{Checking scope}\quad
+\href{https://github.com/KevinMaSAI/doubled-graphs-local-irregularity/blob/main/history.md}{History}
+\end{document}
