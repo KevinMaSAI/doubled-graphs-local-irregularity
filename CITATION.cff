@@ -5,6 +5,7 @@ type: software
 authors:
   - family-names: Ma
     given-names: Qiyuan
+    orcid: "https://orcid.org/0009-0000-9532-0821"
     affiliation: "Shanghai Jiao Tong University"
     email: mqyqwerty@sjtu.edu.cn
 date-released: 2026-10-28
@@ -22,6 +23,7 @@ preferred-citation:
   authors:
     - family-names: Ma
       given-names: Qiyuan
+      orcid: "https://orcid.org/0009-0000-9532-0821"
       affiliation: "Shanghai Jiao Tong University"
   title: "Locally Irregular Two-Edge-Colourings of Doubled Graphs: Constructions, Extensions, and Obstructions"
   year: 2026

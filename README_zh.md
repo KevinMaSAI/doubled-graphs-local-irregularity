@@ -1,7 +1,7 @@
 # 倍边图局部不规则二染色：论文与证明材料
 
 **Qiyuan Ma · 上海交通大学**  
-联系：[mqyqwerty@sjtu.edu.cn](mailto:mqyqwerty@sjtu.edu.cn)
+联系：[mqyqwerty@sjtu.edu.cn](mailto:mqyqwerty@sjtu.edu.cn) · [ORCID: 0009-0000-9532-0821](https://orcid.org/0009-0000-9532-0821)
 
 这个仓库按“研究总览 → 结果目录 → 论文及源码 → 证明材料 → 更新记录”组织。目前为 **1 篇论文、1 个问题家族**。A1–E4 是研究记录编号，不代表相互独立的新论文数量或学术评级。
 

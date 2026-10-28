@@ -1,7 +1,7 @@
 # Locally irregular colourings of doubled graphs
 
 **Qiyuan Ma · Shanghai Jiao Tong University**  
-[mqyqwerty@sjtu.edu.cn](mailto:mqyqwerty@sjtu.edu.cn) · [中文说明](README_zh.md)
+[mqyqwerty@sjtu.edu.cn](mailto:mqyqwerty@sjtu.edu.cn) · [ORCID: 0009-0000-9532-0821](https://orcid.org/0009-0000-9532-0821) · [中文说明](README_zh.md)
 
 This repository contains **one mathematical research preprint and its supporting proof artifacts**, organised as one problem family. It presents a computer-assisted subcubic proof and further conditional constructions for locally irregular two-edge-colourings of doubled graphs.
 

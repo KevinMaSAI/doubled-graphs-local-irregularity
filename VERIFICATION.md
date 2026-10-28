@@ -20,9 +20,9 @@ python -I -B proof_artifacts/subcubic/verify.py
 python -I -B verify_snapshot.py
 ```
 
-The first checks the exposed A1 subset. The second verifies published SHA-256 hashes, extracts the unchanged complete archive into a new retained directory and executes its standard-library verification suite. These commands need no network, third-party packages or solver. Constructor tests need additional dependencies listed inside the archive.
+The first checks the exposed A1 subset. The second verifies published SHA-256 hashes, extracts the complete archive into a new retained directory and executes its standard-library verification suite. These commands need no network, third-party packages or solver. Constructor tests need additional dependencies listed inside the archive.
 
-The exposed A1 files and editable manuscript sources are exact copies of the frozen release. Newly added catalogue and navigation files change presentation and access only. The original paper and complete ZIP retain their public-deposit hashes.
+The exposed A1 files are identical to the initial release. The editable manuscript and complete archive include an author-identifier update to the front matter; the mathematical text, code and certificate data are unchanged. The original PDF and archive remain available in the initial public Git commit.
 
 ## Read the proof obligations
 

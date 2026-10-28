@@ -1,5 +1,10 @@
 # Release history
 
+## 28 October 2026 — author identifier
+
+- Added the author’s ORCID iD to the manuscript front matter, repository citation information and Zenodo preparation. The mathematical text, code and certificate data were unchanged.
+- Rebuilt the manuscript and updated its source, the reproducibility archive and checksum lists. The initial snapshot remains available at the commit recorded below.
+
 ## 28 October 2026 — catalogue organisation
 
 - Added a research overview in PDF and TeX, a manuscript map and manuscript-specific source/build/citation materials under `preprints/`.
