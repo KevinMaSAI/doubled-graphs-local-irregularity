@@ -1,6 +1,7 @@
 # Locally Irregular Two-Edge-Colourings of Doubled Graphs: Constructions, Extensions, and Obstructions
 
 **Qiyuan Ma · Shanghai Jiao Tong University**  
+[ORCID: 0009-0000-9532-0821](https://orcid.org/0009-0000-9532-0821)  
 28 October 2026 · [mqyqwerty@sjtu.edu.cn](mailto:mqyqwerty@sjtu.edu.cn)
 
 **[Read the manuscript](paper.pdf)** · **[Editable main source](main.tex)** · **[BibTeX](CITATION.bib)** · **[Finite proof artifacts](../../proof_artifacts/)**
@@ -35,6 +36,7 @@ The mathematical source snapshot is fixed at 10:25:33 CST on 28 October 2026. Th
   year         = {2026},
   month        = {October},
   howpublished = {Research preprint},
+  note         = {Author ORCID: 0009-0000-9532-0821},
   url          = {https://github.com/KevinMaSAI/doubled-graphs-local-irregularity/blob/main/preprints/Locally-Irregular-Two-Edge-Colourings-of-Doubled-Graphs-October-28-2026/paper.pdf}
 }
 ```
