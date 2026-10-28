@@ -1,0 +1,412 @@
+\section{Fixed targets, factors and exchanges}\label{sec:targets}
+
+This section gives applications of classical matching and factor
+theory. These applications distinguish three tasks: independently
+selecting mutually distinguishing targets, realising one target vector
+by shared edge weights, and finding a target for which the actual
+colour constraints hold. Only the last task for every graph would
+prove the general conjecture.
+
+\subsection{Independent target lists are not edge realisations}
+
+\begin{lemma}\label{lem:complementlists}
+Give each vertex $v$ of a simple graph $H$ a real number $D_v$ and a
+list $L_v$ of at least $d_H(v)+1$ distinct real numbers. One can
+choose $z_v\in L_v$ such that both $z_v$ and $D_v-z_v$ distinguish
+the endpoints of every edge.
+\end{lemma}
+\begin{proof}
+Orient the edges arbitrarily and write
+$Q(z)=\prod_{uv}(z_u-z_v)=\sum_\alpha q_\alpha z^\alpha$.
+For $d=(d_H(v))_v$ and $m=|E(H)|$,
+$z^d Q(z^{-1})=(-1)^m Q(z)$, so
+$q_{d-\alpha}=(-1)^m q_\alpha$. The coefficient of $z^d$ in
+the highest homogeneous part of $Q(z)Q(D-z)$ is therefore
+$\sum_\alpha q_\alpha^2>0$. Polynomial interpolation on the lists,
+equivalently the Combinatorial Nullstellensatz~\cite{Alon99}, gives
+a nonzero evaluation.
+\end{proof}
+
+This lemma says nothing about incidence realisation. On a triangle,
+the lists $\{0,2,4\}$ with $D_v=4$ allow mutually distinct
+complementary targets, but the targets $0,2,4$ cannot be realised
+by weights $0,1,2$: the zero vertex forces its two weights zero,
+preventing its degree-four neighbour from receiving four.
+
+\subsection{A precise fixed-target criterion}
+
+Consider a simple subgraph $H$ whose vertices receive fixed external
+counts $a(v),b(v)$. Specify total red targets $R(v)$ and put
+\[
+ q(v)=R(v)-a(v),\qquad B(v)=b(v)+2d_H(v)-q(v).
+\]
+Define $E_0=\{uv:R(u)=R(v)\}$ and
+$E_2=\{uv:B(u)=B(v)\}$. If the two sets overlap, no legal realisation
+of these targets exists. Otherwise set
+\[
+ K=H-(E_0\cup E_2),\qquad t(v)=q(v)-2d_{E_2}(v).
+\]
+
+\begin{proposition}\label{prop:fixedfactor}
+The targets admit a legal internal colouring exactly when
+$q(v)\in[0,2d_H(v)]\cap\mathbb Z$, $E_0\cap E_2=\varnothing$,
+and $\doub K$ has a spanning subgraph of degrees $t(v)$.
+\end{proposition}
+\begin{proof}
+On $E_0$ all weights are forced to zero, on $E_2$ to 2. Every
+remaining edge distinguishes both total colour degrees and is free
+to have any weight. Its selected red copies must supply exactly $t$.
+This correspondence is reversible.
+\end{proof}
+
+Here is an explicit ordinary matching reduction. For each copy of
+$\doub K$ create its two endpoint ports and join them. At $v$ create
+$2d_K(v)-t(v)$ auxiliary vertices adjacent to all ports at $v$.
+A perfect matching uses that many local ports, leaving exactly
+$t(v)$ ports matched across original copies. Select those copies
+for the factor. Conversely any such factor completes to a perfect
+matching by matching unused ports locally. The auxiliary graph has
+at most $8|E(K)|$ vertices. Range failures for $t$ are rejected first.
+
+\subsection{Capacity and odd-component certificates}
+
+For disjoint $S,T\subseteq V(K)$ put
+\[
+ g_t(S,T)=t(S)+2\sum_{v\in T}d_{K-S}(v)-t(T),
+\]
+and let $o_t(S,T)$ be the number of components $C$ of $K-S-T$ for
+which $t(C)$ is odd.
+
+\begin{proposition}\label{prop:capacity}
+Real weights $0\le x_e\le2$ realising $t$ exist if and only if
+$g_t(S,T)\ge0$ for all disjoint $S,T$. Integer weights exist if and
+only if $g_t(S,T)\ge o_t(S,T)$ for all such pairs.
+\end{proposition}
+\begin{proof}
+Necessity of capacity follows by subtracting the sums over $T$ and
+$S$ and bounding the remaining terms by
+$4|E_K(T)|+2|E_K(T,V\setminus(S\cup T))|$.
+For sufficiency, let $\mathcal Z=\{Bx:x\in[0,2]^{E(K)}\}$, where
+$B$ is the unsigned incidence matrix. Its support function at $y$ is
+$2\sum_{uv}\max(0,y_u+y_v)$. If $t\notin\mathcal Z$, a separating
+vector $y$ violates this bound. Write $y$ as the integral, over
+$h\ge0$, of the vector taking value 1 where $y_v>h$, value $-1$
+where $y_v<-h$, and zero elsewhere. For each edge the same integral
+identity holds for the positive part of $y_u+y_v$; it is checked
+separately when the two signs agree or disagree. Some three-valued
+vector must therefore violate the support bound, which is precisely
+a violated $g_t(S,T)\ge0$.
+
+For integers apply Tutte's factor theorem~\cite{Tutte54} to $\doub K$.
+In its odd-component term the number of edges from a component to
+$T$ is even because every original edge is doubled. The odd term
+is consequently exactly $o_t(S,T)$, and its degree term is $g_t$.
+This proves the stated equivalence.
+\end{proof}
+
+For even total target sum, $g_t-o_t$ is even. Colour complementation
+sends $t$ to $2d_K-t$ and interchanges $S,T$, preserving both
+quantities. If every $t(v)$ is even, every odd-component term is
+zero, so continuous feasibility already gives an integer realisation.
+One can also see this directly from a vertex of the capacity polytope.
+Strictly fractional edges have independent incidence columns, hence
+each of their components is a tree or has one odd cycle. Leaves
+are impossible with even residual demands and all other weights at
+0 or 2. The fractional support is thus a disjoint union of odd cycles;
+each adjacent pair sums to 2, forcing all their weights to 1.
+The resulting extreme point is integer. This is a fixed even-target
+integrality fact, not permission to require all red degrees even in
+the original conjecture.
+
+Prescribed parity intervals also reduce to matching. Tighten
+$[\ell(v),u(v)]\cap[0,2d(v)]$ to its first and last values
+$g(v),f(v)$ of the desired parity. Add $(f(v)-g(v))/2$ virtual loops
+at $v$ to $\doub G$. An exact factor of degree $f$ becomes the
+required interval assignment after virtual loops are deleted, and
+every such assignment can be completed by loops. For a matching
+gadget with loops, create two ports per edge or loop, join each port
+pair, and create $f(v)$ demand vertices joined to all local ports.
+Ports are either matched together (edge unselected) or both to
+demands (selected); exactly $f(v)$ incidences are selected. This
+polynomial reduction includes degree feasibility only.
+
+\subsection{Minimum conflicts and fixed-degree exchanges}
+
+Let $\mathcal D(G)$ be all realisable integer red target vectors, and
+\[
+ \Psi(x)=\sum_{uv}\left(x_{uv}\mathbb{1}_{R(u)=R(v)}
+ +(2-x_{uv})\mathbb{1}_{B(u)=B(v)}\right),\qquad
+ F(q)=\min_{Bx=q}\Psi(x).
+\]
+For a fixed $q$ put $I_R(uv)=\mathbb{1}_{q(u)=q(v)}$,
+$I_B(uv)=\mathbb{1}_{2d(u)-q(u)=2d(v)-q(v)}$. Then
+\begin{equation}\label{eq:fixedcost}
+ F(q)=2\sum_e I_B(e)+\min_{Bx=q}\sum_e (I_R(e)-I_B(e))x_e.
+\end{equation}
+The matching gadget above, with weight $-(I_R-I_B)$ on each
+cross-port pair and zero on local edges, computes the minimum by
+a maximum-weight perfect matching. This is an exact application of
+weighted matching; the costs change when $q$ changes.
+
+If two assignments realise the same target, mark their differing
+copies by $+$ or $-$ and pair opposite signs at each vertex. They
+decompose into even alternating closed walks. Altering one walk
+moves toward the other assignment, never leaves $\{0,1,2\}$, and
+preserves all degrees. Repeated vertices and repeated original edges
+must be allowed. At fixed targets a legal realisation, if it exists,
+can be reached without increasing $\Psi$, since all forced edges
+move monotonically to their required extremes and all free edges
+permit both colours.
+
+More generally, for $q,r\in\mathcal D(G)$ and any unit step $s$
+toward $r$, there is a second unit step $t$ toward $r$ such that
+\[
+ q+s+t,\ r-s-t\in\mathcal D(G),\qquad
+ \|q+s+t-r\|_1=\|q-r\|_1-2.
+\]
+To prove this, pair opposite marked incidences as far as possible.
+Unpaired incidences have exactly the signs of $r(v)-q(v)$. Start at
+one representing $s$, follow its alternating paired trail, and stop
+at the next unpaired incidence, representing $t$. Transfer the marked
+copies in opposite directions in the two assignments. Every edge
+stays between its two initial values. This is the standard constant
+parity jump-system exchange phenomenon; see~\cite{BC95}. In particular
+the two-unit target graph is connected, with distance
+$\|q-r\|_1/2$. For a \emph{fixed} linear edge-cost vector $c$ the
+same transfer gives
+\[
+ f_c(q+s+t)+f_c(r-s-t)\le f_c(q)+f_c(r),\quad
+ f_c(q)=\min_{Bx=q}c\cdot x,
+\]
+because the two assignments have conserved total cost. The function
+$F$ in~\eqref{eq:fixedcost} does not share this conclusion in general;
+Section~\ref{sec:targetbarriers} gives explicit failures.
+
+\subsection{A parity-defect lower bound}
+
+For $E_0\cap E_2=\varnothing$, contract every component of the free
+graph $K$. Let $\mathcal O$ be the resulting vertices with odd $q$
+sum. On a forced edge write $z_e=x_e$ for $e\in E_0$ and
+$z_e=2-x_e$ for $e\in E_2$. Then $\Psi=\sum z_e$, and each free
+component $C$ satisfies
+\[
+ q(C)\equiv\sum_{e\in\delta(C)}z_e\pmod2.
+\]
+After duplicate copies cancel modulo two, the bad forced copies
+contain an $\mathcal O$-join in the quotient graph. Therefore
+$F(q)$ is at least its minimum join cardinality. Pairing incidences
+decomposes any join into paths between paired odd vertices and
+closed parts; conversely shortest paths of a minimum perfect matching
+on the odd vertices, cancelled modulo two, give a join. This proves
+the familiar shortest-path matching formula for this lower bound.
+It detects parity only; internal factor capacities can require a
+larger defect.
+
+\section{Normal forms and conditional structural reductions}\label{sec:reductions}
+
+\subsection{Sparse mixed-edge normal form}
+
+\begin{proposition}\label{prop:normalform}
+Every assignment can be changed, preserving all colour degrees and
+not increasing $\Psi$, until the weight-one edges form a cactus
+whose cycles are vertex-disjoint odd cycles.
+\end{proposition}
+\begin{proof}
+On an even closed trail of mixed edges alternately increase and
+decrease weights by one. Both signs of this change are feasible and
+preserve degrees. At fixed degrees $\Psi$ is linear, so one choice
+does not increase it. Every traversed edge ceases to be mixed.
+Repeat until no even closed trail remains. There is no even cycle.
+Two cycles sharing at least two vertices give a theta subgraph, two
+of whose three paths have the same parity, giving an even cycle.
+Two odd cycles sharing exactly one vertex give an even closed trail.
+Thus cycles are vertex-disjoint and odd, and all other edges of each
+mixed component are bridges.
+\end{proof}
+
+If there are $n$ vertices, $c$ mixed components including isolates,
+and $k$ mixed cycles, their edge count is $n-c+k\le n-c+\lfloor n/3\rfloor$.
+This sparsification neither asserts nor needs $\Psi=0$.
+
+\subsection{Energy cleanup and an exact one-edge identity}
+
+Define $\mathcal E(x)=\sum_v(R(v)-d_G(v))^2$. If a present colour
+has equal degree $k>\max(d(u),d(v))$ at both ends of $uv$, changing
+one copy of that colour to the other changes the energy by
+\[
+ -4k+2(d(u)+d(v))+2\le-2.
+\]
+If a present colour has equal degree one, its edge is mixed. Changing
+the other copy to that colour changes the energy by
+$6-2(d(u)+d(v))\le0$, provided the graph has no isolated $K_2$
+component. Both new endpoint colour degrees are even, so no new
+degree-one conflict appears. Hence the lexicographic pair
+$(\mathcal E,h_1)$, where $h_1$ counts bad degree-one copies, strictly
+decreases under these two rules. Termination takes at most
+$(\lfloor\mathcal E(x)/2\rfloor+1)(2m+1)-1$ steps. The remaining
+bad colour degrees are between two and the larger endpoint original
+degree. The mixed-edge normal form can subsequently be imposed,
+preserving these statements because it fixes all degrees and changes
+only edges that already had both colours.
+
+The energy is not $\Psi$. On a four-vertex path, changing the word
+$(0,1,0)$ to $(0,2,0)$ lowers $\mathcal E$ from two to zero while
+increasing $\Psi$ from two to six. The all-mixed triangle has energy
+zero and six bad copies and is already stopped by both rules.
+
+For completeness there is an exact local accounting identity. For a
+permitted change $x_e\mapsto x_e+\eta$, $e=uv$, $\eta=\pm1$, put
+\begin{align*}
+ H_z^\eta(e)=\sum_{zw\ne e}\bigl[&x_{zw}
+ (\mathbb{1}_{R(w)=R(z)+\eta}-\mathbb{1}_{R(w)=R(z)})\\
+ &+(2-x_{zw})(\mathbb{1}_{B(w)=B(z)-\eta}-\mathbb{1}_{B(w)=B(z)})\bigr].
+\end{align*}
+Then
+\[
+ \Psi(x')-\Psi(x)=\eta(\mathbb{1}_{R(u)=R(v)}-
+ \mathbb{1}_{B(u)=B(v)})+H_u^\eta(e)+H_v^\eta(e).
+\]
+On $e$ the degree differences stay fixed and only multiplicities
+change; the remaining affected edges are exactly those in the two
+sums. Any claimed improvement must account for these neighbour terms.
+
+\subsection{Exact elimination of peripheral trees}
+
+If $G$ contains a cycle, its 2-core $C$ is nonempty and connected.
+Every component outside it is a tree attached by exactly one edge:
+a cycle outside or two attachments would enlarge the minimum-degree-two
+subgraph. At a core vertex put $h=d_C(v)\ge2$ and let
+$\ell,s,b$ count attached trees of orders one, two and at least three,
+respectively. Let $k=\ell+s+b,D=h+k$. At a proposed final red degree
+$q$ put $B=2D-q$ and define
+\begin{align*}
+ L_1(q)&=\{c\in\{0,1,2\}:c=0\Rightarrow B\ne2,
+ \ c=1\Rightarrow q,B\ne1,\ c=2\Rightarrow q\ne2\},\\
+ L_2(q)&=\{c\in\{0,1,2\}:c=0\Rightarrow B\ne4,
+ \ c=2\Rightarrow q\ne4\},\\
+ S_v(q)&=\ell L_1(q)+s L_2(q)+b\{0,1,2\},\qquad
+ J_v(q)=S_v(q)\cap[q-2h,q].
+\end{align*}
+The sums are Minkowski sums, with $0L=\{0\}$. A graph colouring is
+equivalent to core weights $y_e$ and targets $q_v$ satisfying
+\[
+ q_v-\sum_{e\in C,e\ni v}y_e\in J_v(q_v)
+\]
+and the actual red/blue comparison on every core edge with total
+degree $D_v$. Necessity is restriction. For sufficiency split the
+chosen sum into allowed bridge weights and apply the tree interface
+lemma independently. Physical counts hold because
+$q=t+\sum c_i\ge c_i$ and
+$B=(2h-t)+\sum(2-c_i)\ge2-c_i$.
+
+Each $S_v(q)$ is an integer interval or an interval of step two.
+Indeed $L_1$ is an interval or $\{0,2\}$, and $L_2$ is an interval,
+possibly $\{1\}$. A width of at least one in any other interval
+fills the gaps of a sum of $\{0,2\}$ sets. This is an exact compact
+description, not an approximation of feasible root degrees. Trees
+of order at least three may therefore be replaced by any rooted
+three-vertex path, preserving colourability in both directions.
+
+\subsection{A sharp tree capacity extension}\label{sec:treecapacity}
+
+\begin{theorem}\label{thm:treecapacity}
+At a core vertex of core degree $h\ge2$, $k\ge h$ attached rooted
+trees can be restored to a given legal colouring of the graph with
+those trees removed, preserving every old edge colour.
+\end{theorem}
+\begin{proof}
+Fix its old internal red degree $t\in[0,2h]$. The feasible final
+targets are $\mathcal Q(t)=\{q\in[t,t+2k]:q-t\in J_v(q)\}$.
+For $k\ge3$ this is the whole interval, except for: value 1 if all
+branches are singletons and $t=0$; its colour-complement at $t=2h$;
+value 4 if there are exactly three branches, all of order two, and
+$t=0$; its complement at $t=2h$. To check this list only the low
+targets $1,2,4$ and their complements need inspection. At $q=1$
+only singleton bridge sets become $\{0,2\}$, causing a gap exactly
+when all branches are singletons and $t=0$. At $q=2$ their total
+upper bound is $2k-\ell\ge k\ge3$, sufficient for any $2-t$.
+At $q=4$ the upper bound is $2k-s$, insufficient only when
+$k=s=3,t=0$. All other targets allow all weights. Low and high
+cases are disjoint since $h+k\ge5$.
+
+If $j$ old incident edges are mixed, old neighbours forbid at most
+$h+j$ new targets. When $0<t<2h$, there are $2k+1>h+j$ candidates.
+At $t=0$ or $2h$ no old edge is mixed and at least $2k>h$ remain.
+The small case $h=k=2$ has at least four candidates, and all five
+at $t=2$: directly inspect $q=1,2,4,6,7$ in the bridge sets.
+At $t=1,3$ exactly one old edge is mixed, giving at most three
+forbidden targets; at $t=0,4$ there are at most two. Thus an allowed
+target always exists. Split its bridge contribution and fill the trees.
+\end{proof}
+
+The bound cannot uniformly be reduced to $k=h-1$ for any $h\ge2$.
+Create roots $v,u_1,\ldots,u_h,z$, edges $vu_i$, and, for each
+$i$, $d_i-1$ internally disjoint two-edge paths from $u_i$ to $z$,
+where $d_i=2h-2+i$. The old degrees are $h,d_i,5h(h-1)/2$ at
+$v,u_i,z$ and two at the path interiors. All-mixed old edges are
+legal. Attach $h-1$ three-vertex rooted paths at $v$. A preserved
+old colouring has $q\in[h,3h-2]$ and total colour sum $4h-2$ there.
+The old edges forbid $q=d_i$ and $q=4h-2-d_i$, covering that entire
+interval. Yet a full recolouring exists: change only $vu_2$ to zero,
+give new bridges weight 1 and each new internal path word $(0,0)$.
+Now $v$ has $(2h-2,2h)$, $u_2$ has $(2h-1,2h+1)$, other
+$u_i$ keep $(d_i,d_i)$, and each tree has successive counts
+$(1,3),(0,4),(0,2)$. These values verify every edge.
+
+\subsection{Universal vertices and minimality}
+
+\begin{theorem}\label{thm:universal}
+If $z$ is universal in $G\ne K_2$, and every component of $G-z$
+of order at least three has a given legal colouring, then the
+colouring extends to $G$, preserving those given edge weights.
+Isolated vertices and $K_2$ components require no given colouring.
+\end{theorem}
+\begin{proof}
+Let $H=G-z$ have $N$ vertices, $k$ components $K_2$, $\ell$
+isolates and larger components of orders $c_i$. Join every larger
+component and isolate to $z$ with blue edges. For each $K_2=uv$
+put $uv=1,zu=0,zv=2$. Its endpoints become $(1,3),(3,1)$ and
+contribute $(2,2)$ to $z$. Thus $z$ has
+$(2k,2(N-k))$. The $K_2$ interfaces compare even counts to three;
+an isolated blue neighbour has count two, equal only in the excluded
+case $G=K_2$. In a larger component, all old blue degrees increase
+by two, preserving every old comparison, and are at most $2c_i$.
+If $H$ has any other component, $2(N-k)>2c_i$, so the new
+interfaces are legal.
+
+It remains that $H$ is a single connected component of order $N\ge3$.
+All-blue new edges fail only if an old vertex is universal in $H$
+and has every old copy blue. If no such vertex exists, retain them.
+Otherwise make every new edge red. This preserves old differences
+and can fail only at an old all-red universal vertex. An all-blue
+and an all-red universal vertex cannot coexist, since their common
+positive-multiplicity edge would need both pure colours. Hence the
+second choice works.
+\end{proof}
+
+Consequently a vertex-minimal counterexample has no universal vertex,
+so $\Delta\le n-2$. It has a nonempty 2-core, every attached tree
+has at most three vertices, and the number $k_v$ of trees at a
+core vertex is smaller than its core degree $h_v$. These follow by
+replacement and Theorem~\ref{thm:treecapacity}; the smaller remainders
+contain a cycle and are not $K_2$. Hence, for core order and size
+$n_C,m_C$,
+\[
+ |V(G)|\le n_C+3\sum_v(h_v-1)=6m_C-2n_C.
+\]
+Every maximal degree-two core thread has length at most five,
+including return threads. At length at least six replace its interior
+and attached trees by a new bare two-edge path, or a triangle for a
+return. The smaller graph is simple and connected and has a legal
+colouring by minimality. Its fixed endpoint counts and end weights
+extend back by Theorem~\ref{thm:decorated}. The condition $k_v<h_v$
+ensures that each internal core-degree-two vertex has at most one
+tree. If the core is a cycle, its length is also at most five.
+For a noncycle core compressed to a skeleton with $n_H$ vertices,
+$m_H$ edges and minimum degree at least three, there are at most
+$4m_H$ degree-two vertices. Combining the branch bound gives
+\[
+ |V(G)|\le22m_H-2n_H.
+\]
+The skeleton size and degrees remain unbounded; none of these
+necessary conditions resolves an arbitrary minimum-degree-three core.

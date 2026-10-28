@@ -1,0 +1,130 @@
+\appendix
+\section{Finite domains and certificate specification}\label{app:cert}
+
+The proof certificates describe exact relations, not probabilistic
+tests.  The five data files are listed in Table~\ref{tab:files}.
+The marked-theta table supports a more general internal helper;
+Corollary~\ref{cor:cactus} makes that helper unnecessary for the
+single-mark step of Theorem~\ref{thm:main}.  It is included so that
+the implementation's dependencies remain self-contained.
+
+\begin{table}[H]\centering\small
+\begin{tabular}{p{0.48\linewidth}p{0.43\linewidth}}
+\toprule
+Data file in \code{artifact/}&Contents\\
+\midrule
+\code{safe_cactus_interfaces.json}&Six message types, 43 node cases,
+letter matrices and complete even product layers\\
+\code{safe_all_cactus_interfaces.json}&The same data, odd product layers
+and even-cycle rooted profiles\\
+\code{sparse_bip_core_interfaces.json}&Nine states, six-step walks,
+163 sparse-core representative witnesses\\
+\code{weak_two_marked_interfaces.json}&Arm layers, 4,256 two-mark
+witnesses and the embedded chain certificate\\
+\code{marked_theta_interfaces.json}&608 marked-theta witnesses and the
+chain certificate for the optional helper\\
+\bottomrule
+\end{tabular}
+\caption{Finite certificate data.  Equality of entire domains and relation
+sets is checked, rather than equality of recorded totals alone.}
+\label{tab:files}
+\end{table}
+
+\subsection{Sparse-core representatives}
+
+Put $I=\{1,\ldots,8\}$ and $J=\{4,6,8\}$.  Length parameters in
+Table~\ref{tab:sparse} record only chains between forks or around
+cycles; leaf-arm lengths are handled by the separate induction in
+Lemma~\ref{lem:free}.  A fork is a vertex of core degree three.
+An even cycle represented by two fork-to-fork paths has lengths $a,b$.
+
+\begin{table}[H]\centering\small
+\begin{tabular}{p{0.30\linewidth}p{0.51\linewidth}r}
+\toprule
+Shape&Complete parameter domain&Cases\\
+\midrule
+Three-arm tree&No chain parameter&1\\
+Cycle with an arm&Cycle length $a\in J$&3\\
+Double-star tree&Fork-to-fork length $b\in I$&8\\
+Cycle attached to a fork&Cycle length $a\in J$, joining length $b\in I$&24\\
+Cycle with two arms&$a,b\in I$, $a\le b$, $a+b$ even, $a+b\ge4$&19\\
+Theta&$a\le b\le c$ in $I$, all of the same parity, at most one equals 1&36\\
+Two cycles joined by a chain&Cycle lengths $a,b\in J$, joining length $c\in I$&72\\
+\midrule
+Total&&163\\
+\bottomrule
+\end{tabular}
+\caption{Complete finite domain for the sparse bipartite core lemma.}
+\label{tab:sparse}
+\end{table}
+
+Each record supplies one or two fork triples in $\{0,1,2\}^3$, with
+their sums in $\{1,3,5\}$.  For every compressed chain the checker
+starts at its given end state, applies \eqref{eq:T} once per internal
+vertex and checks its other end state and final unequal-degree
+comparison.  Each leaf arm is checked against the relation of possible
+pure-port leaf completions.  The shape data specify how triples are
+shared by chains, so consistency of all three incidences is explicit.
+
+\subsection{The two-mark kernel}
+
+Label the direct unmarked position \code{u0}.  Label arms of lengths
+1,2 and at least 3 by \code{u1}, \code{u2}, \code{u3}.
+Use \code{m0} for a direct marked position and
+\code{m1},\ldots,\code{m6} for marked arm lengths 1 through 5 and
+at least 6.  Write $U$ and $M$ for these four- and seven-element
+sets of labels.  The complete domain is
+\begin{equation}\label{eq:kernel}
+ \left(\operatorname{Sym}^2(M)\times\operatorname{Sym}^2(U)
+       \;\cup\; (M\times U)^2\right)\times\{1,3,5,7\}.
+\end{equation}
+The two pieces are kept as distinct canonical patterns.  Each record
+contains the two side labels, the middle length, the two end states
+$(x,r)$ and the actual choices for the two positions at each side.
+
+For a direct position, its contribution is 0 or 2 if unmarked and
+1 if marked.  A direct marked position requires its root red degree
+not to equal 3.  For an arm position, its pair $(y,s)$ must belong
+to the message set for that label and satisfy $s\ne r$ at the
+distinguished root.  At either side, the root degree must equal
+the middle end weight plus its two position contributions.  The
+middle path must satisfy the recurrence \eqref{eq:T}, allowing actual
+end red degrees 2 and 4.  These are all the checks imposed by
+\code{weak_two_marked_certificate.py}.
+
+The independent local verifier does not read these 4,256 witnesses.
+It reconstructs the arm messages, forms every possible side state,
+computes all middle-path relations and checks that each member of
+\eqref{eq:kernel} has a witness.  This provides a separate calculation
+of the finite existence claim, while the main checker validates the
+portable witness data.
+
+\subsection{Execution and trust boundary}
+
+From a fresh extraction of the archive run
+\begin{center}\code{python -B verify.py}\end{center}
+The program rejects optimized Python execution, since the supplied
+checkers use assertions.  It verifies the six-state closure, the
+163-case sparse-core certificate, the 4,256-case two-mark certificate,
+the optional 608-case marked-theta certificate and the fresh local
+calculation.  It also rejects deliberately damaged copies of selected
+certificate data in memory.  No source data is changed.
+
+For a full graph example, install the optional dependency and run
+\begin{center}
+\code{python -m pip install -r requirements.txt}\\
+\code{python -B construct.py examples/triangle.json}
+\end{center}
+The input gives an integer vertex list and unordered pairs of distinct
+vertices.  Duplicate edges, disconnected inputs, degree above three
+and $K_2$ are rejected.  The output lists red and blue multiplicities
+and actual vertex degrees, which are recounted before output.
+The optional argument \texttt{-{}-output} saves the resulting JSON to a
+chosen path.
+
+All calculations rely on ordinary exact Python execution.  They are
+reproducible computation, not proof-assistant kernel checking.
+Conversely, the claim of arbitrary size rests on the explicitly
+proved classifications, finite-state inductions and global
+compatibility arguments in the body, which cannot be replaced by
+running a finite suite of graph examples.

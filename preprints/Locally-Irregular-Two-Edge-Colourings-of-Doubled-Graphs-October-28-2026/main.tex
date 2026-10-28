@@ -1,0 +1,79 @@
+\documentclass[11pt]{article}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern,amsmath,amssymb,amsthm,booktabs,longtable,array,float,microtype}
+\usepackage[margin=1in]{geometry}
+\usepackage[colorlinks=true,linkcolor=blue,citecolor=blue,urlcolor=blue]{hyperref}
+\hypersetup{pdftitle={Locally Irregular Two-Edge-Colourings of Doubled Graphs: Constructions, Extensions, and Obstructions},pdfauthor={Qiyuan Ma},pdfsubject={Subcubic proof and further conditional constructions; unrestricted conjecture remains open}}
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{corollary}[theorem]{Corollary}
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{remark}[theorem]{Remark}
+\newcommand{\doub}[1]{{}^{2}\!#1}
+\newcommand{\lir}{\operatorname{lir}}
+\newcommand{\safe}{\mathcal R}
+\newcommand{\SC}{\mathsf S}
+\newcommand{\MC}{\mathsf M}
+\newcommand{\F}{\mathbb F_3}
+\newcommand{\code}[1]{\nolinkurl{#1}}
+\newcommand{\per}{\operatorname{per}}
+\newcommand{\supp}{\operatorname{supp}}
+\makeatletter
+\newcommand{\compactcontents}{\begingroup\small
+\renewcommand{\l@section}{\@dottedtocline{1}{0pt}{2em}}
+\tableofcontents\endgroup}
+\makeatother
+\setlength{\emergencystretch}{3em}
+\renewcommand{\labelitemi}{\(\bullet\)}
+\title{Locally Irregular Two-Edge-Colourings of Doubled Graphs:\\Constructions, Extensions, and Obstructions}
+\author{Qiyuan Ma\\Shanghai Jiao Tong University\\{\small\href{mailto:mqyqwerty@sjtu.edu.cn}{\texttt{mqyqwerty@sjtu.edu.cn}}}}
+\date{28 October 2026}
+\begin{document}
+\maketitle
+\begin{abstract}
+We study the conjecture that replacing every edge of a connected simple
+graph other than $K_2$ by two parallel copies produces a multigraph whose
+edges admit a locally irregular two-colouring. We present a
+computer-assisted proof for all subcubic underlying graphs and develop
+constructions for several families of unbounded maximum degree. These
+include sparse direct branch cores, degree-homogeneous three-colourable
+cores joined by paths, balanced partial subdivisions, parity-separated
+degree patterns, and clique block trees with explicit interface capacity.
+Two general sufficient conditions are
+$\delta(G)\ge8\chi(G)(2\chi(G)+1)-7$ and
+$8\delta(G)\ge7|V(G)|+6$; the latter admits red degrees distinct at all
+vertices and blue degrees distinct at all vertices. We extend the dense
+construction to prescribed external contributions, forbidden final
+degrees, and sequential absorption of multiple regions. Complement-path
+lifts give further infinite families. Exact fixed-target factor criteria,
+exchange and polynomial identities, and explicit obstructions clarify
+the limits of several stronger strategies. Complete finite interface
+certificates and executable checkers accompany the proofs. Classical
+factor, matching and interpolation tools are explicitly attributed.
+We also prove a signed-gap lemma with at most two occurrences per
+variable, use it to colour degree-three/four path--cycle partitions,
+and derive exact fixed-interface criteria and arbitrary-degree
+root-port constructions for odd components.
+The conjecture for arbitrary connected graphs is not proved.
+\end{abstract}
+\clearpage
+\compactcontents
+\clearpage
+\input{overview.tex}
+\input{subcubic.tex}
+\input{ports_and_branches.tex}
+\input{cliques_and_gluing.tex}
+\input{targets_and_reductions.tex}
+\input{algebra.tex}
+\input{high_degree.tex}
+\input{dense_regions.tex}
+\input{complements.tex}
+\input{obstructions.tex}
+\input{integer_partitions.tex}
+\input{reproducibility.tex}
+\input{subcubic_appendix.tex}
+\input{additional_certificates.tex}
+\input{references.tex}
+\end{document}

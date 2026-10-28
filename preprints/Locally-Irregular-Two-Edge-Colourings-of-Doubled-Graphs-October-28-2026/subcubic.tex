@@ -1,0 +1,742 @@
+\section{The subcubic theorem}\label{sec:subcubic}
+\begin{theorem}\label{thm:main}
+Let $G$ be a connected simple graph with $G\not\cong K_2$ and
+$\Delta(G)\le3$.  Then $\lir(\doub G)\le2$.
+\end{theorem}
+
+The proof uses finite calculations for three auxiliary state systems.
+Their complete domains, recurrences and checking procedures are specified
+below and in Appendix~\ref{app:cert}.  The finite calculations are not
+enumerations of all graphs up to an order bound.  Inductions on paths,
+trees and blocks extend the verified relations to graphs of arbitrary
+order.  The only external colouring theorem used is the classical
+degree-list theorem, stated as Theorem~A in \cite{CR17}.
+
+\section{Edge weights and path interfaces}\label{sec:path}
+
+Assign to every original edge $e$ a weight $x_e\in\{0,1,2\}$, the number
+of its red copies.  Define
+\begin{equation}\label{eq:actual}
+ R(v)=\sum_{e\ni v}x_e,\qquad B(v)=2d_G(v)-R(v).
+\end{equation}
+The required condition on an edge $uv$ of weight $x$ is
+\begin{equation}\label{eq:rule}
+ x>0\Longrightarrow R(u)\ne R(v),\qquad
+ x<2\Longrightarrow B(u)\ne B(v).
+\end{equation}
+When both endpoints have degree three, it is sufficient and necessary
+that their red degrees differ.  The same observation applies to two
+degree-two vertices, with $B=4-R$ instead of $6-R$.
+
+Let $W=\{v:d_G(v)=3\}$ and $H=G[W]$.  Vertices of $W$ are called
+\emph{roots}; a connected component of $H$ is called a \emph{core}.
+Every edge outside $H$ belongs to a maximal path with internal vertices of
+degree two.  Such a path is an \emph{ordinary connection} if its endpoints
+are distinct roots, a \emph{return path} if both endpoints are the same
+root, and a \emph{pendant path} if one endpoint is a root and the other is
+a leaf.  An ordinary connection has length at least two, and a return
+path has length at least three.  A pendant path can have any positive
+length.  Distinct roots of an ordinary connection may belong to the same
+core.  A length-one edge between roots is already an edge of $H$.
+
+The weight of the first edge at a root is the corresponding \emph{port}.
+A port is \emph{pure} if its weight is 0 or 2, and \emph{mixed} if its
+weight is 1.  A root red degree is physically compatible with a port $a$
+when $a\le R\le a+4$.  At a return path its two port contributions must
+both be included in the same root degree.
+
+\begin{lemma}[Path interfaces]\label{lem:path}
+The following statements hold for physically compatible root degrees.
+\begin{enumerate}
+\item A two-edge ordinary connection with pure end ports $a,b$ is
+admissible exactly when $R(u)\ne2+b$ and $R(v)\ne2+a$.
+\item A three-edge ordinary connection with arbitrary ports $a,b$ is
+admissible exactly when
+\begin{equation}\label{eq:three}
+ a\ne b,\qquad
+ \neg\bigl((a=1\text{ or }b=1)\text{ and }R(u)=R(v)=3\bigr).
+\end{equation}
+\item Opposite pure ports are admissible on every ordinary connection of
+length at least three.  Any two pure ports are admissible at length at
+least four.
+\item A return path accepts ports $(0,2)$ at every legal length.  If its
+root red degree is nonzero modulo three, each of $(0,1)$ and $(1,2)$ is
+also admissible.
+\item A pendant path of length at least three accepts either pure root
+port.  At length one, ports 0 and 2 exclude root red degrees 4 and 2,
+respectively; at length two they exclude 2 and 4, respectively.
+\end{enumerate}
+\end{lemma}
+\begin{proof}
+For a path with weights $x_1,\ldots,x_\ell$, all comparisons between its
+internal degree-two vertices are equivalent to
+$x_i\ne x_{i+2}$.  At a degree-three root of red degree $r$, its incident
+port $a$ permits the next weight to lie in
+\begin{equation}\label{eq:P}
+ P_r(a)=\{0,1,2\}\setminus
+ \bigl(\{r-a:a>0\}\cup\{r-a-2:a<2\}\bigr),
+\end{equation}
+where values outside $\{0,1,2\}$ have no effect.
+Part~1 follows by direct substitution.  For three edges, the middle
+comparison is $a\ne b$ and the remaining weight must lie in
+$P_{R(u)}(a)\cap P_{R(v)}(b)$.  A pure port has at least two choices.
+A mixed port has at least two choices except at red degree 3, where its
+set is $\{1\}$.  A pure-port set excludes 1 exactly at red degree 3.
+This proves part~2.
+
+For longer paths, separate the odd and even edge positions.  They form
+two three-colour paths under the relations $x_i\ne x_{i+2}$.
+At even length at least four, each position path has one fixed endpoint
+and an endpoint list of size at least two.  At odd length at least five,
+one position path has two fixed endpoints at distance at least two and
+the other has two lists of size at least two.  Both can always be coloured.
+Together with part~2 this proves part~3.  If one port is mixed but its
+root red degree is not 3, its set in \eqref{eq:P} again has at least two
+elements, so the same argument applies to longer paths.
+
+For a return path set both endpoint red degrees equal to the actual
+root degree.  Its nonzero residue excludes red degree 3; the preceding
+argument gives part~4.  At a pure leaf port 0 or 2, the preceding weight
+has allowed set $\{0,1\}$ or $\{1,2\}$, respectively.  The position-path
+argument proves part~5 for length at least four.  At length three choose
+the leaf port opposite to the root port and intersect two sets of size at
+least two.  The length-one and length-two exclusions follow directly
+from \eqref{eq:rule}.
+\end{proof}
+
+We will use the safe set
+\begin{equation}\label{eq:safe}
+ \safe=\{0,1,3,5,6\}.
+\end{equation}
+In particular, pure ports at safe roots automatically satisfy either
+end of every two-edge connection.  To attach a pendant path at a modular
+root of target residue $\phi$, take port 2 exactly when its length is one
+and $\phi=1$, or its length is two and $\phi=2$; take port 0 otherwise.
+Both choices are allowed at any length when $\phi=0$.
+
+If $W$ is empty, $G$ is a single vertex, a path, or a cycle.
+A two-edge path takes weights $(0,0)$; longer paths take first weight 0
+and last weight 2 and use the position-path argument with leaf endpoint
+conditions.  For a cycle, give its edge positions a proper three-colouring
+in the auxiliary graph joining positions $i$ and $i+2$ modulo its length.
+That auxiliary graph has maximum degree two.  The resulting weights
+satisfy all comparisons.  Also, for $K_4$, on edges
+$(01,02,03,12,13,23)$ take weights $(1,2,0,0,0,2)$; the red degrees are
+$(3,1,4,2)$.  We henceforth exclude these cases.
+
+\section{Three finite auxiliary lemmas}\label{sec:finite}
+
+A core $C$ has $3-d_C(v)$ private ports at each vertex $v$.
+In an auxiliary port assignment its red degree is the sum of its core
+edge weights and its private port weights.  Private ports here are free
+variables, not prescribed boundary weights.
+
+\begin{lemma}[Free safe ports]\label{lem:free}
+Suppose $C$ is a tree, a cactus all of whose cycle blocks are odd, or a
+connected bipartite subcubic graph with at most two vertices of core
+degree three.  There is an assignment for which all private ports are
+pure, every red degree belongs to $\safe$, and adjacent core vertices
+have distinct red degrees.
+\end{lemma}
+
+\begin{lemma}[One mixed port]\label{lem:one}
+Let $C$ be a bipartite subcubic cactus.  Any specified private port can
+be set to 1 so that its root red degree is 1 or 5, all other private
+ports are pure, every root red degree is safe, and adjacent core vertices
+have distinct red degrees.
+\end{lemma}
+
+We specify the finite calculations and their infinite extensions before
+stating the third lemma.  A rooted state $(x,r)$ records the incoming
+core-edge weight (or one actual free port at the final root) and the red
+degree of that vertex.  Its domain is
+\begin{equation}\label{eq:Omega}
+ \Omega=\{(x,r):x\in\{0,1,2\},\ r\in\safe,\ x\le r\le x+4\},
+ \qquad |\Omega|=9.
+\end{equation}
+The six rooted message sets are
+\begin{align*}
+ \mathcal L&=\{(0,0),(1,1),(1,3),(1,5),(2,6)\},\\
+ \mathcal O&=\{(0,1),(0,3),(1,1),(1,3),(1,5),(2,3),(2,5)\},\\
+ \mathcal A&=\Omega,\\
+ \mathcal C&=\{(0,0),(0,1),(1,3),(2,5),(2,6)\},\\
+ \mathcal D&=\{(0,0),(0,1),(0,3),(1,3),(2,3),(2,5),(2,6)\},\\
+ \mathcal E&=\{(0,0),(0,1),(1,1),(1,3),(1,5),(2,5),(2,6)\}.
+\end{align*}
+For $c\in\{0,1,2\}$ child sets $X_1,\ldots,X_c$, define
+\begin{equation}\label{eq:node}
+ N(X_1,\ldots,X_c)=
+ \left\{\left(x,x+\sum_{i=1}^c y_i+\sum_{j=1}^{2-c}p_j\right):
+ \begin{array}{l}
+ (y_i,s_i)\in X_i,\ p_j\in\{0,2\},\\
+ r=x+\sum_i y_i+\sum_jp_j\in\safe,\ r\ne s_i\ (1\le i\le c)
+ \end{array}\right\}.
+\end{equation}
+Here $x\in\{0,1,2\}$.  Every one of the $1+6+36=43$ ordered
+choices has one of the six message sets as its exact result.
+
+For a non-anchor vertex of a cycle, its third incidence is a free pure
+port, denoted $F$, or one child message set $X$.  Define a Boolean matrix
+$M_X$ on $\Omega$ by
+\begin{equation}\label{eq:letter}
+ (M_X)_{(x,r),(y,s)}=1
+ \quad\Longleftrightarrow\quad
+ s\ne r\text{ and }
+ \begin{cases}
+ s-x-y\in\{0,2\},&X=F,\\
+ \exists(p,t)\in X:\ s=x+y+p,\ s\ne t,&X\ne F.
+ \end{cases}
+\end{equation}
+The rooted interface of a cycle product $M$ consists of the states
+$(z,r)$ for which there are $a,b\in\{0,1,2\}$ and $(b,s)\in\Omega$
+with $r=z+a+b$, $s\ne r$, and $M_{(a,r),(b,s)}=1$.
+
+\begin{proposition}[Finite closure identities]\label{prop:closure}
+The node recurrence \eqref{eq:node} is closed on the six message sets.
+Let $\mathcal P_k$ be the set of all products of $k$ letter matrices
+from \eqref{eq:letter}.  Then
+\begin{align*}
+ (|\mathcal P_2|,|\mathcal P_4|,|\mathcal P_6|)&=(14,11,2),&
+ \mathcal P_8&=\mathcal P_6,\\
+ (|\mathcal P_3|,|\mathcal P_5|,|\mathcal P_7|)&=(23,6,2),&
+ \mathcal P_9&=\mathcal P_7.
+\end{align*}
+Their rooted interface types have the following multiplicities:
+\begin{center}
+\begin{tabular}{ccl}
+\toprule
+Parity of cycle length&Number of letters&Rooted types\\
+\midrule
+odd&2&$\mathcal C$ once, $\mathcal D$ thirteen times\\
+odd&4&$\mathcal A$ ten times, $\mathcal D$ once\\
+odd&6&$\mathcal A$ twice\\
+even&3&$\mathcal A$ twenty-one times, $\mathcal O$ twice\\
+even&5&$\mathcal A$ six times\\
+even&7&$\mathcal A$ twice\\
+\bottomrule
+\end{tabular}
+\end{center}
+Moreover the node recurrence restricted to
+$\mathcal L,\mathcal O,\mathcal A$ stays within these three types.
+\end{proposition}
+\begin{proof}[Computer-assisted finite calculation]
+Evaluate \eqref{eq:node} for the 43 choices.  Construct the seven
+matrices by \eqref{eq:letter} and multiply them as Boolean relations.
+The files \code{safe_cactus_certificate.py} and
+\code{safe_all_cactus_certificate.py} independently recompute the
+complete layers, compare sets rather than just their cardinalities,
+and compute every rooted interface.  They use Python integer and set
+operations only.  The complete layer sets are supplied in
+\code{safe_cactus_interfaces.json} and
+\code{safe_all_cactus_interfaces.json}.  Appendix~\ref{app:cert}
+gives the common execution command.
+\end{proof}
+
+\begin{proof}[Proof of the tree and cactus parts of Lemmas~\ref{lem:free}
+and~\ref{lem:one}]
+For a tree, root at a vertex with an available private port, use that
+port as the incoming incidence, and apply \eqref{eq:node} upward.
+Only $\mathcal L,\mathcal O,\mathcal A$ occur.  All accept incoming
+weight 0, which gives the free-port assertion, and incoming weight 1
+with red degree 1 or 5, which gives the marked assertion.
+
+For a cactus of maximum degree three, different cycle blocks cannot
+share a vertex.  Contract each cycle block to a unit and induct on the
+resulting tree of units.  A non-anchor cycle vertex has precisely the
+third-incidence choices in \eqref{eq:letter}; two children there would
+violate the degree bound.  A cycle of length $\ell$ uses $\ell-1$
+letters.  The identities in Proposition~\ref{prop:closure} imply, by
+induction under multiplication by any two letters, that every longer
+product of the same parity has one of the listed rooted types.
+Thus the argument covers arbitrary cycle lengths and numbers of blocks.
+
+Every one of the six types accepts incoming weight 0.  This proves the
+odd-cactus assertion.  In a bipartite cactus every cycle is even, and
+the induction stays in $\mathcal L,\mathcal O,\mathcal A$.  Root at the
+specified private port and choose $(1,1)$ or $(1,5)$ to prove
+Lemma~\ref{lem:one}.  The incoming port is an actual private incidence,
+not an extra edge added to the original degree.
+\end{proof}
+
+For core chains with one pure private port at each internal vertex,
+write
+\begin{equation}\label{eq:T}
+ (x,r)\ T\ (y,s)\quad\Longleftrightarrow\quad
+ r\ne s,\quad s=x+y+p\in\safe\text{ for some }p\in\{0,2\}.
+\end{equation}
+Both states lie in $\Omega$.  The supplied certificate gives a six-step
+walk for every ordered pair of states, so
+\begin{equation}\label{eq:sat}
+ T^6=\Omega\times\Omega.
+\end{equation}
+Every state has an incoming neighbour, and therefore
+$T^k=\Omega\times\Omega$ for every $k\ge6$.
+Here internal chain vertices have original degree three, unlike the
+degree-two internal vertices in Section~\ref{sec:path}.
+
+\begin{proof}[Proof of the remaining part of Lemma~\ref{lem:free}]
+If there are no core-degree-three vertices, the core is a single vertex,
+a path, or an even cycle, already covered above.  Otherwise compress its
+core-degree-two chains.  If $n_1,n_3$ count core degrees one and three,
+and $\beta=|E(C)|-|V(C)|+1$, then
+\begin{equation}\label{eq:euler}
+ n_1=n_3+2-2\beta.
+\end{equation}
+With one degree-three vertex the only shapes are a three-arm tree and
+an even cycle with an arm.  With two, the only shapes are a double-star
+tree, an even cycle attached to a fork with two arms, an even cycle with
+an arm at each of its two forks, a theta, or two even cycles joined by
+a chain.  These follow by counting loops and paths in the compressed
+shape, whose two forks have degree three.
+
+There are 163 complete finite shape and length representatives, with
+their domain specified in Table~\ref{tab:sparse}.  Every representative
+has a witness assigning odd safe red degree to each fork, consistent
+with its three incident weights.  The checker
+\code{sparse_bip_core_certificate.py} verifies the complete domain,
+all fork sums and all chain relations, as well as \eqref{eq:sat}.
+
+Keep a length $n\le6$, replace a longer odd length by 7, and a longer
+even length by 8.  Any chain of length at least seven has at least six
+internal transitions, so \eqref{eq:sat} lifts its witness with unchanged
+end weights and fork degrees.  Parities and simplicity restrictions
+are preserved.  An arm can have arbitrary positive length: an odd-red
+fork can be completed immediately at a leaf by two pure ports; from
+every state one step reaches a state that admits such a completion,
+and every state has an outgoing step.  These finite assertions are also
+checked.  Thus all arm lengths and all chain lengths are covered.
+\end{proof}
+
+\begin{definition}[Four-port tree]\label{def:four}
+A four-port tree is a subcubic tree core with two distinguished vertices
+$a,b$ at odd distance.  Neither has a short port.  On each side of the
+$a$--$b$ path there are exactly two positions, each either a direct long
+private port at the distinguished vertex or an arm ending at a leaf
+with one long and one short port.  Every other internal vertex of such
+an arm or of the $a$--$b$ path has one short private port.  Thus there
+are precisely four long ports.  The distinguished vertices have no
+other incidences.
+\end{definition}
+
+Figure~\ref{fig:four} shows one possible topology.  A position at a
+distinguished vertex may instead be a direct long port.
+\begin{figure}[htbp]
+\centering
+\setlength{\unitlength}{0.9mm}
+\begin{picture}(140,54)
+\put(35,25){\circle*{2.4}}\put(105,25){\circle*{2.4}}
+\put(35,25){\line(1,0){70}}
+\put(55,25){\circle*{1.5}}\put(85,25){\circle*{1.5}}
+\put(55,25){\line(0,1){8}}\put(85,25){\line(0,1){8}}
+\put(55,36){\makebox(0,0){$s$}}\put(85,36){\makebox(0,0){$s$}}
+\put(35,25){\line(-4,3){20}}\put(35,25){\line(-4,-3){20}}
+\put(105,25){\line(4,3){20}}\put(105,25){\line(4,-3){20}}
+\put(15,40){\circle*{1.5}}\put(15,10){\circle*{1.5}}
+\put(125,40){\circle*{1.5}}\put(125,10){\circle*{1.5}}
+\put(15,40){\line(-1,0){13}}\put(15,10){\line(-1,0){13}}
+\put(125,40){\line(1,0){13}}\put(125,10){\line(1,0){13}}
+\put(15,40){\line(0,1){8}}\put(15,10){\line(0,-1){8}}
+\put(125,40){\line(0,1){8}}\put(125,10){\line(0,-1){8}}
+\put(15,51){\makebox(0,0){$s$}}\put(15,0){\makebox(0,0){$s$}}
+\put(125,51){\makebox(0,0){$s$}}\put(125,0){\makebox(0,0){$s$}}
+\put(2,44){\makebox(0,0){$\ell_1$}}\put(2,6){\makebox(0,0){$\ell_2$}}
+\put(138,44){\makebox(0,0){$\ell_3$}}\put(138,6){\makebox(0,0){$\ell_4$}}
+\put(35,18){\makebox(0,0){$a$}}\put(105,18){\makebox(0,0){$b$}}
+\end{picture}
+\caption{A four-port tree with two distinguished vertices $a,b$, four
+long ports $\ell_i$, and short ports labelled $s$.  The middle path
+is odd; the arms and middle path may be longer than shown, with one
+short port at every added internal core vertex.  All vertices drawn
+have original degree three.  Only $a,b$ have no short incidence and
+may use red degrees 2 or 4.}
+\label{fig:four}
+\end{figure}
+
+\begin{lemma}[Two mixed ports]\label{lem:two}
+In any four-port tree, any two distinct long ports can be set to 1 so
+that their roots have red degree different from 3.  All other private
+ports can be pure, adjacent core vertices can have distinct red
+degrees, and every vertex carrying a short port can have safe red
+degree.  The two distinguished vertices may have red degree 2 or 4.
+\end{lemma}
+\begin{proof}
+For an arm, its incoming message at the leaf is $\mathcal L$ if the
+long port is pure, and
+$Q=\{(0,1),(2,5)\}$ if the long port is marked.  At an internal
+vertex the message map is
+\begin{equation}\label{eq:U}
+ U(X)=\{(x,x+y+p):(y,s)\in X,\ p\in\{0,2\},\
+ x+y+p\in\safe,\ x+y+p\ne s\}.
+\end{equation}
+Exact iteration gives cardinalities $5,7,9,9$ from $\mathcal L$, and
+$2,3,5,7,7,9,9$ from $Q$.  In each case the last two sets are equal
+to $\Omega$, not merely equinumerous.  Thus an unmarked position has
+four types, direct or arm lengths $1,2,\ge3$; a marked position has
+seven types, direct or arm lengths $1,2,3,4,5,\ge6$.
+
+Up to exchanging the two ends, the mark distribution is $(2,0)$ or
+$(1,1)$.  The first has
+$\binom82\binom52=280$ choices of unordered pairs of position types;
+the second has $(7\cdot4)^2=784$ choices.  Two direct marked ports at
+the same distinguished vertex are included.  The connecting path is
+odd, and its representatives have lengths $1,3,5,7$.  Hence the complete
+domain contains $(280+784)\cdot4=4256$ cases.
+
+For each case, \code{weak_two_marked_interfaces.json} gives the end
+states, the two position choices at each end, and compatibility with
+the connecting path.  The checker recomputes the domain, arm sets,
+actual sums and connecting relations; every case passes.  A second
+verifier recomputes existence from these definitions without using the
+stored witnesses.  Details appear in Appendix~\ref{app:cert}.
+
+Arm fixed points prove lifting at every larger arm length.  For the
+middle path, \eqref{eq:sat} proves lifting at every length at least
+seven if the two end degrees are safe.  If an end red degree is 2 or 4,
+it differs from every internal safe red degree; a word valid with the
+same end-edge weight and virtual end red degree 3 is still valid with
+the actual degree.  The virtual state is physical for every possible
+end weight.  Thus larger odd lengths preserve both actual end degrees
+and end weights.  These observations prove the lemma for arbitrary
+four-port trees, rather than only for the finite representatives.
+\end{proof}
+
+\section{Classifying cores and counting long ports}\label{sec:class}
+
+Call an ordinary connection \emph{short} if its length is two, and
+\emph{long} if its length is at least three.  For a bipartite core $C$
+with parts $A,B$, count the following objects on each part:
+\begin{enumerate}
+\item every pendant port rooted in that part;
+\item every endpoint in that part of a short connection whose two roots
+both belong to $C$;
+\item every vertex in that part incident with neither a pendant path
+nor any short connection, including short connections to other cores.
+\end{enumerate}
+Let the resulting counts be $k_A,k_B$.  In item~3 a core-degree-three
+vertex is always counted, even though it has no private port.
+
+Assign cores to classes $\SC$ and $\MC$ by the following fixed rules,
+before choosing any weights.  Put in $\MC$ every core with a return
+path, every nonbipartite core incident with an ordinary three-edge
+connection, and every bipartite core incident with an ordinary
+three-edge connection and satisfying $\max(k_A,k_B)\ge2$.
+Among the remaining cores, put in $\SC$ those covered by
+Lemma~\ref{lem:free}, and put the rest in $\MC$.
+
+The letters specify how a core will be handled, not that all degrees
+in its final colouring must have a common residue.  In particular,
+Lemma~\ref{lem:two} may give red degree 2 or 4 at vertices of an
+$\SC$ core that carry no short port.
+
+\begin{lemma}\label{lem:count}
+An $\SC$ core incident with an ordinary three-edge connection is
+bipartite and has at most four long ports.  If it has four ports that
+belong to three-edge connections between $\SC$ cores, it is a four-port
+tree as in Definition~\ref{def:four}.
+\end{lemma}
+\begin{proof}
+Nonbipartite cores incident with such a connection have been assigned
+to $\MC$.  For a remaining bipartite core, $k_A,k_B\le1$.
+Let $p$ be the number of pendant ports, $s$ the number of short
+connections internal to $C$, and $t$ the number of vertices in item~3.
+Then
+\begin{equation}\label{eq:budget}
+ t+p+2s=k_A+k_B\le2.
+\end{equation}
+There is no return path.  A core leaf has at most one long port, plus
+one more if it is counted in $t$.  A core-degree-two vertex with a long
+port is counted in $t$.  A core-degree-three vertex is counted in $t$
+but has no long port.  Therefore, writing $L$ for the total number of
+long ports, \eqref{eq:euler} gives, for a nontrivial core,
+\begin{equation}\label{eq:Lbound}
+ L\le n_1+t-n_3=2-2\beta+t
+ \le4-2\beta-p-2s\le4.
+\end{equation}
+A one-vertex core has only three ports.
+
+If four of these ports belong to the stated three-edge connections,
+all inequalities are equalities.  Thus $\beta=p=s=0$, $t=2$, and the
+two vertices counted in $t$ lie in opposite parts.  All core-degree-three
+vertices are among them.  Their connecting path has odd length.  Each
+other internal core vertex has its one short port; each other core
+leaf has one long and one short port.  Removing the middle path leaves
+exactly two positions at each end, either direct ports or unbranched
+arms.  There are no other long ports, pendant paths or internal short
+connections.  This is precisely Definition~\ref{def:four}.
+\end{proof}
+
+\begin{corollary}\label{cor:cactus}
+Every $\SC$ core incident with an ordinary three-edge connection is a
+bipartite cactus.
+\end{corollary}
+\begin{proof}
+Its $L$ is positive, so \eqref{eq:Lbound} gives $\beta\le1$.
+A connected graph with at most one cycle is a cactus.
+\end{proof}
+
+\section{Making all safe three-edge connections compatible}\label{sec:glue}
+
+Form an indexed multigraph $F$ whose vertices are the $\SC$ cores.
+Every ordinary three-edge connection with both ends in $\SC$ gives an
+edge of $F$.  Roots in the same core give a loop, and different
+connections may give parallel edges.  Loops contribute two to degree.
+By Lemma~\ref{lem:count}, $\Delta(F)\le4$.
+
+\begin{lemma}\label{lem:orient}
+There is a spanning forest $T$ of $F$ and an orientation of
+$D=E(F)\setminus E(T)$ with outdegree at most two at each vertex.
+Outdegree two is possible only at a vertex of $F$ of degree four.
+\end{lemma}
+\begin{proof}
+Take any spanning forest.  Orient $D$ so that its outdegree at each
+vertex lies between the floor and ceiling of half its degree.  Such
+an orientation is obtained by joining each odd-degree vertex to a
+temporary vertex, orienting Euler tours in the resulting even-degree
+multigraph, and deleting the temporary edges.  A loop has one tail.
+
+In a component of $F$ with at least two vertices, every vertex has an
+incident forest edge.  Thus its $D$-degree is at most three, and at
+most two if its $F$-degree is at most three.  In a singleton component
+all edges are loops, and at most two loops are possible.  These facts
+prove both assertions.
+\end{proof}
+
+For every $\SC$ core of outdegree zero use Lemma~\ref{lem:free}.
+For outdegree one, mark its outgoing half-port by 1 and use
+Corollary~\ref{cor:cactus} and Lemma~\ref{lem:one}.
+For outdegree two, Lemma~\ref{lem:count} gives a four-port tree, to
+which Lemma~\ref{lem:two} applies.  Only long ports are marked.
+Every short-incident root remains safe.
+
+Each $D$ edge now has exactly one mixed and one pure port, with red
+degree different from 3 at its mixed end.  It is compatible by
+Lemma~\ref{lem:path}.  A loop in $F$ uses two distinct actual roots of
+the same core; it is not an original return path.
+
+Every $T$ edge still has pure ports $a,b$.  Choose a colour-complement
+bit $\eta_C$ for each core.  Complementation changes every core weight
+and private port from $x$ to $2-x$ and changes each root red degree
+from $r$ to $6-r$.  To make the two ports of a $T$ edge opposite impose
+\begin{equation}\label{eq:xor}
+ \eta_C\oplus\eta_{C'}=1\oplus(a/2)\oplus(b/2).
+\end{equation}
+These equations are simultaneously solvable on a forest.
+Complementation preserves safety at short ports, unequal red degrees
+on core edges, and the condition that a marked root is not of red
+degree 3.  Thus all $D$ connections remain compatible.
+
+All ordinary three-edge connections between $\SC$ cores are now
+compatible.  At an $\SC$--$\MC$ three-edge connection the $\SC$ port
+is pure, since marking was confined to $D$.  Set the $\MC$ port
+opposite to it.  At a three-edge connection between two $\MC$ roots
+use ports 0 and 2.  At longer ordinary connections any $\MC$ port
+can be set to 0.  These choices put no restriction on the eventual
+physical red degrees of $\MC$ roots.
+
+\section{Targets and realizability modulo three}\label{sec:mod}
+
+All arithmetic on target values in this section is in $\F$.
+
+\begin{lemma}[Realizing sums]\label{lem:linear}
+Let $C$ be a connected simple graph and $q:V(C)\to\F$.
+There are weights in $\{0,1,2\}$ whose incident sums equal $q$ modulo
+three if and only if, in the bipartite case with parts $A,B$,
+\begin{equation}\label{eq:balance}
+ \sum_Aq-\sum_Bq=0.
+\end{equation}
+There is no constraint if $C$ is nonbipartite.
+\end{lemma}
+\begin{proof}
+In a bipartite graph, each edge contributes once to each part, proving
+necessity.  Fix a spanning tree.  Setting non-tree weights to zero,
+remove leaves successively and set their parent edge to the remaining
+target.  The final equation is exactly \eqref{eq:balance}.
+For a nonbipartite graph, sign vertices alternately along the tree.
+Some non-tree edge has equal signs at its ends.  Its coefficient in
+the signed defect is $2$ or $-2$, invertible in $\F$.  Choose its
+weight to cancel the defect and then eliminate along the tree.
+Choose representatives 0,1,2 for the resulting field elements.
+\end{proof}
+
+For an $\MC$ core, let $c(v)$ be the sum of its private ports and seek
+a proper target colouring $\phi(v)\in\F$ of its core edges, then
+realize the core sums $q(v)=\phi(v)-c(v)$.  The final actual degree
+satisfies $R(v)\equiv\phi(v)$, so adjacent core degrees differ.
+
+If a short connection joins $v$ to an $\SC$ root with port $a$, delete
+$(2+a)\bmod3$ from the list at $v$.  Denote the resulting list by
+$L(v)$.  Since $a$ is pure, only colours 1 or 2 are deleted; hence
+\begin{equation}\label{eq:lists}
+ 0\in L(v),\qquad |L(v)|\ge d_C(v).
+\end{equation}
+Indeed at most $3-d_C(v)$ private ports can impose deletions.
+A return path or a three-edge port at a vertex leaves a strict
+surplus $|L(v)|>d_C(v)$ there.
+
+We use the following established theorem \cite[Theorem~A]{CR17}:
+a connected graph that is not a Gallai tree is colourable from any
+lists of sizes at least the vertex degrees.  A Gallai tree is a
+connected graph whose blocks are complete graphs or odd cycles.
+Also, a single strict-surplus vertex suffices in any connected graph:
+root a spanning tree there and colour in reverse tree order.
+
+\subsection{Nonbipartite cores}
+
+If a nonbipartite $\MC$ core has a return path or an ordinary
+three-edge connection, it has a strict-surplus vertex.  Otherwise,
+if it were a Gallai tree, its blocks would be bridges, odd cycles,
+or $K_4$.  A $K_4$ uses all degree-three incidences, forcing
+$G=K_4$, already treated.  Without it the core is an odd-cycle
+cactus and would have been assigned to $\SC$.  Thus the remaining
+core is not a Gallai tree.  In all cases a proper list target exists,
+and Lemma~\ref{lem:linear} realizes it for any subsequent private
+offsets.  No bipartite defect needs to be balanced.
+
+\subsection{Bipartite cores with at least two safe short exits}
+
+Let $f$ count short connections from $C$ to $\SC$ cores, with
+multiplicity.  If $f\ge2$, choose a proper target from the lists.
+This is justified as follows.  If $C$ contains a cycle, its bipartite
+structure makes it a non-Gallai graph.  If it is a tree, its assignment
+to $\MC$ implies the presence of a return path or a three-edge
+connection, giving a strict-surplus vertex.
+
+Reserve this core's own port on each of two safe short exits.  Each
+can be set independently to 0 or 2: the opposite root is safe and
+therefore accepts either value.  Each changes the defect in
+\eqref{eq:balance} by a nonzero element of $\F$, without changing
+any target.  Two such binary changes cover all residues and will
+balance the defect after other offsets have been fixed.
+
+\subsection{Bipartite cores with at most one safe short exit}
+
+Suppose $f\le1$.  If $C$ has a return path, choose its root in part
+$B$, set $\phi=0$ on $A$ and $\phi=t$ on $B$, and choose
+$t\in\{1,2\}$ to respect the possible single list restriction.
+The return path accepts all three port pairs $(0,1),(0,2),(1,2)$,
+because its root target is nonzero.  Their total contributions
+$1,2,3$ cover the three defects.
+
+Now suppose there is no return path.  If $C$ was assigned to $\MC$
+by the $k$-count rule, some side has at least two objects counted in
+$k$.  Any other bipartite $\MC$ core not already covered has at
+least three core-degree-three vertices; otherwise
+Lemma~\ref{lem:free} would have placed it in $\SC$.  One side
+therefore has two such vertices, each counted by item~3.  Again one
+side has at least two counted objects.
+
+Take this side as $A$, put $\phi=0$ on $A$, and put
+$\phi=t\in\{1,2\}$ on $B$.  Since all lists contain 0 and there
+is at most one deletion in total, a choice of $t$ respects all lists.
+Two objects on $A$ will provide independent defect adjustments.
+
+\section{Balancing all cores without disturbing short connections}
+\label{sec:controls}
+
+First fix the target at every root incident with a short connection.
+For a short connection between two $\MC$ roots, give either endpoint
+the port
+\begin{equation}\label{eq:shortchoice}
+ p=\begin{cases}2,&\text{the other root has target }2,\\
+                  0,&\text{otherwise}.
+   \end{cases}
+\end{equation}
+Then the other root target differs from $(2+p)\bmod3$, as required
+by Lemma~\ref{lem:path}.  Give each $\MC$ pendant its port from
+Section~\ref{sec:path}; give each return path the default pair
+$(0,2)$ until a selected return adjustment is made.
+
+Consider the remaining case from Section~\ref{sec:mod}: a bipartite
+core with targets 0 on $A$, $t$ on $B$ and two counted objects on
+$A$.  Define
+\begin{equation}\label{eq:defect}
+ \delta_C=\sum_{v\in A}(\phi(v)-c(v))-
+           \sum_{v\in B}(\phi(v)-c(v)).
+\end{equation}
+Its counted objects have the following interpretations.
+\begin{enumerate}
+\item A pendant port at a zero-target root may take either pure
+value, at every length, by Lemma~\ref{lem:path}.
+\item For an internal short connection whose endpoint $u\in A$
+has target 0, the \emph{other endpoint's own port} is free to take
+0 or 2.  The actual red degree at $u$ is 0 modulo three, hence
+avoids both 2 and 4.  The comparison at the other endpoint is
+protected by the already chosen port at $u$ in \eqref{eq:shortchoice}.
+\item A zero-target root with no pendant and no short incidence may
+change its target from 0 to $3-t$.  This remains different from
+all neighbouring core targets $t$.  No short port or pendant choice
+depends on this target.
+\end{enumerate}
+
+Each object changes \eqref{eq:defect} by a nonzero element of $\F$.
+The variable freed by item~2 is at the opposite endpoint, so its
+sign in the defect can be either sign; nonzeroness is all that is
+needed.  Different short endpoints free different actual ports.
+If both ends are on $A$, both actual ports are independently free.
+An item~3 vertex has no short or pendant incidence, so it cannot
+overlap variables of the first two kinds.  Thus two counted objects
+really give independent binary choices.
+
+For any nonzero $\alpha,\beta\in\F$,
+\begin{equation}\label{eq:binary}
+ \{\alpha\epsilon+\beta\epsilon':
+          \epsilon,\epsilon'\in\{0,1\}\}=\F.
+\end{equation}
+Consequently the two chosen objects can cancel any initial defect.
+The two-safe-exit case uses the same calculation.  The return case
+uses its three total contributions instead.
+
+All cores can be balanced separately.  Changing a target in item~3
+never changes a short endpoint or pendant target.  Changing a port
+uses only a pendant, a short connection internal to the same core,
+or this core's end of a connection to an $\SC$ root.  It never
+changes another $\MC$ core's offsets.  On a safe short exit the
+opposite root accepts either pure port, and its own degree does not
+change.  Long path interfaces accept arbitrary actual root degrees.
+There is therefore no remaining coupled system between different
+modular cores.
+
+Apply Lemma~\ref{lem:linear} to each core with its balanced targets
+and final offsets.  All resulting core weights belong to $\{0,1,2\}$.
+The actual root degrees are the sums of these incident core weights
+and the fixed ports, so they are physical and satisfy
+$R(v)\equiv\phi(v)$.  Every direct core edge has distinct red
+degrees at its ends and hence distinct blue degrees as well.
+
+\section{Completion of the proof}\label{sec:complete}
+
+\begin{proof}[Proof of Theorem~\ref{thm:main}]
+The cases with no degree-three root and the case $K_4$ were treated
+in Section~\ref{sec:path}.  Otherwise decompose the graph into cores
+and paths and classify its cores as in Section~\ref{sec:class}.
+Sections~\ref{sec:glue}--\ref{sec:controls} assign all core weights
+and all root ports, with unequal degrees along every direct core
+edge.  It remains to fill the path interiors.
+
+For a short connection between two $\SC$ roots, both roots carrying
+short ports are safe.  Any exceptional red degree 2 or 4 allowed by
+Lemma~\ref{lem:two} occurs only at a root without short ports.
+For an $\SC$--$\MC$ short connection, the safe root's comparison
+is automatic and the modular root's comparison follows from its list.
+For an $\MC$--$\MC$ short connection, \eqref{eq:shortchoice} and
+the frozen short targets ensure both comparisons; Section~\ref{sec:controls}
+preserves them.
+
+Every ordinary three-edge connection either has opposite pure ports
+or is a $D$ edge with one mixed port whose root degree is not 3.
+Every longer ordinary connection has pure ports.  Return and pendant
+paths have their admissible pairs or ports.  Lemma~\ref{lem:path}
+therefore fills every path.
+
+The interiors are edge-disjoint, and their first and last weights
+were already counted in the root degrees.  Filling them does not
+alter a root degree.  This verifies core edges, internal path edges,
+root-end edges and leaf-end edges, exhausting $E(G)$.  Replacing a
+weight $x$ by $x$ red and $2-x$ blue copies yields \eqref{eq:rule}
+on every edge of the doubled graph.
+\end{proof}
+
+The argument uses the common identity $B=6-R$ at the roots, their
+three-incidence budget and the resulting bound $\Delta(F)\le4$.
+No theorem for graphs of larger maximum degree is asserted here.
+

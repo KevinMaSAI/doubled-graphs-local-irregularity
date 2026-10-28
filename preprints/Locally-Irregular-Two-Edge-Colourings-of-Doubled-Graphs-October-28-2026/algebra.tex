@@ -1,0 +1,218 @@
+\section{Exact polynomial certificates and parity identities}\label{sec:algebra}
+
+Orient each original edge $e=uv$ arbitrarily and put
+$\Delta_e=d_G(u)-d_G(v)$ and $D_e=R(u)-R(v)$. The linear form
+$D_e$ does not involve $x_e$, whose contributions cancel.
+
+\begin{proposition}\label{prop:exactpoly}
+The quadratic factor
+\[
+ f_e=D_e^2-2\Delta_e(2-x_e)D_e
+       +2\Delta_e^2(x_e-1)(x_e-2)
+\]
+is nonzero exactly when the actual colour condition holds on $e$,
+for $x_e\in\{0,1,2\}$. Consequently $\prod_e f_e$ has a nonzero
+point on that grid if and only if $\doub G$ has a legal two-colouring.
+\end{proposition}
+\begin{proof}
+Its evaluations at $x_e=0,1,2$ are respectively
+$(D_e-2\Delta_e)^2$, $D_e(D_e-2\Delta_e)$, and $D_e^2$.
+These express exactly the blue-only, mixed and red-only comparisons.
+\end{proof}
+
+For arbitrary real parameters $\tau_e$ define
+\[
+ f_{e,\tau}=D_e(D_e-2\Delta_e)+
+ \tau_e(x_e-1)(D_e+\Delta_e(x_e-2)),
+\]
+and the multilinear parameter polynomial
+\begin{equation}\label{eq:freeC}
+ C_G(\tau)=\left[\prod_e x_e^2\right]
+ \prod_e(D_e^2+\tau_e x_eD_e+\tau_e\Delta_e x_e^2).
+\end{equation}
+The three evaluations of $f_{e,\tau}$ are
+$(D_e-2\Delta_e)(D_e-\tau_e)$,
+$D_e(D_e-2\Delta_e)$, and
+$D_e(D_e+\tau_e-2\Delta_e)$. Nonzero therefore always implies
+actual legality, although additional legal assignments may be excluded.
+
+\begin{proposition}\label{prop:freecertificate}
+If $C_G$ is not the zero polynomial, $\lir(\doub G)\le2$.
+Its nonvanishing is equivalent to nonvanishing at some
+$\tau\in\{0,1\}^{E(G)}$. The fixed coefficient
+$c_G=C_G(2\Delta)$ is a sufficient special case.
+\end{proposition}
+\begin{proof}
+For every polynomial of total degree at most $2m$,
+\begin{equation}\label{eq:gridinterp}
+ \left[\prod_e x_e^2\right]P
+ =\sum_{a\in\{0,1,2\}^{E(G)}}
+ \frac{P(a)}{\prod_e w(a_e)},\qquad
+ w(0)=2,\ w(1)=-1,\ w(2)=2.
+\end{equation}
+In one variable the weighted sums of powers of degrees zero and one
+vanish and that of degree two equals one. A total-degree-at-most-$2m$
+monomial with any exponent above two has another below two, so only
+the all-two monomial contributes. This proves the identity. Apply it
+to $\prod f_{e,\tau}$: its leading coefficient is~\eqref{eq:freeC}.
+A nonzero coefficient forces a nonzero grid value. The assertion
+about binary parameters follows from unique interpolation of
+multilinear polynomials. This is an application of~\cite{Alon99};
+no general nonzero-coefficient theorem is supplied here.
+\end{proof}
+
+Write $D=Mx$. On the binary-copy variables $z_{e,1},z_{e,2}$ put
+$x_e=z_{e,1}+z_{e,2}$. The copy comparison is the nonzero linear
+expression $D_e-2\Delta_e+2\Delta_e z_{e,i}$. Its coefficient matrix is
+\[
+ \mathcal A_G=M\otimes J_2+2\operatorname{diag}(\Delta)\otimes I_2.
+\]
+The coefficient of the full squarefree monomial is its permanent,
+and
+\begin{equation}\label{eq:permanent}
+ \per(\mathcal A_G)=2^m c_G.
+\end{equation}
+To check this equality, the quadratic part of $f_e(a+b)$ differs
+from the product of the two copy linear parts only by
+$2\Delta_e^2(a^2+b^2)$, which cannot contribute to a squarefree
+monomial. Each substitution $x_e^2=(a+b)^2$ contributes a factor
+two to the desired coefficient. Reversing an edge reverses its two
+copy rows, leaving the permanent unchanged.
+
+\subsection{A principal-minor formula modulo two}
+
+Let $A$ and $L$ be the adjacency and Laplacian matrices of the line
+graph of $G$, indexed by original edges; all determinants in the
+next statement are over $\mathbb F_2$.
+
+\begin{theorem}\label{thm:modtwo}
+For every $S\subseteq E(G)$,
+\[
+ [\prod_{e\in S}\tau_e]C_G(\tau)
+ \equiv\det L[S,S]\,\det A[\overline S,\overline S]\pmod2.
+\]
+Moreover, $\det A[F,F]$ is odd exactly when $(V(G),F)$ is a
+forest and each of its components has odd order, including isolates.
+\end{theorem}
+\begin{proof}
+Modulo two, $M=A$, and
+$\Delta_e\equiv d_{L(G)}(e)$, so $M+\operatorname{diag}(\Delta)=L$.
+After selecting the indicated parameters the product is
+\[
+ \prod_{e\in S}x_e(D_e+\Delta_e x_e)
+ \prod_{e\notin S}D_e^2.
+\]
+In characteristic two the squared factors contain only squared
+variables. They cannot use an $S$ variable, already present once.
+Each $S$ variable still needs one odd contribution, so all the
+$|S|$ linear factors must use precisely the $S$ variables, one each.
+The coefficient separates into the permanents of the two principal
+submatrices; modulo two these equal the stated determinants.
+
+Let $B$ be the unsigned vertex-edge incidence matrix modulo two.
+Then $A=B^TB$. If $F$ contains a cycle its incidence columns are
+dependent and so is its Gram matrix. For a tree component with $p$
+vertices, every $(p-1)$-row incidence minor has determinant one,
+by leaf elimination. Cauchy--Binet gives its Gram determinant
+$p\pmod2$. Multiply over components. Isolates contribute the
+empty determinant one. This proves the forest characterisation.
+\end{proof}
+
+For an odd-order tree the constant coefficient is odd. For an
+even-order tree with an even-degree vertex there is an edge $uv$
+with odd $\Delta$ whose deletion gives two odd-order components:
+take a leaf even-degree vertex of the smallest subtree spanning all
+even-degree vertices, and an edge leaving that subtree at that
+vertex. The component on the other side has only original odd degrees,
+and its original degree sum is $2(|U|-1)+1$, forcing $|U|$ odd.
+Taking $S=\{uv\}$ in the formula gives an odd coefficient; the
+constant coefficient is even. Similarly an odd-order unicyclic graph
+has an odd single-parameter coefficient if a cycle edge has
+endpoints of different degree parity. These are certificates on
+already known colourable graph families, not new graph-family claims.
+
+\subsection{Offset extensions on odd forests}\label{sec:oddforest}
+
+\begin{corollary}\label{cor:oddforest}
+If each component of a forest $F$ has odd order, arbitrary real
+offsets $a(v),b(v)$ admit weights $0,1,2$ such that
+\[
+ a(v)+\sum_{e\ni v}x_e,\qquad
+ b(v)+\sum_{e\ni v}(2-x_e)
+\]
+both distinguish the ends of every forest edge.
+\end{corollary}
+\begin{proof}
+The product of both colour differences has leading homogeneous part
+$(-1)^m\prod_e D_e^2$. Its all-two coefficient is odd by
+Theorem~\ref{thm:modtwo}, independent of offsets. Apply
+\eqref{eq:gridinterp} over the reals.
+\end{proof}
+
+For physical nonnegative integer offsets with $a(v)+b(v)$ even,
+this extends constructively to any odd-order connected bipartite
+graph $H$. Choose the bipartition labelling $p$ or its complement
+so that $\sum p\equiv\sum a\pmod2$; odd order makes the two
+choices have opposite parity. Solve
+$\sum_{e\ni v}x_e\equiv p(v)-a(v)\pmod2$ by a spanning tree
+with non-tree weights zero. The parity sum condition makes the root
+equation hold. All weights may be 0 or 1, and the final red and
+blue degrees both have parity $p(v)$. Every internal edge compares
+opposite parities. Neither this result nor the corollary automatically
+keeps outside edges legal when boundary degrees change.
+
+\subsection{A fixed forbidden-value application}
+
+If each vertex of a simple graph $H$ has real offset $a(v)$ and a
+fixed forbidden set $Z(v)$ with $|Z(v)|\le d_H(v)$, there is a
+weighting with $a(v)+\sum x_e\notin Z(v)$ at every vertex. Enlarge
+each set to size $d_H(v)$ and consider the product of all forbidden
+linear factors. Its highest homogeneous part is
+$\prod_v(\sum_{e\ni v}x_e)^{d_H(v)}$, with nonnegative coefficients.
+Selecting each incident variable once at every vertex shows that its
+all-two coefficient is at least $\prod_v d_H(v)!>0$. Interpolation
+proves the assertion. More exactly that coefficient equals
+\[
+ \frac{\prod_v d_H(v)!}{2^{|E(H)|}}
+ \#\{\text{orientations of $\doub H$ with indegree $d_H(v)$ at each $v$}\}.
+\]
+Indeed allocating the two occurrences of each variable to its two
+endpoint factors gives the multinomial expansion; distinguishing
+the two copies contributes $2!$ per edge. This also witnesses
+positivity by orienting one copy each way. With blue offsets too, combine red forbidden
+values with the reflected blue values; the union must still have size
+at most $d_H(v)$. Final neighbour degrees that themselves depend on
+these edge weights are not fixed forbidden values, so this does not
+prove the conjecture.
+
+\subsection{Limitations of the parity certificate}\label{sec:mod2limits}
+
+If all original degrees have the same parity, $L=A$ modulo two.
+A symmetric zero-diagonal matrix has every odd-order principal
+determinant zero, by pairing a permutation cycle with its reversal.
+Thus when $m$ is odd every coefficient of $C_G$ is even. This does
+not imply zero over the integers: the triangle has $c_G=-6$.
+
+More generally for a connected $n$-vertex graph the line adjacency
+matrix has rank $n-1$ at odd $n$ and $n-2$ at even $n$. Indeed the
+incidence image is the even-coordinate-sum subspace of dimension
+$n-1$; the kernel of $B^T$ consists of constants, intersecting that
+subspace in dimension zero or one respectively. If $m$ exceeds
+twice this rank and degrees have common parity, either $S$ or its
+complement is larger than the rank in every coefficient formula.
+All coefficients vanish modulo two. In particular this happens for
+every connected $d$-regular simple graph with $d\ge4$. Such graphs
+are known to be colourable~\cite{GOW26}; the obstruction is to this
+parity certificate.
+
+Even integer nonvanishing is a substantial demand. On a regular
+graph $\Delta=0$, write $Q=\prod_eD_e$. If $C_G$ is nonzero then
+$Q$ has a nonzero monomial $x^\alpha$ with all $\alpha_e\le2$,
+since otherwise no product with $Q$ can supply the all-two monomial.
+For arbitrary real vertex offsets the same coefficient survives in
+$\prod_{uv}(a(u)-a(v)+D_{uv})$. Interpolating on an arbitrary
+three-element list separately assigned to every edge gives a proper
+neighbour-sum weighting with those offsets. Thus this nonvanishing
+would imply the corresponding $(1,3)$ list-weighting property.
+Ordinary shared-list 1--2--3 weightability does not establish it.
+We leave the general nonzero-polynomial question open.

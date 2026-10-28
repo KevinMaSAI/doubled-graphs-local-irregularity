@@ -1,0 +1,235 @@
+\section{Clique interfaces, block trees and capacity}\label{sec:cliques}
+
+Fix a root $z$ of $K_n$, external contributions $A,B\ge0$ with
+$A+B$ even, and a desired internal root red sum $S$. Only internal
+edges are to be checked, using final root counts
+$(A+S,B+2(n-1)-S)$.
+
+\begin{theorem}[Complete clique root interface]\label{thm:cliqueport}
+For every $n\ge4$ and $0\le S\le2(n-1)$ there is a legal internal
+colouring with the prescribed root sum. For $n\ge5$ every nonroot
+vertex may additionally have both colour degrees in $[1,2n-3]$.
+For $n=4$ the same strengthening holds except at
+$(A,B,S)=(1,3,4),(3,1,2)$; the ordinary interface still holds there.
+\end{theorem}
+\begin{proof}
+For $n=4,5$, put $r=n-1$. External counts exceeding $2r$ are
+comparison-equivalent to $2r+1$ for odd counts and $2r+2$ for even
+counts, since every nonroot count is at most $2r$. Consequently the
+entire base domain is
+\[
+ A,B\in\{0,\ldots,2r+2\},\quad A+B\equiv0\pmod2,
+ \quad S\in\{0,\ldots,2r\}.
+\]
+It contains $287+549=836$ entries. Actual edge-weight witnesses are
+in \code{rooted_clique_interfaces.json}. The independent standard-library
+checker \code{rooted_clique_certificate.py} verifies equality with this
+whole domain, root sums, every actual colour comparison, and every
+nonroot bound outside the two exceptions. Thus the bases include
+arbitrarily large physical external counts by exact clipping, not by
+an unproved extrapolation.
+
+For $n\ge6$ use strong induction by two vertices. If
+$2\le S\le2n-4$, take a rooted $K_{n-2}$ with the same external
+counts and internal sum $S-2$. Add $u,v$, set $wu=0,wv=2$ for
+every old $w$, and $uv=1$. All old colour degrees increase by two;
+the new counts are
+\[
+ u:(1,2n-3),\qquad v:(2n-3,1).
+\]
+Old nonroot counts are within $[2,2n-4]$, so all their new edges
+are legal. Write the final root counts as $p,q$. If neither equals
+$2n-3$, its two new pure edges are also legal. Otherwise both
+$p,q$ are odd because $p+q$ is even. Choose an old nonroot $w_0$
+and change its two new weights from $(0,2)$ to $(1,1)$. All old
+counts stay fixed, while the new counts become
+\[
+ u:(2,2n-4),\qquad v:(2n-4,2).
+\]
+Inductively strengthened old nonroot counts, after adding two, lie
+in $[3,2n-5]$ and are strictly separated from these boundary values.
+The root counts are odd, so its comparisons with the new even values
+hold. When $n=6$ and the old $K_4$ is one of the two exceptional
+bases, the final root counts are instead $p=q=7$, different from
+$2n-3=9$; the unmodified construction already works. Thus no missing
+strengthened base is needed.
+
+For $S=0,1$, take the old $K_{n-2}$ with the same internal sum but
+formal external counts $A'=A-2,B'=B+2$. If $A\ge2$, these are
+physical. If $A=0,1$, obtain the old witness using the nonnegative
+replacement $\widehat A=A\bmod2$ and then reinterpret its root red
+count with $A'$. This keeps the old internal edges legal: for $S=0$
+the root has no red edge; for $S=1$ its sole red incidence meets a
+vertex of red degree at least one, whereas the reinterpreted root
+red count is nonpositive. Its blue count is unchanged. These formal
+negative offsets are only an intermediate comparison argument.
+
+Add $u,v$ with $wu=0,wv=2$ for old nonroots, $zu=zv=0$, and
+$uv=2$. Relative to the reinterpreted old counts every old vertex
+gains two in each colour, so the root now has exactly the originally
+specified physical counts and internal sum $S$. The new counts are
+$(2,2n-4),(2n-4,2)$. The old nonroot counts lie in $[3,2n-5]$;
+the root blue count is at least $2n-3$. All new comparisons follow.
+The old base parameter $S=0$ or 1 is never an exceptional $K_4$
+parameter. Finally obtain $S=2n-3,2n-2$ by exchanging the colours
+and $A,B$. These cases cover every $S$ and preserve the asserted
+nonroot bounds.
+\end{proof}
+
+\subsection{Bouquets and arbitrary cores}\label{sec:cliquecapacity}
+
+\begin{theorem}[A8]\label{thm:bouquet}
+At a vertex of old degree $h$ in a given legal colouring, attach
+cliques of orders $n_i\ge4$ sharing only that vertex, with total
+new degree $L=\sum_i(n_i-1)\ge h$. Every old edge colour can be
+preserved. Alternatively, for an arbitrary uncoloured simple core
+$C$, attach such a bouquet at every vertex $v$ with
+$L_v\ge d_C(v)$. The entire expanded graph can then be coloured.
+\end{theorem}
+\begin{proof}
+For the first assertion, let the old counts at the root be $a,b$.
+An added red contribution $s\in[0,2L]$ gives final counts
+$(a+s,b+2L-s)$. Each old pure edge forbids at most one value of
+$s$ and each mixed edge at most two. There are at most $2h$
+forbidden values and $2L+1>2h$ candidates. Choose an allowed $s$
+and split it into $s_i\in[0,2(n_i-1)]$. Clique $i$ receives external
+counts
+\[
+ A_i=a+s-s_i,\quad
+ B_i=b+2L-s-\bigl(2(n_i-1)-s_i\bigr).
+\]
+These are nonnegative with even sum. Theorem~\ref{thm:cliqueport}
+colours it with internal sum $s_i$. Every clique uses the same
+final root counts and all old neighbours keep their counts.
+
+For the second assertion give every core edge weight 1. Put
+$h_v=d_C(v)$ and $D_v=h_v+L_v$. In any vertex order choose
+$R(v)\in[h_v,h_v+2L_v]$. A previously processed neighbour forbids
+at most $R(w)$ and $2D_v-B(w)$, so at most $2h_v$ values are
+forbidden. There are at least $2h_v+1$ candidates. Choose all red
+targets greedily and set $B(v)=2D_v-R(v)$. Every mixed core edge
+now distinguishes both colours. Split the remaining red contribution
+among the cliques and realise it by the root interface theorem.
+\end{proof}
+
+The first capacity bound cannot uniformly be reduced to $L=h-1$
+for $h\ge4$. Pair the integers $0,\ldots,2h-2$ within their even
+and odd subsequences using adjacent values, covering a final odd
+triple by two overlapping pairs. This gives exactly $h$ pairs
+$(a_i,b_i)$ with $a_i=b_i+2$, distinct $a_i$, distinct $b_i$, and
+union $\{0,\ldots,2h-2\}$. On a central $K_{h+1}$ with vertices
+$v,u_1,\ldots,u_h$ put every weight 1. Attach a rooted $K_{h+1}$
+at each $u_i$, with internal red sum $a_i$ using the theorem.
+The old counts are
+\[
+ v:(h,h),\qquad u_i:(h+a_i,\ 3h-2-b_i).
+\]
+All central mixed edges are legal: both lists at the $u_i$ are
+distinct and at least $h+2$. Add $K_h$ at $v$. Its contribution
+$s\in[0,2h-2]$ is forbidden by $vu_i$ precisely at $s=a_i$ or
+$s=b_i$. The pairs cover every candidate. Nonetheless the entire
+graph is colourable by the block-tree theorem below, rooted at $v$:
+each nonroot cutvertex has equal parent and child capacities. Thus
+this is a sharp preserved-colour obstruction, not a graph obstruction.
+
+\subsection{Clique block trees with full root freedom}
+
+\begin{theorem}[A7]\label{thm:cliquetree}
+Let every block of a connected graph be a clique of order at least
+four. Root its block-vertex incidence tree at any vertex $z$.
+At every nonroot cutvertex require the sum of its child-block degrees
+$\sum(n_i-1)$ to be at least its parent-block degree $n_0-1$.
+For all physical external counts $A,B$ at $z$ and all
+$S\in[0,2d_G(z)]$, the graph has a legal internal colouring with
+root internal red sum $S$. In particular all equal-order clique
+block trees satisfy this conclusion.
+\end{theorem}
+\begin{proof}
+First colour the bouquet of root blocks, distributing the specified
+sum $S$ between them and using the root interface with the contributions
+of the other root blocks included as external counts. Process the
+other cutvertices outwards. Before its children are added a cutvertex
+belongs to its one parent block and has current degree $h=n_0-1$.
+The child bouquet has capacity at least $h$, so
+Theorem~\ref{thm:bouquet} extends the current colouring without changing
+any old edge weight. Actual external root counts remain included in
+all old comparisons. Adding blocks away from $z$ does not change
+its internal red sum. The finite incidence tree is eventually exhausted.
+\end{proof}
+
+In a vertex-minimal counterexample, any bouquet of leaf clique blocks
+of order at least four at a vertex must have capacity $L<h$, where
+$h$ is its degree in the remainder. Otherwise delete the leaf blocks,
+colour the smaller remainder, and apply Theorem~\ref{thm:bouquet}.
+If the remainder is $K_1$, use the root interface directly. If it
+is $K_2$, give its edge weight 1 and the bouquet total red contribution
+1; the endpoints have counts $(2,2L)$ and $(1,1)$, so the old edge
+is legal and all cliques can be filled. Hence no hidden $K_2$
+assumption is used in this minimality argument.
+
+\section{Gluing coloured pieces along a tree}\label{sec:pieceglue}
+
+Let connected pieces $P_i$ partition the edges of $G$. Let $U$ be
+the vertices belonging to more than one piece; all other vertices
+are called private. Suppose the bipartite incidence graph of pieces
+and shared vertices is a tree. In the given local weighting of $P_i$,
+write $d_i,r_i,b_i$ for the local degrees and set
+\[
+ a_i(v)=r_i(v)-d_i(v),\quad
+ M_v=\max_{i:v\in P_i}|a_i(v)|,\quad
+ I_v=[d_G(v)-M_v,d_G(v)+M_v]\quad(v\in U).
+\]
+
+\begin{theorem}[A9]\label{thm:pieceglue}
+One may obtain a legal colouring solely by whole-piece colour flips
+provided that: private--private edges are locally legal; each edge
+from shared $v$ to private $u$ in $P_i$ satisfies
+$d_G(v)-M_v>\max(r_i(u),b_i(u))$; and each shared--shared edge $uv$
+satisfies $|d_G(u)-d_G(v)|>M_u+M_v$.
+\end{theorem}
+\begin{proof}
+Root the incidence tree at a piece. On reaching a shared vertex its
+parent piece's flip is already fixed. Starting with its contribution
+$s=\pm a_i(v)$, choose the flip of each child piece to minimise the
+new absolute sum. The identity
+\[
+ \min\{|s+a|,|s-a|\}\le\max\{|s|,|a|\}
+\]
+keeps $|s|\le M_v$. Each child piece has only one parent shared
+vertex, so no choice is made twice. At the end the global red and
+blue degrees at $v$ are $d_G(v)\pm s$, both in $I_v$.
+Private counts are their local counts up to a swap. The three edge
+types in the hypotheses are respectively preserved by local legality,
+strict separation above private counts, or disjoint shared intervals.
+Every edge is therefore legal.
+\end{proof}
+
+If the given pieces have maximum degree at most $q$, a sufficient
+uniform condition is $d_G(v)\ge3q+1$ for shared vertices and degree
+gap at least $2q+1$ on shared--shared edges. Indeed $M_v\le q$
+and private colour degrees are at most $2q$. Taking known colourings
+of cycle or cubic blocks gives, for example, the conditions shared
+degree at least 10 and adjacent shared-degree gap at least 7. This
+allows unbounded global maximum degree and pieces that are not cliques.
+
+\subsection{Why whole-piece flips do not suffice in general}\label{sec:piecebarrier}
+
+For each $r\ge2$, identify the distinguished left vertex $z$ of
+two copies of $K_{r,r}$. In each copy put weight 2 in column 1,
+weight zero in column 2, weight 1 in all remaining entries of row
+$z$, and zero elsewhere. The local red sums are $r$ at $z$, 2 at
+other rows, $2r$ at column 1, zero at column 2, and 1 at other
+columns. As the local original degrees are equal, these values
+verify local legality on every edge.
+
+The local root counts are $(r,r)$ even after a whole-piece flip.
+After identification the root counts are $(2r,2r)$, and in each
+flipped or unflipped copy it still has a same-colour neighbour of
+that colour degree $2r$. Thus all four choices of whole-piece flips
+fail, although the incidence graph is a tree. For $r\ge3$, changing
+one entry of row $z$ in a remaining column from 1 to zero in one
+copy repairs the whole graph: the root becomes $(2r-1,2r+1)$,
+the changed column's red sum becomes zero, and all other local
+counts persist. At $r=2$ replace one copy's matrix by rows
+$(0,0),(2,2)$. These direct repairs show why the obstruction concerns
+given-piece gluing and not the conjecture.

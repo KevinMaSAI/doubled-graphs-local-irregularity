@@ -1,0 +1,678 @@
+\section{Signed gaps and paired partitions (E1)}\label{sec:signedgap}
+
+The constructions in this section use actual integer colour degrees.
+In particular, a nonzero difference of four is useful, although it is
+invisible modulo four. No assumption about an unknown initial colouring
+is made. The results of Sections~\ref{sec:signedgap}--\ref{sec:rootports}
+are independent of the subcubic proof.
+
+\begin{lemma}[A signed gap with at most two occurrences]\label{lem:signedgap}
+Let $L_i(y)=\sum_{e\in E_i}a_{ie}y_e$, where $a_{ie}\in\{-1,1\}$,
+every $E_i$ contains at least four distinct variables, and every variable
+belongs to at most two different sets $E_i$. There is a choice
+$y_e\in\{-1,1\}$ for which $|L_i(y)|\ge2$ for every $i$.
+Such a choice can be found in polynomial time.
+\end{lemma}
+\begin{proof}
+Make an auxiliary vertex for each form. A variable occurring twice is an
+edge between its two forms, with label $\tau_e=a_{ie}a_{je}$; parallel
+edges are allowed, but there are no loops. A variable occurring once is
+a boundary variable at its form.
+
+Choose signs $\sigma_i\in\{-1,1\}$ and call an auxiliary edge good when
+$\tau_e=\sigma_i\sigma_j$. Start with any signs and flip a vertex whenever
+it has more bad than good internal edges. Each flip strictly increases
+the total number of good edges, so there are at most as many flips as
+internal edges. At termination, the number of good internal edges at
+each vertex is at least its number $b_i$ of bad edges. Count boundary
+variables as good and write $g_i$ for this enlarged good count. Then
+\[
+ m_i=g_i-b_i=|E_i|-2b_i\ge0.
+\]
+For a boundary variable put $y_e=\sigma_i a_{ie}$; for a good edge put
+$y_e=\sigma_i a_{ie}=\sigma_j a_{je}$. A bad edge contributes opposite
+values at its ends after multiplying the two rows by $\sigma_i$ and
+$\sigma_j$. We may therefore select which end receives $+1$. If $o_i$
+bad edges select $i$ as their positive end, then
+\begin{equation}\label{eq:signedmargin}
+ \sigma_i L_i=g_i-b_i+2o_i=m_i+2o_i.
+\end{equation}
+Call a vertex critical if $m_i\in\{0,1\}$. Since $|E_i|\ge4$, every
+critical vertex has bad-edge degree at least two. In a component of the
+bad-edge graph with a noncritical vertex, root a spanning tree at such
+a vertex and select each nonroot vertex as the positive end of its
+parent edge. If all vertices of a component are critical, its minimum
+degree is at least two, so it contains a cycle, possibly a pair of
+parallel edges. Select positive ends cyclically around that cycle and
+use attached rooted trees to give every remaining vertex a positive
+parent edge. Set the positive ends of unused edges arbitrarily.
+Every critical vertex now has $o_i\ge1$, and every noncritical vertex
+has $m_i\ge2$. Equation~\eqref{eq:signedmargin} proves the claim.
+The local flips and all tree and cycle operations have polynomial bounds.
+\end{proof}
+
+Odd-length rows are permitted; their sums have odd parity, so their
+absolute values are actually at least three. This distinction will
+remove a boundary obstruction on an even-order path.
+
+\begin{theorem}[Paired vertex partition]\label{thm:integerpairs}
+Let $V(G)=S\sqcup T$ be a supplied partition. Suppose that both induced
+graphs have maximum degree at most one, that $G[T]$ has no isolated
+vertex, and that every edge $uv$ internal to either side satisfies
+\[
+ \min(d(u),d(v))\ge3,\qquad |d(u)-d(v)|\le1.
+\]
+Then $\lir(\doub G)\le2$. The mixed original edges can be exactly
+$E(G[T])$. No degree bound is imposed on an internally isolated vertex
+of $S$, and there is no upper bound on the maximum degree of $G$.
+\end{theorem}
+\begin{proof}
+Give edges of $G[S]$ weight zero, edges of $G[T]$ weight one, and each
+crossing edge $e$ weight $1+y_e$, where $y_e\in\{-1,1\}$. For each
+internal pair $uv$ form
+\[
+ L_{uv}=\sum_{\substack{e\text{ crossing}\\e\ni u}}y_e
+       -\sum_{\substack{e\text{ crossing}\\e\ni v}}y_e.
+\]
+The variables in a row are distinct and number $d(u)+d(v)-2\ge4$.
+Each crossing edge occurs in at most one row at each end, hence at most
+twice altogether. Apply Lemma~\ref{lem:signedgap}. The equal internal
+contributions at $u,v$ give
+\begin{equation}\label{eq:integerpairdifference}
+ R(u)-R(v)=d(u)-d(v)+L_{uv},\qquad
+ B(u)-B(v)=d(u)-d(v)-L_{uv}.
+\end{equation}
+Both differences are nonzero. On crossing edges, vertices of $S$ have
+even red and blue degrees, whereas vertices of $T$ have odd red and
+blue degrees. Thus all crossing edges are legal as well.
+\end{proof}
+
+The assumption on degree differences concerns the endpoints of the
+internal pairs, not the degree range of the whole graph. The artifact
+includes a connected nonbipartite example with a leaf and degrees
+ranging from one to six.
+
+\subsection{An integer repair with a fixed mixed set}
+
+To see why retaining integer values matters, take the cube on
+$0,\ldots,7$, with adjacency given by exclusive-or differences $1,2,4$,
+and add $03$. Put $S=\{0,1,6,7\}$, $T=\{2,3,4,5\}$ and
+$M=\{23,45\}$. The following weights and degrees are a complete witness.
+\begin{center}\small
+\begin{tabular}{c|rrrrrrrrrrrrr}
+$e$&01&02&04&13&15&23&26&37&45&46&57&67&03\\\hline
+$x_e$&0&2&2&0&0&1&2&0&1&2&0&0&0
+\end{tabular}\par\medskip
+\begin{tabular}{c|rrrrrrrr}
+$v$&0&1&2&3&4&5&6&7\\\hline
+$R(v)$&4&0&5&1&5&1&4&0\\
+$B(v)$&4&6&1&7&1&5&2&6
+\end{tabular}
+\end{center}
+With this same $M$, the stronger demand that both differences on every
+mixed edge be nonzero modulo four is impossible: on $23$ the red degrees
+are odd, while the ordinary degrees differ by one. A nonzero red
+difference modulo four would have to be two, making the blue difference
+zero modulo four. In the displayed legal colouring the actual red
+difference is four and the blue difference is minus six.
+
+There is also an infinite global obstruction to that stronger demand.
+For $t\ge1$, take $H_t=C_{4t}$ with its antipodal matching. Subdivide
+every edge once, let $S$ be the $4t$ old vertices and $T$ the $6t$ edge
+vertices, and add a perfect matching inside each side. The resulting
+graph $F_t$ has $10t$ vertices and $17t$ edges; its $S$ degrees are four
+and its $T$ degrees are three. It is connected and nonbipartite: an
+internal $S$ matching edge closes an even path in the subdivision into
+an odd cycle. Theorem~\ref{thm:integerpairs} colours every $F_t$ with
+exactly the $T$ matching mixed.
+
+For the same mixed set, the stronger modulo-four condition is feasible
+if and only if $t$ is even. Indeed, write
+$R(v)\equiv p_v+2q_v\pmod4$, with $p=0$ on $S$ and $p=1$ on $T$.
+Every internal pair must have opposite $q$ values. The $5t$ pairs force
+$\sum_vq_v\equiv5t\pmod2$. On the other hand, writing every nonmixed
+weight as $2z_e$ gives $q_v\equiv\sum_{e\ni v,\,e\notin M}z_e\pmod2$,
+so the same sum is even. Conversely, when $t$ is even, assign opposite
+$q$ values on each pair. Their even total can be realised as vertex
+parities by a spanning-tree leaf elimination in the connected graph
+$F_t-M$. The resulting weights satisfy the stronger condition.
+Thus every odd $t$ supplies an integer repair on the same graph and
+with the same mixed set, rather than a repair obtained by changing
+the instance or the interface.
+
+\section{Path and cycle sides in degree three and four (E2)}\label{sec:pathcyclepart}
+
+Here and in Section~\ref{sec:isolatepart}, every ordinary degree is three
+or four. An internal degree always means degree in an induced side of
+the specified partition.
+
+\begin{lemma}[A useful maximum-cut shape]\label{lem:biasedcut}
+Every connected graph with $3\le d(v)\le4$ has a partition $S\sqcup T$
+whose crossing graph is connected, such that $G[S]$ has maximum degree
+two, every internally degree-two vertex has ordinary degree four,
+and $G[T]$ is a matching together with isolated vertices.
+\end{lemma}
+\begin{proof}
+Among maximum cuts choose one maximising the number of ordinary
+degree-four vertices in $S$. A vertex cannot have more than half of
+its neighbours on its own side. Thus ordinary degree-three vertices
+have internal degree at most one and degree-four vertices at most two.
+If a degree-four vertex in $T$ had internal degree two, flipping it
+would preserve the cut size and improve the secondary objective.
+Consequently $G[T]$ has maximum degree one.
+If the crossing graph were disconnected, some original same-side edge
+would join two of its components, since $G$ is connected. Flipping all
+vertices of one such component loses no crossing edge and gains all its
+boundary edges, contrary to maximum cut size.
+\end{proof}
+
+This existence argument does not supply a polynomial-time maximum-cut
+algorithm. The colouring theorems below assume their partitions are
+given. They do not prove that the isolated vertices permitted by
+Lemma~\ref{lem:biasedcut} can always be handled.
+
+\begin{theorem}[Path/cycle side against a matching]\label{thm:pathcyclepart}
+Suppose $d(v)\in\{3,4\}$ and a supplied partition $S\sqcup T$ satisfies:
+$G[T]$ is a matching covering $T$, $\Delta(G[S])\le2$, and every
+internally degree-two vertex of $S$ has ordinary degree four.
+Then $\lir(\doub G)\le2$, with mixed set exactly $E(G[T])$.
+The colouring can be constructed in polynomial time.
+\end{theorem}
+
+We prove the local completion facts first. Give every crossing edge
+weight $1+y_e$ with $y_e\in\{-1,1\}$, every $T$ matching edge weight one,
+and each $S$ internal edge weight $2z_e$ with $z_e\in\{0,1\}$.
+The crossing comparisons are automatically separated by parity.
+For every $T$ pair impose the row condition $|L_{uv}|\ge2$ from
+\eqref{eq:integerpairdifference}. It suffices to add a matching of
+selected $S$ edges to these rows, then complete the internal pure edges.
+
+\subsection{Binary relations}
+
+A relation on two bits has full projections if either variable, when
+fixed, has some compatible value for the other. Equality, inequality,
+the exclusion of one ordered pair, and the unrestricted relation all
+have this property. On a variable path, full projections permit an
+extension from any one prescribed bit. On a variable cycle consisting
+only of equality and inequality relations, consistency is equivalent
+to an even number of inequalities. A variable cycle of full-projection
+relations is also consistent if at least one relation allows three or
+four pairs. To prove the last claim, compose the relations around the
+cycle. Full projections are preserved under composition; composing a
+relation with at least three pairs with any full-projection relation
+still gives at least three pairs. The resulting relation on the first
+variable contains a diagonal pair. These statements include a two-edge
+cycle of parallel relations.
+
+\subsection{Completing a cycle}
+
+Let an $S$ cycle be $v_0\ldots v_{n-1}v_0$ and put $e_i=v_iv_{i+1}$,
+with indices modulo $n$. Each vertex has two crossing edges. Let $s_i$
+be its number of wholly red crossing edges. Then
+\[
+ R(v_i)/2=s_i+z_{i-1}+z_i,
+ \qquad B(v_i)/2=4-s_i-z_{i-1}-z_i.
+\]
+Whatever the colour of $e_i$, its legality is exactly
+\begin{equation}\label{eq:cyclebits}
+ s_i-s_{i+1}+z_{i-1}-z_{i+1}\ne0.
+\end{equation}
+When the first difference is zero this is inequality of the two bits;
+when it is $1$ or $-1$ it excludes one ordered pair; when its absolute
+value is at least two it imposes no restriction. The variable graph
+uses step two around the cycle. For odd $n$ it is one odd cycle; for
+even $n$ it consists of two cycles of length $n/2$, including two-edge
+cycles when $n=4$. The binary relation facts give the exact alternatives:
+\begin{itemize}
+\item If $n$ is odd, completion fails exactly when all $s_i$ are equal.
+\item If $n\equiv0\pmod4$, completion is always possible.
+\item If $n\equiv2\pmod4$, each of the two variable cycles must contain
+at least one constraint with $s_i\ne s_{i+1}$.
+\end{itemize}
+It is therefore enough to select $e_0$ on an odd cycle, $e_0,e_3$ on a
+cycle of length two modulo four, and no edge otherwise. In the second
+case $n\ge6$, the two selected edges are disjoint and control different
+variable cycles. For a selected edge, the crossing row is
+$L_i=2(s_i-s_{i+1})$, with four distinct variables. The gap condition
+ensures the required unequal values.
+
+\subsection{Completing a path}
+
+Let an $S$ path have vertices $v_0,\ldots,v_{n-1}$ and $m=n-1$ edges,
+and write $z_{-1}=z_m=0$. Then
+\[
+ R(v_i)/2=s_i+z_{i-1}+z_i,\qquad
+ B(v_i)/2=d(v_i)-s_i-z_{i-1}-z_i.
+\]
+An isolated vertex needs no completion. For a two-vertex path, if the
+ordinary endpoint degrees differ, at least one of the two pure colours
+is legal: the two failures would require simultaneously
+$s_0-s_1=0$ and $s_0-s_1=d(v_0)-d(v_1)$. If the degrees are equal,
+select its only edge and require $s_0\ne s_1$.
+
+For $n\ge3$, every nonendpoint has ordinary degree four. Edges between
+such vertices again give~\eqref{eq:cyclebits}, producing two variable
+paths, one on each parity of edge index. At a left endpoint of ordinary
+degree four, put $\delta=s_0-s_1$. Its condition is
+$\delta-z_1\ne0$: it fixes $z_1=1$ for $\delta=0$, fixes $z_1=0$ for
+$\delta=1$, and otherwise imposes no condition. At a degree-three left
+endpoint, its own bit $z_0$ must also be considered:
+\begin{equation}\label{eq:threeendbits}
+ z_0=1\Longrightarrow\delta-z_1\ne0,
+ \qquad z_0=0\Longrightarrow\delta-z_1\ne-1.
+\end{equation}
+For $\delta=0$ this is equality of $z_0,z_1$; for $\delta=-1$ it
+excludes $(0,0)$; for $\delta=1$ it excludes $(1,1)$; otherwise it is
+unrestricted. In each case it is a full-projection relation joining the
+two variable paths. The right endpoint has the same description after
+reversing the indices. Thus:
+\begin{center}\small
+\begin{tabular}{ccl}
+\toprule Endpoint degrees&$n$&Sufficient treatment\\\midrule
+$3,4$&either parity&One variable path, at most one prescribed bit.\\
+$4,4$&odd&Prescribed bits lie on different variable paths.\\
+$4,4$&even&Require left $\delta\notin\{0,1\}$.\\
+$3,3$&odd&A relation cycle with an even number $m-2$ of inequalities.\\
+$3,3$&even&Require left $\delta\ne0$ to make a relation nonbijective.\\
+\bottomrule
+\end{tabular}
+\end{center}
+In the odd-order $3,3$ case, either a relation is nonbijective, or both
+endpoint relations are equality and all $m-2$ others are inequality.
+This includes the parallel endpoint relations when $n=3$.
+
+Select the first internal edge only when $n$ is even and the endpoint
+degrees are equal. For endpoints of degree three and $n\ge4$, the row
+has four variables and is $L=2\delta$. For endpoints of degree four,
+it has five variables and is $L=2\delta-1$, since the first vertex has
+three crossing edges and the second has two. The bound $|L|\ge2$ in
+the latter case actually gives $|L|\ge3$ and excludes $\delta=0,1$.
+The two-vertex case was handled separately. Each path selects at most
+one internal edge.
+
+\begin{proof}[Completion of Theorem~\ref{thm:pathcyclepart}]
+All selected $S$ edges form a matching. Combine their crossing rows
+with the rows for the $T$ pairs. Each row has at least four distinct
+variables. Each crossing variable appears at most once on each side,
+because the selected edges and the $T$ pairs are matchings.
+Lemma~\ref{lem:signedgap} supplies all crossing signs simultaneously.
+The preceding completion arguments then colour each $S$ component.
+The $T$ comparisons follow from~\eqref{eq:integerpairdifference}, and
+all crossing edges are separated by parity. Local binary completion is
+equivalently a two-literal clause system, solvable by strongly connected
+components, so the whole construction is polynomial.
+\end{proof}
+
+\subsection{Why internal recolouring is a real extension}
+
+Take $2t$ disjoint triangles as $S$ and a perfect matching $Q$ between
+their vertices, with no pair inside a triangle, connecting the triangles
+as units. Such a matching exists for every $t\ge1$: allocate the three
+ports of each triangle according to a connected cubic loopless
+multigraph on $2t$ units. For each pair $uv\in Q$ introduce $a,b\in T$
+and edges $ua,ub,va,vb,ab$. This gives a connected nonbipartite graph
+with $12t$ vertices and $21t$ edges, of degrees four on $S$ and three
+on $T$. Theorem~\ref{thm:pathcyclepart} applies with all $ab$ mixed.
+
+If all $S$ edges were blue while this mixed set stayed fixed, each
+$K_{2,2}$ crossing block would require a vertex of $S$ with exactly one
+red crossing edge. Otherwise both $S$ vertices send equal contributions
+to the two ends of the mixed edge $ab$. The $3t$ blocks use disjoint
+$S$ pairs and require at least $3t$ such vertices. In a wholly blue
+triangle there can be at most one: two would both have blue degree six
+on their common blue edge. There are only $2t$ triangles, a contradiction.
+The new theorem restores legality by changing internal pure colours,
+while preserving the mixed set and the original graph.
+
+The partition requirement itself is not universal. In $K_{3,3}$ plus
+one chord on one side, an induced matching covering $T$ can contain at
+most two vertices. Choosing the chord leaves an $S$ vertex of internal
+degree three; choosing a crossing edge leaves two ordinary degree-three
+vertices of internal degree two. Taking $T=\varnothing$ also fails.
+This six-vertex graph has a stored legal colouring; it is an applicability
+obstruction, not a counterexample to the conjecture.
+
+\section{Isolated vertices of the matching side (E3)}\label{sec:isolatepart}
+
+Keep $d(v)\in\{3,4\}$ and the same conditions on $G[S]$, but now allow
+$G[T]$ to consist of a matching and an internally isolated set $I$.
+Let $C$ be the crossing graph. Let $F$ be the selected $S$ matching from
+the path and cycle proof, and let $P$ be its set of endpoints.
+
+\begin{theorem}[A protected parity join]\label{thm:protectedjoin}
+Put $A=C[(S\setminus P)\cup I]$. If every component of $A$ contains
+an even number of vertices of $I$, then $\lir(\doub G)\le2$.
+The original $T$ matching remains mixed, and the only additional mixed
+edges belong to $A$. The component condition is necessary and sufficient
+for an additional edge set in $A$ with odd degrees on $I$ and even
+degrees on $S\setminus P$.
+\end{theorem}
+\begin{proof}
+The last assertion is the elementary parity-subgraph criterion. Necessity
+follows by summing degrees in each component. For sufficiency, root a
+spanning tree in each component and determine parent edges from leaves
+upwards; the root equation follows from the even number of odd targets.
+Let $N$ be the resulting edge set and make exactly $N$ and the original
+$T$ matching mixed. Every $T$ colour degree is odd and every $S$ colour
+degree is even, so crossing edges are automatically legal.
+
+No $N$ edge touches a $T$ pair or a protected $S$ endpoint. Consequently
+the rows for $T$ pairs and selected $S$ edges keep all their original
+pure crossing variables, with no new constants. They still have at
+least four terms and at most two occurrences per variable. Apply
+Lemma~\ref{lem:signedgap} and then the preceding component completion.
+At an unprotected vertex the even number of mixed crossing edges still
+makes its crossing red contribution even; the local completion only
+needs the protected row conditions. This proves all required comparisons.
+\end{proof}
+
+A component of $A$ with an odd number of $I$ vertices is a certificate
+against this protected-join restriction. It does not certify that the
+graph has no locally irregular two-colouring.
+
+For example, choose odd $t\ge1$ and $r\ge0$. On $2t$ auxiliary vertices
+take a connected bridgeless cubic loopless multigraph: three parallel
+edges for $t=1$, or $C_{2t}$ with an antipodal matching for $t\ge3$.
+Subdivide one edge by $2r$ new vertices. Use these auxiliary vertices as
+$T$, replace each auxiliary edge by a new $S$ vertex joined to its ends,
+and join the $3t+2r$ vertices of $S$ into one path. Pair the $2r$ new
+$T$ vertices consecutively by added internal edges. This is a simple
+graph with $5t+4r$ vertices and $9t+7r-1$ edges. Its $S$ path has odd
+order, so $F=\varnothing$; the auxiliary graph with the designated edge
+removed remains connected. Thus the main component of $A$ contains all
+$2t$ isolated $T$ vertices and the theorem applies. For $r>0$, internally
+paired and isolated $T$ vertices coexist with unbounded counts.
+
+\subsection{An exact condition with an independent side}
+
+Suppose now that $T$ is independent. Fix a crossing mixed set $N$ with
+\begin{equation}\label{eq:fixedjoinparity}
+ d_N(v)\equiv0\pmod2\ (v\in S),\qquad
+ d_N(v)\equiv1\pmod2\ (v\in T),
+\end{equation}
+and require all other original edges to be pure. Call an $S$ component
+critical if it is a cycle of length not divisible by four, or an
+even-order path with both ordinary endpoint degrees three. All its
+vertices have crossing degree two. Call it saturated when every one
+of its vertices has $N$ degree two.
+
+\begin{theorem}[Exact independent-side completion]\label{thm:exactindependent}
+For the fixed $N$ satisfying~\eqref{eq:fixedjoinparity}, a pure completion
+of all remaining edges exists if and only if no critical component is
+saturated.
+\end{theorem}
+\begin{proof}
+Let $c_v$ be crossing degree and $m_v=d_N(v)$. The crossing red
+contribution divided by two can be selected independently at each $S$
+vertex as any integer in
+\begin{equation}\label{eq:crossinterval}
+ s_v\in[m_v/2,c_v-m_v/2]\cap\mathbb Z.
+\end{equation}
+Independence holds because every crossing edge has only one $S$ end,
+and $T$ has no internal comparison. At a nonisolated $S$ vertex the
+possibilities are $(c,m)=(2,0),(2,2),(3,0),(3,2)$, giving respectively
+$s\in\{0,1,2\},\{1\},\{0,1,2,3\},\{1,2\}$.
+
+Saturation of a critical component forces $s_v=1$ throughout. On a
+critical cycle, the step-two constraint graph has an odd cycle of
+inequality relations. On an even-order path with degree-three ends,
+the two endpoint equalities and the odd number of internal inequalities
+are inconsistent. This proves necessity, including a two-vertex path.
+
+For each unsaturated critical component choose one vertex with $m_v=0$,
+set its $s$ to zero and all other $s$ values to one. On an odd cycle this
+creates a nonzero neighbouring difference. On a cycle of length two
+modulo four the two differences around the special vertex occur in
+different variable cycles. On a path with degree-three ends the change
+makes an endpoint or internal relation nonbijective (and directly
+separates the two vertices when the path has order two). The earlier
+relation argument gives a completion.
+
+For a cycle of length zero modulo four, an odd-order path, or a path
+with different endpoint degrees, take all $s_v=1$. An isolated vertex
+can take any allowed value. The only remaining case is an even-order
+path with both endpoint degrees four. Its endpoints can each take
+values one and two. For order two choose these different values. For
+order $n\ge4$, set the left endpoint and all internal values to one.
+Set the right endpoint to one if $(n-4)/2$ is even, and to two otherwise.
+The two unary constraints on one variable path are separated by exactly
+$(n-4)/2$ inequalities, so this choice is consistent; the other variable
+path has no conflicting unary constraints. Realise the chosen crossing
+degrees using~\eqref{eq:crossinterval}, then complete the internal
+components. All crossing edges satisfy parity separation.
+\end{proof}
+
+\subsection{A bridge obstruction and its repair}
+
+The opposite parity configuration, developed more generally in
+Section~\ref{sec:rootports}, gives the following useful special case.
+
+\begin{corollary}[Even components with an independent opposite side]
+\label{cor:evencomponents}
+If $T$ is independent and every $S$ component is an even-order path or
+an even cycle, under the degree-three/four assumptions above,
+$\lir(\doub G)\le2$. There is no parity restriction on $|T|$.
+\end{corollary}
+\begin{proof}
+Make an internal perfect matching of every $S$ component mixed, and
+all other internal edges blue. Bipartition each component, and give its
+two classes respectively zero and two wholly red crossing edges at each
+vertex. There are at least two crossing edges at every vertex. Red
+degrees are one and five; every internal red difference has absolute
+value four, and its blue difference is nonzero because ordinary
+degrees differ by at most one. All crossing edges are pure, joining
+odd colour degrees in $S$ to even colour degrees in $T$.
+\end{proof}
+
+An infinite family shows why parity solvability alone does not guarantee
+the first configuration. For $t\ge1$, subdivide one edge of
+$C_{4t}$ plus its antipodal matching, obtaining a graph $Q_t$ of order
+$4t+1$ with one degree-two vertex. Join three disjoint copies of $Q_t$
+to a new centre through these vertices. The resulting cubic graph $H_t$
+has three bridges. Let $T=V(H_t)$ and introduce an $S$ vertex on each
+edge of $H_t$, giving the subdivision as the crossing graph. Denote the
+three bridge vertices in $S$ by $w_1,w_2,w_3$. Add $w_1w_2$, make six
+nonbridge $S$ vertices into a six-cycle, and pair all remaining $S$
+vertices. There is an even number remaining, and there are enough
+nonbridge vertices for every $t\ge1$.
+
+This simple connected nonbipartite graph has $30t+10$ vertices and
+$45t+18$ edges; exactly six vertices have degree four, and all others
+degree three. Every $S$ component has even order, so
+Corollary~\ref{cor:evencomponents} colours it. But if all $S$ internal
+edges are pure, $S$ has even colour degrees, and $T$ odd colour degrees,
+each half of a subdivided bridge is forced mixed. Indeed, its cut side
+contains $4t+1$ odd targets in $T$, so summing the mixed degrees modulo
+two forces the sole allowed crossing boundary edge into $N$. Thus the
+crossing red contribution is two at both $w_1,w_2$. If their common
+internal edge has weight $x\in\{0,2\}$, then
+\[
+ R(w_1)=R(w_2)=2+x,\qquad B(w_1)=B(w_2)=4-x.
+\]
+Its actual colour is illegal. The obstruction excludes that entire
+parity configuration, not just a particular choice of $N$, while the
+opposite configuration colours the same infinite family.
+
+\section{Odd-component root ports at arbitrary degrees (E4)}\label{sec:rootports}
+
+The following theorem removes the global degree restriction from
+Corollary~\ref{cor:evencomponents} and permits odd paths, odd cycles and
+internally isolated vertices. The needed port certificate is explicit.
+
+\begin{theorem}[Root-port construction]\label{thm:rootports}
+Let a finite simple graph have a supplied partition $S\sqcup T$ with
+$T$ independent and $\Delta(G[S])\le2$. Suppose every nonisolated
+vertex of $G[S]$ has at least two neighbours in $T$, and every $S$
+internal edge $uv$ satisfies $|d(u)-d(v)|\le1$.
+
+Select one root in each odd-order $S$ component and no root in an
+even-order component. In an odd path, number vertices from an end and
+select a root with even index; in a singleton, select its only vertex.
+In an odd cycle, choose a root whose two neighbours are not both of
+degree $d(r)+1$ and not both of degree $d(r)-1$. Let $\mathcal U$ be
+the selected roots. Suppose a crossing edge set $N$ exists with:
+\begin{itemize}
+\item every edge of $N$ joins a root to $T$;
+\item every $T$ vertex has even $N$ degree;
+\item every internally nonisolated root has $N$ degree one or three;
+\item every internally isolated root has positive odd $N$ degree.
+\end{itemize}
+Then $\lir(\doub G)\le2$, constructively. There is no bound on the
+maximum degree of $G$ or on degrees in $T$; internally isolated
+vertices of $S$ may include original leaves.
+\end{theorem}
+\begin{proof}
+An eligible root exists on every odd cycle. Otherwise each vertex
+would be a strict local minimum or maximum of the degree sequence,
+with these two types alternating, which cannot close around an odd
+cycle. Deleting the chosen root from an odd cycle leaves an even-order
+path; deleting an even-index vertex from an odd path leaves two
+even-order paths. Give each remaining path or even cycle an internal
+perfect matching. Make all its matching edges and all edges of $N$
+mixed; make every other $S$ internal edge blue.
+
+Each nonroot $S$ vertex has one internal mixed edge and no mixed crossing
+edge. Every root has an odd number of mixed crossing edges and no
+internal mixed edge. Thus all $S$ colour degrees are odd, all $T$
+colour degrees are even, and all crossing edges are automatically legal.
+
+On each remaining even path or cycle, assign red degrees one and five
+to the two bipartition classes. A nonroot has at least two pure
+crossing edges, so these targets are realised by making zero or two
+of them wholly red. Internal edges between nonroots have red difference
+of absolute value four; their blue differences are nonzero because
+ordinary degree differences are at most one.
+
+Give each nonisolated root red degree three. If it has one port, use
+one other crossing edge wholly red; if it has three ports, use no other
+red crossing edge. The assumed two crossing neighbours ensure capacity
+in the first case. For a root neighbour $u$, the internal edge $ru$ is
+blue, and its blue-degree difference is respectively
+\begin{equation}\label{eq:rootbluedifference}
+ B(r)-B(u)=2(d(r)-d(u))-2\quad\text{if }R(u)=1,
+ \qquad
+ B(r)-B(u)=2(d(r)-d(u))+2\quad\text{if }R(u)=5.
+\end{equation}
+If $d(r)-d(u)=1$, label five is forced; if it is $-1$, label one is
+forced; if it is zero, either works. On an odd path, the components
+on the two sides of the root can be phased independently. On an odd
+cycle, the two endpoints after root deletion must receive opposite
+labels. The only inconsistent requests are that both must be one or
+both must be five, exactly the two cases excluded by root eligibility.
+Hence a compatible phase exists.
+
+An internally isolated root needs no internal comparison: give all
+its remaining crossing edges blue. Its colour degrees retain odd
+parity, with no need for red degree three. Every crossing edge has
+only one $S$ end, so all these choices are independent. The preceding
+arguments cover every original edge and produce the colouring by
+finitely many polynomial-time traversals.
+\end{proof}
+
+\begin{corollary}[An exact root parity test within capacity]\label{cor:rootparity}
+Fix eligible roots $\mathcal U$, and let
+$A=C[\mathcal U\cup T]$ in the crossing graph. A subgraph with odd
+degrees on $\mathcal U$ and even degrees on $T$ exists if and only if
+each component of $A$ contains an even number of roots. If every
+internally nonisolated root has crossing degree at most four, this
+condition guarantees the port set of Theorem~\ref{thm:rootports}.
+\end{corollary}
+\begin{proof}
+Apply degree summation and spanning-tree parity recovery as in
+Theorem~\ref{thm:protectedjoin}. An odd port count at a nonisolated
+root of crossing degree at most four is necessarily one or three.
+Internally isolated roots permit any positive odd count.
+\end{proof}
+
+For roots of larger crossing degree the parity condition is still exact
+for odd/even edge selection, but it alone does not guarantee the
+one-or-three capacity for nonisolated roots. A failed tree recovery with
+five ports must not be called infeasibility. A supplied qualified port
+set remains sufficient at arbitrary degrees.
+
+Pairing roots with common neighbours in $T$ is a special case: give
+each pair its two crossing ports, making all $T$ counts even. It is not
+necessary. For odd $b\ge3$, take a vertex $s_0\in S$ and $b$ groups of
+three $S$ vertices; in each group add a private triple of $T$ vertices,
+join the two triples completely, and join $s_0$ to one chosen private
+$T$ vertex. All $S$ components are singletons. The root adjacency graph
+formed by common $T$ neighbours is $b$ copies of $K_4$ sharing $s_0$.
+It has no perfect matching: deleting $s_0$ leaves $b$ odd components,
+which cannot all be matched through a single vertex. Nevertheless the
+root-port graph is connected and has $1+3b$ roots, an even number, so
+Corollary~\ref{cor:rootparity} applies. Explicitly, in each group select
+the edge from $s_0$, one other edge to that same private $T$ vertex,
+and two edges from the other two roots to a common private $T$ vertex.
+This also shows why internally isolated roots need arbitrary odd port
+capacity. These particular examples are bipartite, whose ordinary
+existence theorem is already known~\cite{GW23}; their purpose is to
+separate two port criteria, not to claim a new bipartite result.
+
+Finally, fixing the roots can still lose a legal colouring. Take
+$S=\{0,1,2,3\}$, $T=\{4,5,6\}$ with ordered edges
+\[
+ 04,15,24,26,35,36,23.
+\]
+The odd components give roots $0,1$; the permitted root-port graph
+has two components each containing one root, so the root-only scheme
+fails. Yet the weights $(1,1,1,2,1,0,0)$ give
+\[
+ R=(1,1,3,1,2,2,2),\qquad B=(1,1,3,5,2,2,2),
+\]
+which are legal edge by edge. Here the even component $2\! -\!3$
+also receives crossing mixed ports. Thus the exact root parity test
+does not solve general even-component transport or produce the required
+partition for every graph.
+
+\section{Evidence and limits of the integer partition results}\label{sec:partitionevidence}
+
+The four new groups are not four independent solutions of the mother
+conjecture. E1 contains a general signed tool and an unbounded-degree
+paired-partition application. E2 enlarges the $S$ side to paths and
+cycles within degrees three and four. E3 addresses some, but not all,
+isolated vertices on the matching side and gives an exact fixed-interface
+criterion when that side is independent. E4 handles odd components
+under an arbitrary-degree root-port certificate; the even-component
+existence corollary is retained as its simpler special case rather than
+counted as an additional maximal theorem. Fixed mixed sets, port counts
+and parity patterns are part of the statements, not interchangeable
+notions of extension.
+
+The implementation checkers test 647 signed systems, 15,757 local
+path/cycle profiles against full binary enumeration, 52 independent-side
+fixed-join domains, and 727 eligible fixed-root atlas domains. They also
+check parameter families, the actual integer repairs and the explicitly
+failed restricted strategies. Separate standard-library auditors,
+without importing the constructors or solvers, rebuild the saved signed
+sums, local truth tables, cuts and actual copy degrees. Across the four
+auditors, the stored whole-graph witnesses account for 972 actual
+copies: 100, 190, 258 and 424 in the respective archived source audits.
+The release report supplies machine-readable per-audit counts
+so that repeated or overlapping examples are not counted as distinct
+new graph families. These are implementation and certificate audits;
+the displayed proofs justify the unbounded parameter ranges.
+
+The finite counterexamples to weakened signed-gap hypotheses are also
+retained. With only three terms, antisymmetric incidence forms of $K_4$
+would require every vertex to be a source or a sink to reach absolute
+value at least two, forcing a bipartition. Allowing three occurrences
+already fails for
+\[
+ L_1=y_0+y_1+y_2+y_3+y_4,\quad
+ L_2=-y_0-y_1+y_2+y_3+y_4,\quad
+ L_3=y_0+y_1-y_2-y_3+y_4.
+\]
+After a global sign change $L_1\ge3$, at most one variable is negative.
+With none negative $L_2=1$; if the sole negative is in positions zero or
+one then $L_3=-1$, otherwise $L_2=-1$. Arbitrary affine shifts fail too:
+for antisymmetric incidence forms of $K_5$, $L_v+1=2d^+(v)-3$.
+The condition $|L_v+1|\ge2$ allows only outdegrees $0,3,4$; at most one
+vertex has outdegree zero, so their sum is at least twelve rather than
+the ten edges of $K_5$. These are obstructions to proposed stronger
+tools, not to locally irregular two-colourability of the doubled graphs.
+
+No claim of exhaustive historical priority is made for these tools.
+The known regular and bipartite cases remain attributed to their
+original sources. General graphs still need a suitable partition,
+compatible mixed-edge choices, and control of the remaining component
+configurations. The unrestricted conjecture is not proved.

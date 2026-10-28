@@ -1,0 +1,108 @@
+\section{Artifacts, verification status and remaining problem}\label{sec:release}
+
+\subsection{Three distinct roles of computation}
+
+The artifact separates complete proof kernels, explicit graph witnesses,
+and bounded implementation tests. The first role is logically part of
+the computer-assisted proofs. A1 uses the complete safe-core relation
+tables, 163 sparse-core representatives, and a 4,256-case weak two-mark
+kernel, with fixed-point and path-saturation arguments for unbounded
+length. The clique interface uses 836 complete small-order offset bases
+and its two-vertex induction. The decorated-path interface uses all
+93 endpoint comparison types, all 96 transition rows, and the displayed
+lower-bound and saturation identities. These domains are finite because
+their equivalence reductions are proved, not because experiments stopped
+at a chosen graph order.
+
+The second role is independently checking submitted weight assignments.
+The release verifier rebuilds red and blue degrees from the actual
+edge-copy counts, including physical offsets when present, verifies all
+required comparisons, checks any recorded final degrees, and confirms
+preservation of supplied boundary weights. Large stored region witnesses
+can therefore be audited without repeating their discovery search.
+The 13-regular descent barrier is supported by a fixed integer table
+whose row sums and neighbour counts are checked directly; its arbitrary
+fibre sizes are justified by the explicit matching construction.
+
+The third role is testing the constructive implementations on graphs,
+offsets and lengths beyond the finite kernels. These checks include
+small graph atlases, random compressed graphs, long paths and return
+paths, prescribed-root cliques, and several complete dense-region
+examples. They audit code, rather than replace any infinite proof.
+Original research-run reports are retained separately from reports of
+the new release run. The provenance ledger identifies frozen original
+notes and the script dependencies. Optional factor searches use
+NetworkX and sometimes Z3. Their timeouts are reported as unfinished
+searches; a timeout is never treated as an infeasibility certificate.
+
+\subsection{Reproducing the release}
+
+The default complete-certificate command, from an extracted archive, is
+\begin{center}\code{python -I -B verify.py}\end{center}
+It uses the Python standard library. It invokes the A1 certificate
+verifier and its independent local recalculation, then the additional
+clique and decorated certificates, fixed integer tables, stored graph
+witnesses and independent arithmetic checks. It also runs all four
+portable E1--E4 audits without importing their constructors or solvers.
+Those audits recount 972 actual copies in the saved whole-graph witnesses
+and rederive the submitted rows, local relations, parity cuts and
+strategy obstructions. Do not run Python with
+optimisation enabled: the certificate checkers deliberately use
+assertions. A JSON report can be written using the option
+\texttt{-{}-output validation/certificates.json}.
+
+For constructive implementation tests, install the pinned dependencies
+in \code{requirements.txt} and run
+\begin{center}\code{python -B run_checks.py}\end{center}
+This runs the released construction checkers and saves a bounded report.
+The A1 command-line constructor remains available as
+\code{construct.py}, with examples and an independent copy-degree
+checker in the root directory. Other constructors and their scope
+checks are in \code{artifact/}; the coverage ledger points to each
+public implementation. A method-not-applicable response is not a
+counterexample to the mathematical conjecture.
+
+The editable English source is \code{manuscript/main.tex} with included
+section files and an explicit bibliography. It can be compiled by a
+standard LaTeX installation or Tectonic. No user-specific absolute path
+is required by the released proof data or verifier. The manifest records
+SHA-256 digests of the released files. The final validation report records
+fresh extraction, certificate execution, constructor checks, PDF rebuild
+and source-reference diagnostics. Checks of the archive are local;
+no repository deposit, Zenodo upload, DOI allocation, or journal
+submission is implied.
+
+\subsection{Use of AI and research status}
+
+This manuscript and its research artifacts were developed with extensive
+assistance from OpenAI Codex, including mathematical exploration, proof
+drafting, programming, calculations, internal review and English editing.
+Automated checks and internal reviews are documented as such; they
+are not independent expert peer review. No Lean or other proof-assistant
+verification is claimed.
+
+The artifact attributes the pre-existing graph-family results and the
+classical degree-list, factor, matching and interpolation tools used in
+the proofs. Its grouping of results records this research programme's
+contributions and boundaries; it is not an assertion that every grouped
+lemma first appears here. A literature-screening record is supplied as
+provenance, with no guarantee of exhaustive historical priority.
+The manuscript, documentation and finite certificate data are licensed
+under Creative Commons Attribution 4.0 International (CC BY 4.0).
+The accompanying Python source code is licensed under the MIT licence.
+The licence-scope file and full licence texts accompany the release.
+
+The remaining mathematical problem is the original arbitrary-graph
+conjecture. None of the positive results forces a general graph to have
+a sparse, homogeneous, clique, parity-separated, high-degree or dense
+region structure. Target optimisation is exact only after a target is
+fixed, and the algebraic route lacks a general nonvanishing theorem.
+The E1--E4 partition conditions and mixed-port certificates have not been
+proved to exist for every graph. In particular, a parity-subgraph
+solution can saturate a forbidden local component, and root-only joins
+can exclude valid colourings using even components.
+Minimal-counterexample restrictions still permit arbitrary large,
+nonregular, minimum-degree-three cores. The explicit obstructions show
+why several universal parity and monotone-repair assertions cannot
+fill that gap. A1 covers the full subcubic range; the later conditions
+extend beyond that range but do not combine into a proof for every graph.

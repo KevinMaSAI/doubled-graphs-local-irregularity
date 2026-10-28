@@ -1,0 +1,589 @@
+\section{Interfaces with arbitrary endpoint degrees}\label{sec:generalports}
+
+Here a \emph{root} means a vertex of original degree at least three,
+without an upper bound. We use the same decomposition into direct root
+edges, ordinary paths, return paths and pendant paths as before. A
+non-direct ordinary path has two different actual end edges; their
+weights may be chosen independently. A direct edge has one shared weight.
+This distinction is essential throughout.
+
+For a path $x_1=a,\ldots,x_\ell=b$ with internal vertices of degree two,
+prescribed final endpoint counts $(r,s)$ give the allowed next weights
+\begin{equation}\label{eq:generalP}
+ P_{r,s}(a)=\{0,1,2\}\setminus
+ \bigl(\{r-a:a>0\}\cup\{4-a-s:a<2\}\bigr).
+\end{equation}
+Values outside $\{0,1,2\}$ have no effect. Every internal comparison is
+equivalent to $x_i\ne x_{i+2}$. Thus the odd and even positions form
+independent proper three-colour paths with endpoint constraints.
+
+\begin{lemma}\label{lem:generalpath}
+If the two allowed sets in~\eqref{eq:generalP} each have at least two
+elements, any end weights extend at length at least four; at length
+three they extend if and only if $a\ne b$. Opposite pure end weights
+extend at every length at least three for all physical endpoint counts.
+If all four endpoint colour degrees are at least four, distinct end
+weights extend already at length two.
+\end{lemma}
+\begin{proof}
+At length three choose the middle value in the intersection of two
+two-element subsets of a three-element set. The other condition is
+$a\ne b$. At length four choose $x_2\in P_L\setminus\{b\}$ and
+$x_3\in P_R\setminus\{a\}$. At length five choose
+$x_3\notin\{a,b\}$ and different $x_2\in P_L,x_4\in P_R$.
+For greater lengths each position path has at least two edges between
+its endpoint constraints. A three-colour path of at least two edges
+connects arbitrary prescribed colours, by induction starting with a
+middle colour different from both ends. For a pure end weight, at most
+one value is forbidden, proving the opposite-pure assertion. If
+$r,s\ge4$, a mixed port forbids no value, and a pure port can only
+forbid its own value, when the relevant colour degree is four. At
+length two distinct ports therefore satisfy both endpoint checks.
+\end{proof}
+
+We will also use the following small extension of the first part: at
+length at least three, different end weights extend if one allowed set
+is $\{1\}$, the other contains 1 and has at least two elements, and the
+opposite fixed end weight is pure. At lengths three and four this
+follows from the same explicit choices; at length five the two allowed
+even-position values can be made different; greater lengths follow
+from the position-path induction.
+
+\subsection{Exact preservation under subdivision}\label{sec:preserve}
+
+\begin{theorem}\label{thm:preserve}
+Let a legal colouring of $\doub Q$ be given. Replace a set of original
+edges $e=uv$ by internally disjoint paths of lengths $L_e\ge4$. Set
+\[
+ \epsilon_e(v)=\mathbb{1}_{\{x_e=1,\ R_Q(v)=B_Q(v)\in\{1,3\}\}}.
+\]
+If $L_e\ge4+\epsilon_e(u)+\epsilon_e(v)$ for every replaced edge, the
+colouring extends preserving every old vertex colour degree and every
+unreplaced edge weight. At lengths four and five this condition is
+also necessary when both new end weights must equal $x_e$.
+\end{theorem}
+\begin{proof}
+Keep each end weight equal to $a=x_e$. Pure ports have at least two
+allowed next values. For $a=1$, the forbidden next values are $R-1$
+and $3-B$. If both belong to $\{0,1,2\}$, then $R,B\in[1,3]$.
+Since $R+B$ is even, the allowed set has size one exactly when
+$(R,B)=(1,1)$ or $(3,3)$, and that set is $\{1\}$. At length four
+each next value must differ from the opposite fixed end value $a$;
+one singleton is therefore fatal. At length five the two next values
+must differ from one another, so precisely two singletons are fatal.
+At length at least six each position path can connect arbitrary
+nonempty boundary sets. These conditions give the stated threshold.
+All old incident contributions remain identical, so all unreplaced
+comparisons persist simultaneously.
+\end{proof}
+
+For cubic initial data there are 60 ordered legal end states: for each
+$a$, each endpoint red degree lies in $\{a,\ldots,a+4\}$ and the two
+degrees differ. All 40 pure-port states extend at length four. Of the
+20 mixed-port states, exactly eight fail: one end red degree is three
+and the other is one of $1,2,4,5$, in either order. These are fixed-data
+obstructions, not counterexamples to Theorem~\ref{thm:main}.
+
+In particular selected edges whose endpoints all have degree at least
+four can always be replaced by paths of length at least four while
+preserving a given colouring. Known regular-graph colourability
+\cite{GOW26} makes this unconditional for every connected regular
+mother graph of degree at least four. Known bipartite colourability
+\cite{GW23} gives the same conclusion for a bipartite mother graph
+when every selected endpoint has degree at least four. The initial
+colouring is supplied by those theorems; it is not assumed for a
+general unknown mother graph.
+
+If a vertex-minimal counterexample to the general conjecture exists,
+it has no ordinary degree-two thread of length at least five between
+distinct nonadjacent roots; if both roots have degree at least four,
+length at least four is excluded. Replace that thread by a single edge.
+The smaller graph is simple and is not $K_2$. Its legal colouring
+exists by minimality. On a mixed new edge at most one endpoint can have
+$(R,B)=(3,3)$, since two such endpoints would already violate the edge.
+Theorem~\ref{thm:preserve} restores the thread, a contradiction. The
+nonadjacency assumption cannot be dropped in this argument.
+
+\section{One-bridge trees and decorated paths}\label{sec:trees}
+
+For a rooted tree $(T,r)$ and an external bridge of weight $c$, let
+$P_c(T,r)$ be the achievable \emph{internal} root red sums when all
+internal edges are legal after the root receives external contribution
+$(c,2-c)$. The external bridge itself is not yet checked.
+
+\begin{lemma}\label{lem:treeports}
+For a one-vertex tree all three sets are $\{0\}$. For a two-vertex tree,
+$P_0=\{0\},P_1=\{0,1,2\},P_2=\{2\}$. Every tree of order at least two
+has $|P_1|\ge3$; every tree of order at least three has
+$|P_0|,|P_2|\ge2$.
+\end{lemma}
+\begin{proof}
+Use simultaneous induction on tree order. Delete the root, leaving
+$k$ rooted subtrees with root internal degrees $d_i$. If the root edge
+to subtree $i$ has weight $a_i$ and its internal root sum is $p$, the
+only new restrictions, for final parent counts $A,B$, are
+\[
+ a_i>0\Rightarrow p+a_i\ne A,\qquad
+ a_i<2\Rightarrow2d_i-p+2-a_i\ne B.
+\]
+Thus a mixed edge forbids at most two child candidates, a pure edge at
+most one. Colour complementation gives
+$P_{2-c}=\{2k-p:p\in P_c\}$.
+
+For $c=0$, put all $a_i=1$. The internal sum $k$ is feasible: larger
+children have three mixed candidates, and singleton children have
+counts $(1,1)$, different from parent counts $(k,k+2)$ unless $k=1$,
+which would be the two-vertex base case. Change one $a_i$ to 2 to seek
+sum $k+1$ and parent counts $(k+1,k+1)$. That child must avoid
+$p=k-1$ in $P_2$. A child of order at least three has two candidates;
+a singleton fails only at the excluded $k=1$; a two-vertex child fails
+only at $k=3$. The only remaining configuration is three two-vertex
+children. Take root weights $(0,1,1)$ and all child internal weights
+zero instead. The parent is $(2,6)$; the pure-blue child root has blue
+degree four and the mixed child roots have counts $(1,3)$. This gives
+a second sum distinct from $k=3$. Complementation proves the $P_2$ bound.
+
+For $c=1$, all $a_i=1$ yield sum $k$ and counts $(k+1,k+1)$.
+Changing one $a_i$ to zero seeks sum $k-1$ and counts $(k,k+2)$;
+the child must avoid $p=2d_i-k$ in $P_0$. The only exception not
+handled by the induction is two two-vertex children. In that case set
+both root weights and both child internal weights to zero, giving
+internal sum zero and parent counts $(1,5)$, with child blue degrees
+four. Consequently a feasible sum $a\ne k$ always exists. Its colour
+complement $2k-a$, together with $k$, gives three distinct sums.
+\end{proof}
+
+For an outside vertex of final counts $(A,B)$ the bridge imposes at
+most one or two further exclusions. Lemma~\ref{lem:treeports} gives the
+complete compatibility table
+\begin{center}
+\begin{tabular}{lccc}\toprule
+Tree order&$c=0$&$c=1$&$c=2$\\\midrule
+1&$B\ne2$&$A,B\ne1$&$A\ne2$\\
+2&$B\ne4$&always&$A\ne4$\\
+at least 3&always&always&always\\\bottomrule
+\end{tabular}
+\end{center}
+Here ``always'' assumes physical counts containing the bridge copies.
+This is an interface statement; adding the bridge changes outside
+degrees and may invalidate other outside edges.
+
+\subsection{Saturation of decorated paths}\label{sec:decorated}
+
+\begin{theorem}\label{thm:decorated}
+Let every internal vertex of a path have at most one bridge to a
+disjoint rooted tree. A path of at least six edges accepts arbitrary
+physical final endpoint counts and arbitrary prescribed first and last
+edge weights, while colouring all attached trees. The endpoints may be
+the same vertex if both incident contributions are counted.
+\end{theorem}
+\begin{proof}
+Classify an internal vertex as $A$ (bare), $L$ (a singleton tree),
+$S$ (a two-vertex tree), or $F$ (a larger tree). With incoming and
+outgoing weights $a,p$, bridge weight $c$, and degree $D=2$ or 3, its
+red sum is $r=a+p+c$. For $A$, put $c=0$. The compatibility table
+above says: for $L$, $a+p=0$ forces $c=0$, $a+p=4$ forces $c=2$,
+and otherwise any $c$ works; for $S$, $a+p=2$ forces $c=1$ and
+otherwise any $c$ works; for $F$ every $c$ works.
+
+Record a state $(p,D,r)$. There are 24 possible states,
+\[
+ \mathcal U=\{(p,2,r):p\le r\le p+2\}
+ \cup\{(p,3,r):p\le r\le p+4\},\quad p\in\{0,1,2\}.
+\]
+An old state with outgoing weight $a$ can precede a new state
+$(p,D',r')$ exactly when the indicated bridge is allowed and
+$a>0\Rightarrow r\ne r'$, $a<2\Rightarrow2D-r\ne2D'-r'$.
+Let $T_X$ be the resulting monotone map on state subsets. Complete
+integer tables are given in Appendix~\ref{app:decorated}, including the
+four lower-bound families $F_1,F_2,F_3,F_4$ of sizes $30,19,7,3$.
+
+The initial endpoint has just 93 comparison types: each colour count
+is $0,\ldots,6$ or greater than six, with physical and parity
+restrictions. For each type and first letter the reachable set contains
+an element of $F_1$. For every $M\in F_i$ and letter $X$, $T_X(M)$
+contains an element of $F_{i+1}$, for $i=1,2,3$.
+For each of the three elements of $F_4$, applying $T_X$ gives the
+entire locally feasible state set $\Omega_X$. These are complete finite
+identities, recomputed without the constructor by
+\code{decorated_path_certificate_check.py}.
+
+It follows by monotonicity and induction that after five internal
+vertices the reachable set is $\Omega_X$, and remains saturated after
+every further vertex. For a prescribed final weight, $\Omega_A$ has
+three possible red sums, $\Omega_L,\Omega_F$ have five and $\Omega_S$
+has at least four. The right boundary forbids at most two, so it can
+always be met. Restore the attached trees using the bridge lemma.
+The clipping of large endpoint counts is exact, since internal colour
+degrees never exceed six. This proves arbitrary length and arbitrary
+tree shapes from the finite identities.
+\end{proof}
+
+\section{Sparse direct branch cores}\label{sec:branches}
+
+\begin{theorem}[A2]\label{thm:branches}
+Let $W=\{v:d_G(v)\ge3\}$ for a connected simple graph $G\ne K_2$.
+Each of the following hypotheses implies $\lir(\doub G)\le2$:
+\begin{enumerate}
+\item $G[W]$ is independent;
+\item there is no degree-three vertex and $\Delta(G[W])\le1$;
+\item $\Delta(G[W])\le1$ and every non-direct ordinary branch path
+has length at least four.
+\end{enumerate}
+Return paths of length at least three and pendant paths of arbitrary
+positive length are allowed in all three statements.
+\end{theorem}
+
+\subsection{Independent branch vertices}
+\begin{proof}[Proof of the first statement]
+For a root let $l,h,p$ count return paths, ordinary incidences and
+pendant paths, respectively; its original degree is $D=2l+h+p$.
+On $W$ form a simple graph joining distinct roots connected by an
+ordinary path of length at least three. Choose a maximal independent
+set $A$, then a maximal independent set $B$ in the remaining graph,
+and put $C=W\setminus(A\cup B)$. Every $C$ root has a long neighbour
+in both $A$ and $B$; every isolated root belongs to $A$.
+
+Give every return path ports $(0,2)$. Give pendant root ports
+0, 2, 1 on $A,B,C$, respectively. On ordinary paths assign port pairs
+$AA:(0,0)$, $BB:(2,2)$, $AB:(0,2)$, $AC:(0,1)$, $BC:(2,1)$.
+An $AA$ or $BB$ path necessarily has length two. Balance-orient the
+multigraph of $CC$ paths and give each tail port 0 and head port 2.
+For a length-two $AC$ path whose $C$ root has degree three, change
+its $C$ port to 2; for such a $BC$ path change it to zero.
+
+At a $C$ root of degree at least four the only imbalance between
+its red sum and $D$ is at most one from the balanced $CC$ orientation.
+At degree three the two long $A,B$ incidences leave at most one other
+incidence, so either one $CC$ imbalance or one short-path correction
+occurs, again of magnitude at most one. If the red sum is $D-1$,
+change its long $A$ port from 1 to 2. If it is $D+1$, change its
+long $B$ port from 1 to zero. These independent end ports affect no
+other root. Now every $C$ root has $(R,B)=(D,D)$.
+
+At an $A$ root the counts are $(2l,2(D-l))$, and at a $B$ root they
+are reversed. The larger count is an even integer at least four.
+Equality to four at a root with an external path occurs only when
+$D=3,l=1,h+p=1$. Such a root is exceptional only in the following
+two cases. If its unique external path has length two and joins
+another $A$ root, change its own port from 0 to 2; if both ends
+are exceptional change just one. Its counts become $(4,2)$ and the
+midpoint has $(2,2)$, legal on the red and blue sides. If its unique
+external path is a two-edge pendant, change that port to 1 and use
+the word $(1,1)$; root, middle and leaf counts are $(3,3),(2,2),(1,1)$.
+These exceptional roots have no long ordinary incidence, so none of
+the previous adjustments is disturbed.
+
+The remaining two-edge ordinary checks are listed below. The displayed
+root counts refer to the colour present on the corresponding port.
+\begin{center}\small
+\begin{tabular}{llll}\toprule
+Type&Ports&Middle $(R,B)$&Root comparisons\\\midrule
+$AA$&$0,0$&$0,4$&both blue at least 6\\
+$BB$&$2,2$&$4,0$&both red at least 6\\
+$AB$&$0,2$&$2,2$&relevant counts at least 4\\
+$AC$, $D_C=3$&$0,2$&$2,2$&blue at least 4; red 3\\
+$AC$, $D_C\ge4$&$0,1$&$1,3$&blue at least 4; both at least 4\\
+$BC$&complement&complement&same inequalities\\
+$CC$&$0,2$ or $2,0$&$2,2$&both root counts at least 3\\\bottomrule
+\end{tabular}
+\end{center}
+For long ordinary paths the end ports differ. An $A$ or $B$ allowed
+set has at least two elements and contains 1. At a $C$ root the only
+singleton occurs at $D=3$ with port 1, when it is $\{1\}$; its
+other end is an $A$ or $B$ pure port. The general path lemma and its
+singleton extension therefore apply. Every return path has opposite
+pure ports. Pendant pure ports use the constant word at lengths one
+or two, with the unique bad two-edge case already repaired; at longer
+lengths use the opposite pure leaf port. A $C$ pendant uses $(1)$ or
+$(1,1)$ at lengths one or two; otherwise give its leaf port zero and
+apply the singleton extension. All root counts were fixed first.
+Consequently the independent path fillings are simultaneously legal.
+\end{proof}
+
+\subsection{A direct matching with no degree-three roots}
+\begin{proof}[Proof of the second statement]
+Compress all paths, using a private placeholder leaf for each pendant
+path only for the purpose of orientation. A balanced orientation of
+this multigraph gives outdegrees $o(v)\in\{\lfloor D/2\rfloor,
+\lceil D/2\rceil\}$. Give non-direct tail ports 1 and head ports 0;
+give a pendant root port 1 or 0 according to its direction; give each
+direct edge the shared weight 1. If $i_H(v)$ indicates an incoming
+direct edge, the initial counts are
+\[
+ R_0(v)=o(v)+i_H(v)\ge2,\qquad
+ B_0(v)=2D-R_0(v)\ge5.
+\]
+Repair each direct matching edge independently. If only its red
+degrees coincide, change its weight to zero. The head initially had
+red degree at least three, so both new red degrees remain at least
+two. If only its blue degrees coincide, change its weight to 2.
+The tail initially had blue degree at least six, so both new blue
+degrees remain at least five. If neither coincides, retain weight 1.
+
+If both coincide, orient the edge $u\to v$. Equal original degrees
+and $o(u)=o(v)+1$ force $D=2k+1$, $k\ge2$, with common initial
+counts $(k+1,3k+1)$. There are $k$ other outgoing incidences at $u$.
+If one is an ordinary or return path, change its tail port 1 to 2,
+giving $u$ counts $(k+2,3k)$. Otherwise choose an outgoing pendant
+port and change 1 to zero, giving $(k,3k+2)$. The mixed direct edge
+is now legal. Only tail ports were modified; head ports stay zero,
+so even repairs selecting the same connection cannot interfere.
+Different direct edges have disjoint endpoint sets.
+
+Final root counts satisfy $R\ge2,B\ge5$, and a non-direct port 2
+occurs only at $R\ge4$. Every non-direct port pair is $(0,1)$ or
+$(0,2)$ up to reversal. Its two allowed sets have size at least two,
+so every length at least three extends. At length two the midpoint
+is respectively $(1,3)$ or $(2,2)$ and the same inequalities verify
+both ends. This includes return paths at their legal lengths.
+Pendant port zero uses $(0)$, $(0,0)$, or opposite leaf port 2;
+pendant port one uses $(1)$, $(1,0)$, or leaf port zero, according
+as its length is one, two, or at least three. Direct checking or
+Lemma~\ref{lem:generalpath} verifies every case.
+\end{proof}
+
+\subsection{A direct matching with ordinary paths of length four}
+\begin{proof}[Proof of the third statement]
+Let $h\in\{0,1\}$ indicate a direct incidence, let $l$ count return
+paths, and let $z$ count all other root incidences. Thus $D=h+2l+z$.
+Give direct edges weight 1, return ports $(0,2)$, and choose the
+$z$ free ports from $\{0,2\}$. For a root with $h=1$, if $a$ free
+ports are 2 its counts are
+\[
+ (R,B)=(1+2l+2a,\ 1+2l+2(z-a)).
+\]
+For a direct edge, if both ends have free ports and one has $z\ge2$,
+fix the other end and try $a=0,1,2$. At most two candidates are
+forbidden. If both have $z=1$, their candidates are
+$(D-1,D+1)$ and $(D+1,D-1)$: use the same choice at different degrees
+and opposite choices at equal degrees. If one end has $z=0$, it has
+a return path. Change one such port pair from $(0,2)$ to $(0,1)$.
+That end now has even counts $(D-1,D+1)$ and the other keeps odd
+counts. If both have $z=0$, change just one end. Thus every direct
+edge is legal, independently of all others.
+
+At roots with $h=0$, leave free ports zero; counts are
+$(2l,2(l+z))$. The sole exceptional pendant is $l=z=1$ with length
+two. Change its port to 1, making the root $(3,3)$, and use $(1,1)$.
+Every ordinary non-direct path has pure ports and length at least
+four, so the general path lemma applies even when its ports are equal.
+Unmodified returns have ports $(0,2)$. A modified return has ports
+$(0,1)$ at counts $(D-1,D+1)$; both allowed sets have at least two
+elements, so it also extends at length three. At a directly matched
+root, each colour used by a pendant pure port has odd degree at least
+three, different from the short pendant values two and four. At an
+unmatched root its blue degree is at least four, and equality to four
+on a two-edge pendant was exactly the exception repaired above.
+Long pendants use opposite pure leaf ports. These cases exhaust the
+construction.
+\end{proof}
+
+In all three proofs the case $W=\varnothing$ is separate: a single
+vertex has no edges; a two-edge path has word $(0,0)$; a longer path
+uses opposite pure leaf ports. For a cycle, properly three-colour the
+position graph joining positions $i$ and $i+2$ cyclically. Its maximum
+degree is at most two and its resulting word satisfies every internal
+comparison. The excluded one-edge path is $K_2$.
+
+\section{Homogeneous direct cores with long connections}\label{sec:homogeneous}
+
+\begin{lemma}[Even signed forms]\label{lem:evenforms}
+Suppose each of finitely many homogeneous linear forms has an even
+number, at least four, of distinct variables, all coefficients are
+$\pm1$, and each variable occurs in at most two forms. There is a
+choice of signs $\pm1$ for the variables making every form nonzero.
+\end{lemma}
+\begin{proof}
+Make a signed multigraph whose vertices are forms and whose shared
+variables are edges; variables occurring once are boundary variables.
+In a component with a boundary variable, retain a spanning tree and
+one root boundary variable, set all other variables to 1, and process
+leaves upwards. The one remaining sign at each step avoids at most
+one forbidden value.
+
+In a component without boundary variables every vertex has even
+degree at least four. Give each edge the product of its endpoint
+coefficients as sign. There is a positive cycle: if no fundamental
+cycle is positive, two negative fundamental cycles sharing a tree
+edge have a positive cycle as their symmetric difference; if none
+share tree edges the graph is a cactus and has a vertex of degree at
+most two, a contradiction. Keep such a cycle and a forest rooted on
+it. Eliminate off-cycle vertices as before. On the cycle the relations
+are $a_i y_i+b_i y_{i-1}+C_i\ne0$ with even $C_i$.
+For $C_i=0$ the allowed relation is a bijection on two signs; for
+$C_i=\pm2$ it has three of the four pairs; for $|C_i|\ge4$ all four
+pairs. If every relation is a bijection, positivity makes their
+composition have a fixed point. Otherwise their composition has at
+least three pairs: bijections preserve size, and composition of
+relations with at least three pairs has at least three pairs. Such
+a relation contains a diagonal pair. Hence the signs close around
+the cycle.
+\end{proof}
+
+\begin{theorem}[A3]\label{thm:homogeneous}
+Let $G$ have minimum degree at least two. In each component of
+$H=G[\{v:d_G(v)\ge3\}]$, suppose the original degree is constant and
+the component is three-colourable. Suppose all ordinary non-direct
+connections have length at least three and there are no return paths.
+Then $\lir(\doub G)\le2$.
+\end{theorem}
+\begin{proof}
+Orient each long connection and give it opposite pure ports. Its
+contribution $c(v)$ is twice an indegree. For an isolated direct-edge
+component $uv$ of original degree $D$, the two long-incidence counts
+are both $D-1$. Reversals of the long paths are sign variables, and
+$c(u)-c(v)$ is an even form with $2(D-1)\ge4$ incidences. If a long
+path joins $u$ and $v$ its sign occurs twice with combined coefficient
+$\pm2$; it is private to this equation. Temporarily omit equations
+with such variables. All remaining forms satisfy
+Lemma~\ref{lem:evenforms}; then restore each omitted equation by its
+private variable, one of whose two signs makes it nonzero. Give each
+isolated direct edge weight 1. It is now legal in both colours.
+
+For every larger direct component choose proper targets $\phi$ over
+$\mathbb F_3$ and solve the internal incidence equations
+$\sum_{e\ni v}x_e=\phi(v)-c(v)$. A nonbipartite component realises
+arbitrary demands: a spanning tree and an edge joining two vertices
+of the same tree parity allow adjustment of the signed total by an
+invertible coefficient $\pm2$, followed by leaf elimination. In a
+bipartite component solvability is precisely the alternating-sum
+condition in Lemma~\ref{lem:linear}. Choose the larger side, of size
+at least two, initially all zero and the other side all one. Changing
+zero, one or two vertices of the first side to 2 changes that sum by
+$0,2,4$, covering all residues. The targets stay proper. Representatives
+$0,1,2$ of the solved edge weights give different red sums on every
+direct edge. The original degrees agree there, so the blue sums also
+differ. Isolated roots require no direct comparison. Finally fill
+all long paths with their opposite pure ports.
+\end{proof}
+
+For an $r$-regular simple mother graph, replacing selected edges by
+paths of length at least three is therefore allowed whenever the
+retained graph is three-colourable. At $r=3$, a nonempty selected set
+leaves every retained component 2-degenerate, since a cubic retained
+component would be a whole connected component of the original graph.
+This recovers the earlier cubic subdivision constructions, already
+contained in A1. At unbounded degree the three-colourability hypothesis
+is substantive and has not been removed.
+
+\section{Balanced half-edges and simultaneous extensions}\label{sec:balanced}
+
+\begin{lemma}\label{lem:halfedge}
+Let $J$ be a multigraph, with loops allowed and no vertex of degree
+one. Its incidences admit values $0,1,2$ summing to $d_J(v)$ at every
+vertex, different at the two ends of every edge. Odd-degree vertices
+have exactly one incidence of value 1 and even-degree vertices none.
+For disjoint pairs of positive-degree vertices of the same parity,
+one may instead require exactly one vertex of each pair to have sum
+$d_J(v)\pm1$, leaving every other sum unchanged.
+\end{lemma}
+\begin{proof}
+Balance-orient $J$, assigning 0 at tails and 2 at heads. At an odd
+vertex choose one majority-valued incidence to change to 1. There
+are $\lceil d/2\rceil\ge2$ different candidate edge identifiers;
+a loop cannot supply two majority-valued candidates. The request-edge
+bipartite graph has each request adjacent to at least two edges, each
+edge to at most two requests. Hall's condition follows by counting,
+so all changes can use distinct edges. The sums become exact and
+end values stay different.
+
+For an odd-degree pair skip the correction at one member. For an
+even-degree pair create one request selecting any incidence at either
+member and changing it to 1; the union contains at least two edge
+identifiers. Each original vertex belongs to at most one request,
+so the same Hall argument applies. These changes give precisely the
+claimed one-unit deviations.
+\end{proof}
+
+\begin{theorem}[A4]\label{thm:partialbalanced}
+Let a connected multigraph $M$ have original degrees $D(v)\ge4$.
+Subdivide an edge set $J$ into paths of length at least two, with all
+loops in $J$ and loop paths of length at least three. Suppose $J$ has
+no vertex of degree one, the retained graph $H=M-J$ is simple, and
+every retained edge has endpoints of different original degrees.
+Then the simple expanded graph has a legal doubled two-colouring
+with $R(v)=B(v)=D(v)$ at every old vertex.
+\end{theorem}
+\begin{proof}
+Use Lemma~\ref{lem:halfedge} on $J$ and give every retained edge
+weight 1. Each old vertex receives $d_J+d_H=D$ in both colours.
+Retained edges compare different $D$ values. Each subdivided path
+has distinct end weights and all four endpoint colour degrees at
+least four, so Lemma~\ref{lem:generalpath} fills it at every allowed
+length without changing the old sums.
+\end{proof}
+
+\begin{theorem}[A5]\label{thm:simultaneous}
+Let $H$ be a simple graph whose components of order at least three
+have given legal doubled two-colourings. On the same old vertex set
+let $J$ be a connection multigraph with $k(v)=d_J(v)$ either zero
+or at least four, constant on each component of $H$. Require $k\ge4$
+on every $K_2$ component. Replace $J$ edges by internally disjoint
+paths of length at least two, or at least three for loops. The
+colouring extends to the simple expanded graph preserving every
+given old edge weight. No initial colouring of $K_2$ is assumed.
+\end{theorem}
+\begin{proof}
+Pair the endpoints of the $K_2$ components in
+Lemma~\ref{lem:halfedge}. All other old vertices receive exactly
+$(k,k)$ from new ports. Every given old colour-degree difference is
+unchanged, since $k$ is equal at its two ends. Give each old $K_2$
+edge weight 1. Its endpoints then have counts
+$(k+1+\epsilon,k+1-\epsilon)$ and $(k+1,k+1)$ for
+$\epsilon\in\{-1,1\}$, so that edge is legal. All vertices incident
+with new paths have both colour degrees at least four. Different
+new end ports can therefore be filled at length two by
+Lemma~\ref{lem:generalpath}. All old and new checks hold together.
+\end{proof}
+
+A vertex-minimal counterexample cannot admit the latter decomposition
+with $J\ne\varnothing$: deleting its new internal vertices gives
+smaller old components, while the $K_2$ and isolated cases are already
+handled. This does not assert that every graph has such a decomposition.
+
+\section{Near-centre parity assignments}\label{sec:parity}
+
+\begin{lemma}\label{lem:nearparity}
+A parity prescription $p:V(G)\to\{0,1\}$ can be realised by weights
+$0,1,2$ with $R(v)\equiv B(v)\equiv p(v)\pmod2$ and
+$|R(v)-d_G(v)|\le1$ if and only if $\sum_{v\in C}p(v)$ is even
+in every component $C$. The edges changed from weight 1 may be
+restricted to a forest.
+\end{lemma}
+\begin{proof}
+Necessity is the red handshake identity. Start with all weights 1.
+In each spanning tree choose a $T$-join for
+$T=\{v:p(v)\ne d_G(v)\pmod2\}$ by leaf elimination; $|T|$ is even.
+Pair incidences of the chosen forest at each vertex, leaving one
+unpaired at each odd-degree vertex. Its edges decompose into open
+trails with those unpaired ends; there is no closed trail in a forest.
+Along each trail change weights alternately to 2 and zero. Contributions
+cancel at every paired passage, leaving a change of $\pm1$ exactly
+at the vertices of $T$. All claims follow, including the exact centred
+assignment when $T$ is empty.
+\end{proof}
+
+\begin{theorem}[A6]\label{thm:gapparity}
+Let $F$ consist of the original edges $uv$ with
+$|d_G(u)-d_G(v)|\le2$. If $F$ is bipartite and its bipartition
+phases can be chosen to give an even total number of odd labels,
+then $\doub G$ has a legal two-colouring. Both colours distinguish
+the ends of every original edge.
+\end{theorem}
+\begin{proof}
+Realise those labels by Lemma~\ref{lem:nearparity}. On $F$, both
+colour degrees have different parities. Off $F$, the intervals
+$[d_G(v)-1,d_G(v)+1]$ at the two ends are disjoint, and contain
+both colour degrees. This verifies every comparison.
+\end{proof}
+
+The phase condition is exact: an odd-order component of $F$ allows
+the total parity to be changed by a flip. If all components have even
+order, it holds exactly when an even number of components have two
+odd-sized sides. For example, connect the roots of three disjoint
+$K_{r_i,r_i}$ modules in a triangle, where the $r_i\ge4$ are even
+and pairwise differ by at least four. The graph has no degree-two
+threads and is nonbipartite. Its $F$ consists precisely of the three
+modules with even sides, so the theorem applies. This condition does
+not cover general nonbipartite regular cores.

@@ -1,0 +1,86 @@
+\section{Additional finite certificates}\label{app:additional}
+
+\subsection{Decorated path tables}\label{app:decorated}
+
+Order the 24 states by degree $D=2$ then 3, then by outgoing
+weight $p=0,1,2$ and increasing red degree. Encode a state subset
+by the sum of powers $2^i$ at its indices, starting at zero. The
+complete lower-bound families used in Theorem~\ref{thm:decorated}
+are as follows:
+\begin{flushleft}\small\ttfamily
+$F_1$: 9, 16, 36, 65, 72, 130, 260, 288, 52736, 473088,\newline
+1132032, 1149440, 1166336, 1688064, 2100224, 2671104,\newline
+3217408, 3228160, 3768832, 3784704, 5313536, 6293504,\newline
+6754304, 8599552, 8722432, 8792064, 8859648, 10686464,\newline
+12914688, 15073280.\medskip\newline
+$F_2$: 27, 45, 54, 130, 216, 325, 360, 432, 3264000,\newline
+5313536, 7425536, 7588352, 10344960, 10984448, 11463168,\newline
+12022272, 15014912, 15126016, 15144960.\medskip\newline
+$F_3$: 219, 325, 438, 7458304, 11463168, 15126016, 15145984.\medskip\newline
+$F_4$: 365, 12581376, 16244224.
+\end{flushleft}
+The three final masks are the signatures in the table below; each
+cell records possible red degrees at the given outgoing weight.
+\begin{center}\small
+\begin{tabular}{ccccc}\toprule
+Signature&$D$&$p=0$&$p=1$&$p=2$\\\midrule
+$M_A$&2&$\{0,2\}$&$\{1,3\}$&$\{2,4\}$\\
+$M_L$&3&$\{0,2,3,4\}$&$\{1,2,3,4,5\}$&$\{2,3,4,6\}$\\
+$M_S$&3&$\{0,1,2,3\}$&$\{1,2,3,4,5\}$&$\{3,4,5,6\}$\\\bottomrule
+\end{tabular}
+\end{center}
+The local full-state signatures are
+\begin{align*}
+ \Omega_A&=(\{0,1,2\},\{1,2,3\},\{2,3,4\}),&&D=2,\\
+ \Omega_L=\Omega_F&=(\{0,1,2,3,4\},\{1,2,3,4,5\},\{2,3,4,5,6\}),&&D=3,\\
+ \Omega_S&=(\{0,1,2,3\},\{1,2,3,4,5\},\{3,4,5,6\}),&&D=3.
+\end{align*}
+For every $M\in\{M_A,M_L,M_S\}$ and every letter $X$,
+$T_X(M)=\Omega_X$. Every $\Omega_X$ contains one of the final
+three masks. The machine-readable table contains all 372 initial
+cases, 96 transition rows, 224 successive-family containment checks
+and 12 saturation checks, with the exact state and endpoint domains.
+The independent checker reconstructs the local relations rather
+than trusting the recorded counts.
+
+\subsection{Clique bases and additional witnesses}
+
+The root clique table is indexed by $(n,A,B,S)$ for $n=4,5$,
+the clipped physical domain in Theorem~\ref{thm:cliqueport}, root
+label zero and lexicographic edge order. Every entry records a full
+word in $\{0,1,2\}^{\binom n2}$ and the truth of the nonroot
+interior bound. The independent checker verifies each bound itself
+and permits weakness only at the two specified $K_4$ inputs. The
+domain has 836 entries and 14,424 actual coloured copies.
+
+The portable datasets include the regular-layer integer table, the
+decorated-path transfer table, and the complete clique root bases.
+Their file names and schemas are identified in \code{COVERAGE.md}.
+The witness files for dense, offset and sequential regions instead
+record complete actual graphs, weights, final colour degrees and,
+where applicable, the fixed boundary edges and offsets. Their
+verification checks a concrete construction and does not replace
+the factor-theorem arguments proving arbitrary-size existence.
+
+The standard-library release verifier additionally recalculates the
+wheel's entire single-edge neighbourhood, the five-vertex path's
+entire two-unit target neighbourhood, the strong-mark domain, and
+the nine-vertex continuous/integer distinction using rational
+arithmetic. It checks the frozen regular-layer table against the
+explicit formula, and tests coefficient/permanent and modular
+identities on small exact inputs. Its report records actual domain
+sizes computed in that run. These are finite identities or witness
+audits, with their roles kept separate from the unbounded proofs.
+
+\subsection{Coverage and dependency files}
+
+\code{COVERAGE.md} maps every retained inventory item and completed
+post-17:00 note to its English proof, implementation and certificates.
+\code{PROOF_DEPENDENCIES.md} lists the exact external statements used
+and the difference between complete proof kernels and sampled graph
+tests. \code{provenance/source_manifest.json} hashes the original
+top-level source snapshot, and \code{provenance/source_scope.json}
+records the scientific scope and snapshot date without internal chat
+identifiers. Chinese source notes are
+included for provenance; the English proofs do not require reading
+them. No unfinished current-thread experiment is promoted to a theorem.

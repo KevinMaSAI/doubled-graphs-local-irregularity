@@ -1,0 +1,137 @@
+\section{Four-vertex complement lifts}\label{sec:complements}
+
+\begin{theorem}[D4: complement-path lift]\label{thm:complementlift}
+Let a simple graph $H$ of order $n\ge3$ have a given legal doubled
+colouring and $\Delta(H)\le n-3$. Let $uv$ be a nonedge whose
+endpoints have different ordered colour-degree pairs. In the
+complement replace $uv$ by the five-edge path $uabcdv$ and take
+the complement again, obtaining $H^+$. Its colouring can be extended
+preserving all old edge weights and increasing every old red and
+blue degree by four. Moreover $\Delta(H^+)\le |H^+|-3$, and
+all five edges of the new complement path have endpoints with
+different ordered colour-degree pairs.
+\end{theorem}
+\begin{proof}
+First suppose $B_H(u)\ne B_H(v)$. Give the new edge $uv$ weight
+zero. For every old vertex $w$ give $wb,wc$ weight 2 and $wa,wd$
+weight zero whenever those edges exist; $ua$ and $vd$ are absent.
+Among new vertices the actual edges are $ac,bd,ad$; give them
+weights $1,2,0$. Old vertices different from $u,v$ gain $(4,4)$
+from their four new edges. At $u,v$, the extra old--old edge $uv$
+replaces the missing blue contribution at $ua,vd$, so they also
+gain $(4,4)$. All old comparisons persist and $uv$ is legal.
+
+The new counts are
+\[
+ a:(1,2n+1),\quad b:(2n+2,0),\quad
+ c:(2n+1,1),\quad d:(2,2n).
+\]
+Every old final colour count is at most $2(n-3)+4=2n-2$.
+Consequently pure red old--$b,c$ edges and pure blue old--$a,d$
+edges are legal. The three actual new--new edges are legal by their
+displayed counts. The five missing path edges have different ordered
+pairs as well, by the same strict bounds and the distinct new pairs.
+Each old degree increases by four, and every new degree is $n+1$,
+which proves the maximum-degree assertion. If only the red counts
+of $u,v$ differ, complement the old colours temporarily, apply this
+construction, and complement the entire result back. Old weights
+are again preserved and all stated properties remain true.
+\end{proof}
+
+Different boundary pairs are a real hypothesis. On $C_5$ the cyclic
+word $(0,0,1,1,2)$ is legal, but two nonadjacent vertices have the
+same pair $(2,2)$. A construction adding the same $(4,4)$ to each
+and adding an actual edge between them cannot make that edge legal
+with any weight. This restricts this lift interface, not the graph.
+
+\subsection{An explicit nonregular infinite family}
+
+For odd $k\ge3$ let
+$F_k=C_{2k+1}+02$, using cyclic labels $0,\ldots,2k$, and
+$G_k=\overline{F_k}$. Its two chord endpoints have degree $2k-3$
+and the other vertices degree $2k-2$; its size is $2k^2-k-2$.
+For $k=3$, in the edge order
+\[
+ 03,04,05,13,14,15,16,24,25,26,35,36,46
+\]
+use weights
+\[
+ 2,2,2,0,0,0,0,0,2,0,1,0,1.
+\]
+The vertex red degrees are $(6,0,2,3,3,5,1)$ and blue degrees
+$(0,8,4,5,5,3,7)$, verifying actual legality. The complement edge
+$60$ has different blue endpoint counts. Replacing it by a
+five-edge path produces $G_5$ with new labels extending the cyclic
+order, keeping chord $02$. Repeat on the last new edge incident
+with 0. Its new endpoint blue degree is $2n$, greater than the old
+endpoint final bound $2n-2$, so the interface stays available.
+The lift proves colourability of every $G_k$, $k$ odd, by induction.
+
+This family also limits a parity-refined defective partition. Suppose
+one requires a partition $(A,B)$ with
+\[
+ \Delta(G_k[A])\le k-1,\quad \Delta(G_k[B])\le k-2,
+ \quad R|_A\text{ even},\quad R|_B\text{ odd}.
+\]
+The degree conditions imply minimum induced complement degrees
+$|A|-k$ on $A$ and $|B|-k+1$ on $B$.
+Only two vertices of $F_k$ have degree three; hence these bounds
+force $|A|\le k+2$, $|B|\le k+1$, and
+$|B|\in\{k-1,k,k+1\}$. A minimum-degree-two induced subset of
+$F_k$ with fewer than $2k$ vertices can only be its triangle $012$:
+if it contains any vertex on the other arc from 2 to 0, its two
+neighbours are forced, propagating along that entire arc of $2k$
+vertices. If $|B|=k-1$, then $A$ has size $k+2\ge5$ and induced
+minimum degree two, impossible; if $|B|=k+1$, the same holds for
+$B$ of size at least four. Therefore $|B|=k$ is odd, contradicting
+the even red handshake sum. The degree partition itself exists:
+$B=\{0,\ldots,k-1\}$ and its complement both have no isolates in
+$F_k$, which verifies the required complement degree bounds. It is
+the appended parity prescription that fails. The legal colourings
+above show that this is not a conjecture counterexample.
+
+\subsection{Lifting complements of cubic graphs}
+
+Let $F\ne K_4$ be a connected edge-transitive cubic simple graph
+of order at least six and $H=\overline F$. Each component of $H$
+is regular of degree $n-4\ge2$, so it has a legal doubled colouring
+by~\cite{GOW26}. Some edge of $F$ has distinct endpoint pairs:
+otherwise connectedness of $F$ would make the pair constant on all
+vertices, contradicting legality of any actual edge of $H$.
+An automorphism carries that complement interface to any selected
+edge of $F$. Repeated use of Theorem~\ref{thm:complementlift}
+therefore handles replacing that selected edge of $F$ by a path
+of length $4t+1$ and then complementing, for any $t\ge0$. At
+$t>0$ these graphs are nonregular. Edge-transitivity is used to
+control the selected initial edge and is not silently omitted.
+
+\subsection{Restrictions in complement degree two or three}
+
+Suppose $G$ is a vertex-minimal counterexample to the general
+conjecture and every vertex of $F=\overline G$ has degree two or
+three. If $n\ge11$, $F$ cannot contain a path $uabcdv$ whose four
+internal vertices have degree two, whose endpoint degrees differ,
+and with $uv\notin E(F)$. Delete the four internal vertices and
+replace that path by $uv$. The resulting complement $H$ has order
+$N=n-4\ge7$, degree between $N-4$ and $N-3$, and is connected
+because $2(N-3)>N$. Minimality gives a legal colouring of $H$.
+The two endpoint ordinary degrees differ, so their ordered colour
+pairs differ. The lift reconstructs $G$, a contradiction.
+It follows that no path starting at an $F$-degree-three vertex can
+continue through six consecutive distinct degree-two vertices:
+use its first five-edge subpath, whose endpoint degrees are three
+and two; the sixth vertex ensures the missing closing edge.
+
+There is also no cycle component of $F$ of length at least nine.
+Shorten that cycle by four. Its length remains at least five, so
+its complement is connected (and is completely joined to any other
+complement components). Minimality supplies a colouring of the
+smaller actual graph. Some edge of the shortened complement cycle
+has distinct endpoint pairs; otherwise every vertex of that cycle
+would have the same pair, contradicting an actual edge within its
+complement. Rotate that cycle component to place the interface at
+the edge to be lengthened and apply the lift. Finally
+Theorem~\ref{thm:dense} covers this entire complement-degree class
+when $n\ge38$ since $q\le3$. Any hypothetical counterexample in
+this class therefore has $n<38$. No exhaustion of that residual
+finite range, or reduction of all graphs to this class, is claimed.

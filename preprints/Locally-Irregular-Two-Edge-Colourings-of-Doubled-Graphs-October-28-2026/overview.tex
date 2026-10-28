@@ -1,0 +1,100 @@
+\section{Problem, scope, and provenance}\label{sec:overview}
+
+For a finite simple graph $G$, let $\doub G$ denote the multigraph in
+which every original edge has two parallel copies. A colour class is
+\emph{locally irregular} if the degrees of the endpoints of each of its
+edges are different in that colour class. Parallel copies may have
+different colours. Isolated vertices cause no difficulty. The conjecture
+of Grzelec and Wo\'zniak~\cite{GW23} asks whether
+\[
+ G\text{ connected},\quad G\not\cong K_2
+ \quad\Longrightarrow\quad \lir(\doub G)\le2.
+\]
+All statements below concern finite graphs. Original graphs are simple;
+auxiliary connection graphs may have labelled parallel edges and loops.
+A loop in a connection graph represents a return path in the original
+simple graph, rather than an original loop.
+
+The basic language is an edge weight $x_e\in\{0,1,2\}$ equal to the
+number of red copies. The actual colour degrees are
+$R(v)=\sum_{e\ni v}x_e$ and $B(v)=2d_G(v)-R(v)$. A comparison is required
+in a colour precisely when that colour is present on the edge. Requiring
+both comparisons on every edge is a stronger sufficient condition that
+some, but not all, of our constructions satisfy.
+
+The original conjecture and results for bipartite graphs appear in
+\cite{GW23}; cacti are treated in~\cite{GW24}. The regular-graph result,
+a three-colour bound for subcubic graphs, and special subcubic families
+are established in~\cite{GOW26}. In its arXiv version, Theorems~14--15
+cover independent degree-three vertices and subdivisions of selected
+cubic edges into paths of length at least five. We give a full subcubic
+proof, retaining its complete finite interfaces. The later sections
+address different questions: unbounded-degree constructions, prescribed
+boundaries, target feasibility, and limitations of proposed proof methods.
+
+The identifiers A1--A9, B1--B4 and C1--C5 refer to a prior inventory of
+research notes; they are preserved for traceability in
+Table~\ref{tab:coverage}. They are groups of related assertions, not a
+count of mutually independent or historically new theorems. We fold
+ordinary existence results for smaller subcubic families into A1 and
+retain stronger boundary statements separately. D1--D5 identify completed
+extensions documented after 17:00 China Standard Time on 27 October
+2026, with their source snapshot fixed at 20:31:04 that evening.
+E1--E4 contain four completed notes from 28 October 2026, frozen at
+10:25:33 China Standard Time. They add integer rather than merely
+modular separation, path/cycle completions, and parity-port certificates.
+Work completed after that cutoff, including the later component-dynamic-programming
+note, is outside this fixed snapshot.
+The original notes, snapshot hashes and a detailed coverage ledger
+accompany the manuscript.
+
+\begin{longtable}{>{\raggedright\arraybackslash}p{0.10\linewidth}>{\raggedright\arraybackslash}p{0.53\linewidth}>{\raggedright\arraybackslash}p{0.27\linewidth}}
+\caption{Coverage of the retained inventory.}\label{tab:coverage}\\
+\toprule Identifier&Assertion group&Location\\\midrule\endfirsthead
+\toprule Identifier&Assertion group&Location\\\midrule\endhead
+A1&All subcubic graphs; safe interfaces and the two-mark kernel&
+Sections~\ref{sec:subcubic}--\ref{sec:complete}, Appendix~\ref{app:cert}\\
+A2&Three sparse direct-branch hypotheses&Section~\ref{sec:branches}\\
+A3&Degree-homogeneous, three-colourable direct cores&Section~\ref{sec:homogeneous}\\
+A4--A5&Balanced half-edges and simultaneous preserved-colour extensions&Section~\ref{sec:balanced}\\
+A6&Near-centre parity realisation and degree-gap separation&Section~\ref{sec:parity}\\
+A7--A8&Arbitrary clique root sums, block trees, and capacity extensions&Section~\ref{sec:cliques}\\
+A9&Tree gluing of given coloured pieces&Section~\ref{sec:pieceglue}\\
+B1&Trees, paths, decorated saturation, preserved subdivisions, offsets&Sections~\ref{sec:generalports}, \ref{sec:trees}, \ref{sec:preserve}, \ref{sec:oddforest}\\
+B2&Fixed targets, matching, factors, exchanges, defect bounds&Section~\ref{sec:targets}\\
+B3&Exact polynomial, free parameters, permanent and parity formula&Section~\ref{sec:algebra}\\
+B4&Normal forms, peripheral elimination and minimal counterexamples&Section~\ref{sec:reductions}\\
+C1&Cut, parity, modulo-three and modulo-two limitations&Sections~\ref{sec:mod2limits}, \ref{sec:templates}\\
+C2&Nonincreasing single-edge and two-unit descent barriers&Section~\ref{sec:descent}\\
+C3&Target obstructions, nonconvexity and unbounded parity radius&Sections~\ref{sec:targetbarriers}, \ref{sec:radius}\\
+C4&Sharp fixed-interface path and extension thresholds&Sections~\ref{sec:treecapacity}, \ref{sec:cliquecapacity}, \ref{sec:interfacebarriers}\\
+C5&Gluing, prescribed root sums and multiple marked ports&Sections~\ref{sec:piecebarrier}, \ref{sec:interfacebarriers}\\
+D1&High minimum degree relative to chromatic number&Section~\ref{sec:highdegree}\\
+D2&Multiple CRT regions, low-side ports, matched tree attachments&Sections~\ref{sec:crtregions}, \ref{sec:irregularcore}\\
+D3&Dense antitone targets: $8\delta\ge7n+6$&Section~\ref{sec:dense}\\
+D4&Complement lifts, nonregular families, structural restrictions&Section~\ref{sec:complements}\\
+D5&Dense forbidden targets and sequential region absorption&Section~\ref{sec:denselists}\\
+E1&Signed gaps with two occurrences; paired partitions and fixed-mixed integer repairs&Section~\ref{sec:signedgap}\\
+E2&Degree-three/four path--cycle side against a covering matching&Section~\ref{sec:pathcyclepart}\\
+E3&Protected parity joins and exact independent-side completions&Section~\ref{sec:isolatepart}\\
+E4&Arbitrary-degree odd-component root ports and capacity-aware parity test&Section~\ref{sec:rootports}\\
+\bottomrule
+\end{longtable}
+
+The matching reductions, Tutte's factor criterion, jump-system exchange
+principles and polynomial interpolation are classical tools, not claims
+of invention. We give the required applications and elementary arguments
+so that the boundary between a feasible target and a legal colouring is
+explicit. The degree-constrained subgraph theorem used for D1 is quoted
+with its hypotheses and applied only to a simple host graph. The
+subcubic proof uses the degree-choosability theorem recorded
+in~\cite{CR17}. Other background dependencies are indicated where used.
+
+This is a research preprint with extensive computer assistance. Its
+infinite-family assertions are justified by the displayed arguments and,
+where indicated, complete finite kernels plus lifting inductions.
+Random and bounded-order checks test implementations; they do not prove
+the conjecture. No independent expert review or proof-assistant
+verification is claimed, and no absolute historical-priority claim is
+made. In particular, none of the strategy obstructions below is a
+counterexample to the original conjecture.

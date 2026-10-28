@@ -1,0 +1,210 @@
+\section{Dense graphs with antitone colour degrees}\label{sec:dense}
+
+The second global degree condition uses Tutte's factor theorem directly
+on a doubled graph, where parallel edges are allowed by that theorem.
+This is separate from the simple-host theorem used in
+Section~\ref{sec:highdegree}.
+
+\begin{theorem}[D3]\label{thm:dense}
+Let $G$ be simple with $n$ vertices and
+\[
+ 8\delta(G)\ge7n+6.
+\]
+Then $\doub G$ has a two-colouring in which all vertex red degrees
+are pairwise distinct and all vertex blue degrees are pairwise distinct.
+\end{theorem}
+\begin{proof}
+Put $q=n-1-\delta(G)$, so the condition is $n\ge8q+14$.
+Order $v_0,\ldots,v_{n-1}$ by nonincreasing ordinary degree and put
+$L=\lfloor(n-1)/2\rfloor$. Set $f(v_i)=L+i$, except that if the
+sum is odd, increase only $f(v_{n-1})$ by one. The increment occurs
+exactly when $n\equiv2\pmod4$; only evenness is needed below.
+Their sum is even and the targets are strictly increasing. Their
+physical range follows explicitly from
+\[
+ 0\le f(v_i)\le L+n\le2(n-1-q)\le2d_G(v_i),
+\]
+where $L\le(n-1)/2$ and $n\ge8q+14$ imply the middle bound.
+If $\doub G$ has an $f$-factor, use it for red.
+Then $B(v_i)=2d_G(v_i)-f(v_i)$ is strictly decreasing, proving the
+asserted strong conclusion.
+
+We verify the factor inequalities. For disjoint $S,T$, put
+$s=|S|,t=|T|,h=s+t,r=n-h$. Their Tutte left side is
+\[
+ D=f(S)+2\sum_{v\in T}d_{G-S}(v)-f(T).
+\]
+The odd-component term is the number $o_f(S,T)$ of components of
+$G-S-T$ with odd $f$ sum, since all boundary edges in $\doub G$
+have even multiplicity. Independently of their positions in the order,
+\begin{align*}
+ f(S)&\ge sL+s(s-1)/2,\\
+ f(T)&\le t(L+n-1)-t(t-1)/2+1,\\
+ d_{G-S}(v)&\ge n-1-q-s.
+\end{align*}
+The last lower bound remains valid when negative. Writing
+$L=(n-1)/2-\theta$, $0\le\theta\le1/2$, gives
+\begin{align*}
+ D&\ge (s-t)L+\frac{s(s-1)+t(t-1)}2
+       +t(n-1-2q-2s)-1\\
+  &\ge h\left(\frac{n-6}{4}-2q\right)-1
+   \ge2h-1.
+\end{align*}
+For the middle inequality use
+$s^2+t^2-4st\ge-h^2/2\ge-nh/2$,
+$-\theta(s-t)\ge-h/2$, and $t\le h$.
+
+If $h=0$, the graph is connected: each component would contain at
+least $n-q$ vertices and $n>2q$. Its total $f$ sum is even, so
+$o_f=0=D$. If $h\ge1$ and $r>2q$, the remaining graph is connected
+by the same argument, now with each component of size at least
+$r-q>r/2$. Thus $o_f\le1\le2h-1$. If $r\le2q$, then $o_f\le r$
+and $h=n-r\ge n-2q\ge6q+14\ge r$, so again $D\ge o_f$.
+All factor inequalities hold. Tutte's theorem~\cite{Tutte54} supplies
+the red factor.
+\end{proof}
+
+No optimality of the constant is claimed. The construction may use
+all three weights $0,1,2$, unlike Theorem~\ref{thm:chromatic}.
+Searching for a particular factor is an implementation task; a search
+timeout is neither a failed existence proof nor a counterexample.
+
+\section{Dense forbidden targets and sequential absorption}\label{sec:denselists}
+
+Let $H$ have order $n$ and $q=n-1-\delta(H)$. At each vertex fix
+physical external contributions $A_v,B_v$ and a finite set $F_v$ of
+forbidden \emph{final red degrees}. Put
+\[
+ D_v=d_H(v)+(A_v+B_v)/2,\quad
+ \alpha=\min_v A_v,\quad a=\max_v A_v-\alpha.
+\]
+Partition the vertices into equal-$D_v$ classes $C_1,\ldots,C_k$ in
+strictly decreasing $D$ order and put
+\[
+ b_i=\max_{v\in C_i}|F_v|,\quad
+ E=\sum_i b_i+\min_i b_i+2,\quad W=\max\{a,E\}.
+\]
+
+\begin{theorem}[D5: forbidden-target dense interface]\label{thm:denselists}
+If $n\ge8q+4W+10$, one can colour $\doub H$ so that every final
+red degree avoids $F_v$, all final red degrees are pairwise distinct,
+and all final blue degrees are pairwise distinct. The external
+contributions are preserved.
+\end{theorem}
+\begin{proof}
+Let $L=\lfloor(n-1)/2\rfloor$. Starting at $\alpha+L$, allocate
+pairwise disjoint consecutive integer blocks in the specified class
+order. The block for $C_i$ has length $|C_i|+b_i$, except that a
+class of minimum $b_i$ receives an additional $b_i+2$ places.
+Together these blocks form one interval of length $n+E$.
+In each ordinary class assign distinct targets avoiding the
+individual forbidden sets by greedy choice; the length exceeds the
+number of assigned predecessors plus any forbidden set.
+
+In the enlarged minimum class, designate a vertex $z$. Its interval
+has at least $2b_i+3$ places, containing at least $b_i+1$ integers
+of each parity. Reserve one allowed even and one allowed odd value
+for $z$. Assign the other vertices distinct allowed values while
+avoiding both reserved places. Writing $n_i=|C_i|$, at the last
+such step at least
+$(n_i+2b_i+2)-2-b_i-(n_i-2)=b_i+2$ places remain after all
+exclusions; if $n_i=1$ there is no such step. Choose the parity at $z$ that makes
+$\sum_v(R_v-A_v)$ even. The resulting final red targets are distinct.
+Order vertices inside each degree class by increasing chosen target.
+In the resulting global order $v_0,\ldots,v_{n-1}$, $D_v$ is
+nonincreasing, $R_v$ is strictly increasing, and therefore
+$2D_v-R_v$ is strictly decreasing.
+
+The $n$ selected places in an interval of length $n+E$ have ordered
+indices $j_i$ with $i\le j_i\le i+E$. For the internal target
+$f(v_i)=R_{v_i}-A_{v_i}$ we obtain
+\begin{equation}\label{eq:densetargetband}
+ L+i-a\le f(v_i)\le L+i+E.
+\end{equation}
+The assumption gives $L-a\ge0$ and
+$L+n-1+E\le2(n-1-q)\le2d_H(v)$, so these are physical internal
+targets. Their total is even by the reserved parity choice.
+
+For disjoint $S,T$ with $s,t,h,r$ as before,
+\begin{align*}
+ f(S)&\ge sL+s(s-1)/2-as,\\
+ f(T)&\le t(L+n-1)-t(t-1)/2+Et.
+\end{align*}
+Using $as+Et\le Wh$ and the same degree estimate as in the dense
+proof yields, without its extra final parity increment,
+\[
+ f(S)+2\sum_{v\in T}d_{H-S}(v)-f(T)
+ \ge h\left(\frac{n-6}{4}-2q-W\right)\ge h.
+\]
+For $h=0$ the connected graph has even total target, so its odd term
+is zero. For $h\ge1,r>2q$ the remaining graph is connected and has
+odd term at most one. For $r\le2q$ it has at most $r$ odd
+components, while $h\ge n-2q\ge6q+4W+10\ge r$.
+Thus every factor inequality holds on $\doub H$. The red factor
+realises $f$, and adding the fixed external counts realises the
+chosen final $R$ and $2D-R$. Their order and forbidden-value choices
+prove the theorem.
+\end{proof}
+
+Theorem~\ref{thm:dense} remains useful: with no external data or
+forbidden values it needs $n\ge8q+14$, whereas the general theorem
+has $E=2$ and needs $n\ge8q+18$. It is therefore not removed as
+a supposedly weaker duplicate.
+
+\subsection{Preserving arbitrary fixed boundary colours}
+
+Let $H=G[W]$ be induced, all outside and boundary weights fixed,
+and all outside--outside edges legal using their actual counts.
+For each fixed edge $vu$, $v\in W,u\notin W$, put in $F_v$
+the value $R(u)$ if $x_{vu}>0$, and the value
+$2d_G(v)-B(u)$ if $x_{vu}<2$. Let $A_v,B_v$ be its total fixed
+incident contributions. A final red degree avoiding $F_v$ makes
+every boundary comparison legal, while $D_v=d_G(v)$.
+Theorem~\ref{thm:denselists} therefore gives a preserved-colour
+extension under its stated bound.
+
+If each region vertex has at most $t$ outside edges, then
+$a\le2t$, $b_i\le2t$, and the possible total degrees lie between
+$n-1-q$ and $n-1+t$. Thus $k\le q+t+1$ and
+$W\le2t(q+t+2)+2$. A uniform sufficient condition is
+\begin{equation}\label{eq:denseuniform}
+ n\ge8q+8t(q+t+2)+18.
+\end{equation}
+The bound uses the per-vertex number of boundary edges, not their
+total number or the degrees of their outside endpoints. For $q=0,t=1$
+it is 42, and for $q=3,t=1$ it is 90. The actual class-dependent
+bound can be smaller, for example in the supplied 34-vertex clique
+witness with fixed mixed ports.
+
+\begin{corollary}[Sequential dense absorption]\label{cor:sequential}
+Let $W_1,\ldots,W_s$ be disjoint induced regions. Fix every edge
+not internal to one region, including all inter-region edges. Assume
+the low--low edges outside the regions are legal with their fixed
+final counts. If each region satisfies~\eqref{eq:denseuniform}
+with its internal complement degree $q_i$ and per-vertex outside
+edge bound $t_i$, all region interiors can be filled in any order,
+preserving all fixed edge weights. The sharper actual $W_i$
+condition of Theorem~\ref{thm:denselists} may be used instead at
+each step.
+\end{corollary}
+\begin{proof}
+At a region include all fixed outside incidences in its offsets,
+including those toward unprocessed regions. Their contributions are
+known even if the other endpoints' final degrees are not yet known.
+Forbid conflicts with low vertices and already processed regions,
+whose degrees are final. Defer comparisons toward future regions.
+The dense theorem fills the present interior, verifying all its
+internal and earlier boundary edges. Later fillings cannot alter
+these degrees or the fixed boundary weights; they enforce the
+deferred comparisons at their own steps. Induction over the chosen
+order verifies every edge. The uniform bound allows the worst case
+of at most $2t_i$ forbidden values per vertex at every step.
+\end{proof}
+
+The placeholder-leaf preprocessing from
+Section~\ref{sec:crtregions} supplies low-side colours when its
+components are bipartite or cacti, with the singleton-port exception
+handled explicitly. Unlike the CRT region theorem, sequential dense
+absorption requires no proper colouring of the entire union of high
+regions. Neither theorem asserts that an arbitrary graph admits a
+partition meeting its degree hypotheses.

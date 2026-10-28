@@ -1,0 +1,178 @@
+\section{A chromatic high-minimum-degree condition}\label{sec:highdegree}
+
+We use the following published degree-constrained subgraph theorem
+of Addario-Berry, Dalal and Reed~\cite{ADR08}, Theorem~5 in the
+author version. For a simple host graph with degrees $d(v)$, integers
+$a_v,b_v$ satisfying
+\begin{equation}\label{eq:ADR}
+ 0\le a_v\le\lfloor d(v)/2\rfloor\le b_v<d(v),\quad
+ b_v\le(d(v)+a_v)/2+1,\quad b_v\le2a_v+3
+\end{equation}
+admit a spanning subgraph $F$ with
+$d_F(v)\in\{a_v,a_v+1,b_v,b_v+1\}$. We quote this theorem and
+prove the residue and boundary consequences below.
+
+\begin{theorem}[D1]\label{thm:chromatic}
+If a simple graph has a proper $c$-vertex-colouring, $c\ge2$, and
+\[
+ \delta(G)\ge T(c):=8c(2c+1)-7,
+\]
+then it admits doubled weights $x_e\in\{0,1\}$ for which both
+colour degrees distinguish the ends of every original edge. The same
+internal conclusion holds with arbitrary prescribed physical external
+counts at every vertex.
+\end{theorem}
+\begin{proof}
+Put $p=2c,q=2c+1,M=pq$, and let $j(v)\in\{0,\ldots,c-1\}$
+be the proper colours. With external counts $A_v,B_v$ and internal
+degree $d=d_G(v)$ choose a residue $\phi_v$ by
+\[
+ \phi_v\equiv2j(v)-A_v\pmod p,\qquad
+ \phi_v\equiv B_v+2d-2j(v)\pmod q.
+\]
+The moduli are coprime. Set $t=\lfloor d/2\rfloor$,
+$r=(t-\phi_v)\bmod M$, $a=t-r$, and $b=a$ if $r=0$, otherwise
+$b=a+M$. Both $a,b$ have residue $\phi_v$ and bracket $t$.
+The assumption is $d\ge4M-7$, so
+$\lfloor d/2\rfloor\ge2M-4$ and $\lceil d/2\rceil\ge2M-3$.
+For $r>0$,
+\[
+ a\ge M-3,\quad b=a+M\le2a+3,\quad
+ 2b\le d+a+2\ \Longleftrightarrow\
+ \lceil d/2\rceil\ge2M-r-2,
+\]
+and the last inequality holds since $r\ge1$. Also
+$b\le t+M-1\le d-1$. For $r=0$, all conditions are immediate.
+Thus~\eqref{eq:ADR} holds in the original simple graph.
+
+Give $F$ edges weight 1 and all others zero. For some
+$\epsilon_v\in\{0,1\}$ the final red and blue residues are
+\[
+ R(v)\bmod p\in P_{j(v)}:=\{2j(v),2j(v)+1\},\qquad
+ B(v)\bmod q\in Q_{j(v)}:=\{2j(v),2j(v)-1\}.
+\]
+The $P_j$ are pairwise disjoint modulo $2c$. The $Q_j$ are also
+pairwise disjoint modulo $2c+1$: $Q_0=\{0,2c\}$, and the others
+are $\{1,2\},\{3,4\},\ldots,\{2c-3,2c-2\}$. Different
+proper colours thus give unequal actual degrees in both colours.
+The choice of external offsets changes no degree inequality, proving
+the interface version too.
+\end{proof}
+
+For $c=2,3,4,5$ the thresholds are $73,161,281,433$. They are
+sufficient bounds, with no optimality claim. The theorem has been
+applied to a simple host only: on two vertices with 100 parallel
+edges, the parameter pairs $(25,50)$ and $(30,55)$ satisfy the
+numerical inequalities~\eqref{eq:ADR}, but the allowed factor-degree
+sets at the two ends are disjoint, so no such multigraph factor
+exists. Substituting the doubled host into the quoted theorem is
+therefore not justified by these numerical conditions.
+
+\subsection{One internal boundary vertex}
+
+Suppose a connected induced region $H$ has all its outside edges
+at one vertex $w$. Fix every edge outside the interior of $H$ and
+assume that outside--outside edges are legal using their final counts.
+If $h$ boundary edges include $m$ mixed ones, a pure boundary edge
+forbids at most one residue label and a mixed edge at most two,
+since the $P_j$ and $Q_j$ are disjoint. Let
+$C=\max\{2,\chi(H),h+m+1\}$. At least one of the $C$ labels
+avoids all outside colour counts. Map the old colour class of $w$
+to that label and inject the other proper classes into remaining
+labels. If $\delta(H)\ge T(C)$, Theorem~\ref{thm:chromatic} fills
+$H$ and validates the boundary without changing any given edge.
+
+In particular, a vertex-minimal counterexample cannot have a bridge
+with one side $H$ of minimum internal degree at least
+$T(\max\{\chi(H),3\})$. Replace $H$ by a leaf and use minimality,
+then the preceding absorption with $h=1,m\le1$. If the smaller
+graph is $K_2$, set the bridge mixed directly; its outside endpoint
+has counts $(1,1)$ and no other outside edge to check. This treats
+the exceptional smaller graph without assuming it colourable.
+
+\subsection{Several CRT regions and low-side ports}\label{sec:crtregions}
+
+Let disjoint induced regions $H_i=G[W_i]$ cover $W$ and put
+$U=V(G)\setminus W$. Fix all edges other than those internal to
+a single region, including edges between different regions. Assume
+all $U$--$U$ edges are legal with their actual fixed endpoint counts.
+Given a proper $c$-colouring $j$ of the \emph{entire} graph $G[W]$,
+let $h_v$ be the number of edges from $v\in W$ to $U$, and $m_v$
+the number of mixed ones. For every nonempty colour class define
+\[
+ L_a=1+\max_{j(v)=a}(h_v+m_v),\qquad C=\sum_a L_a,
+\]
+using $c\ge2$; unused classes may be omitted.
+
+\begin{theorem}[D2: CRT region absorption]\label{thm:crtregions}
+If every $\delta(H_i)\ge T(C)$, the fixed colouring extends over
+all regions. If each high vertex has at most $t$ neighbours in $U$,
+the uniform sufficient condition is $\delta(H_i)\ge T(c(2t+1))$.
+\end{theorem}
+\begin{proof}
+Reserve disjoint blocks of $L_a$ labels for the proper colour classes.
+At $v$, outside counts prohibit at most $h_v+m_v<L_{j(v)}$ labels.
+Choose an allowed label in its reserved block, independently at each
+vertex. All high--high edges, including inter-region edges, still
+have different labels. Feed all fixed incident contributions as the
+external counts into Theorem~\ref{thm:chromatic} in each region.
+Internal and inter-region edges distinguish both residues; high--low
+edges avoid their fixed prohibited residues. Low--low edges and
+all their endpoint counts persist. The estimate $C\le c(2t+1)$
+gives the uniform bound, using additional unused labels if necessary.
+\end{proof}
+
+There is a convenient way to supply the low precolouring. For every
+component $D$ of $G[U]$, attach a private placeholder leaf for each
+actual high--low edge, at its low endpoint. Different ports use
+different leaves even if their actual high endpoints agree. A legal
+colouring of this placeholder graph transfers the placeholder edge
+weights to the actual boundary edges, preserving each low vertex
+degree in both colours. If $D$ is bipartite or a cactus, its
+placeholder graph remains in a class covered by~\cite{GW23,GW24}.
+The only $K_2$ placeholder case is a single low vertex with one
+port; make that port mixed, with low counts $(1,1)$ and no low--low
+edge. Thus no $K_2$ colouring is invoked. Inter-region edges can be
+fixed arbitrarily before absorption. This gives complete infinite
+families with global minimum degree one or two, rather than only
+globally high-degree graphs.
+
+\subsection{Trees attached to an ordinarily irregular core}\label{sec:irregularcore}
+
+\begin{proposition}[D2: matched tree attachment]\label{prop:irregularcore}
+Suppose $H$ is connected, has an edge, and its ordinary degrees
+differ at the ends of every edge. Let $S\subseteq V(H)$ have a
+matching to $V(H)\setminus S$ covering $S$. At each vertex of $S$
+attach one disjoint arbitrary rooted tree by a new bridge. The
+doubled expanded graph has a legal two-colouring.
+\end{proposition}
+\begin{proof}
+Give matching edges and the new bridges weight 1, all other core
+edges zero. Core counts are
+\[
+ (R,B)=\begin{cases}
+ (2,2d_H(v)),&v\in S,\\
+ (1,2d_H(v)-1),&v\text{ is a matching helper},\\
+ (0,2d_H(v)),&\text{otherwise}.
+ \end{cases}
+\]
+Matching red edges join degrees two and one. Blue degrees at helpers
+are odd, elsewhere even; within either parity group ordinary degree
+irregularity makes them unequal. Each tree bridge meets final core
+counts $(2,2d_H(v))$. A singleton tree has counts $(1,1)$; a larger
+tree has three mixed-port candidates to avoid the two bridge
+exclusions by Lemma~\ref{lem:treeports}. Fill every tree independently.
+\end{proof}
+
+A single specified root always has such a matching, by choosing
+one neighbour. Arbitrary many roots need not, and the resulting
+expanded graph need not remain ordinarily locally irregular, so
+unconditional repeated attachment does not follow. Moreover a
+\emph{given} old colouring can be rigid. Take edges $vu,vw$, two
+two-edge $u$--$z$ paths and three two-edge $w$--$z$ paths. Its
+degrees at $v,u,w,z$ are $2,3,4,5$ and the five interiors have degree
+two. All-mixed edges give a legal old colouring. A leaf at $v$
+has no possible new weight preserving that colouring: weights zero,
+one and two cause respectively a blue equality with $w$, both
+equalities with $u$, and a red equality with $w$. Changing old
+$vw$ to zero and giving the new edge weight 1 repairs the graph.

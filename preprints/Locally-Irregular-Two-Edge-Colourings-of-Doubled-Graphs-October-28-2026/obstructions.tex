@@ -1,0 +1,438 @@
+\section{Cut, parity and modular templates}\label{sec:templates}
+
+Every obstruction in this and the next sections concerns an additional
+restriction on a colouring or on a proposed algorithm. We supply
+actual legal colourings or cite an already established family result
+where needed to keep that distinction explicit.
+
+\subsection{A maximum-cut template with no exceptions}
+
+The template chooses a maximum cut $(S,T)$, requires all edges in
+$G[S]$ to have weight zero, and requires $R(v)\equiv\mathbb{1}_T(v)$
+at every vertex. For any vertex set $U$ the actual handshake identity is
+\begin{equation}\label{eq:boundaryhandshake}
+ \sum_{v\in U}R(v)=2\sum_{e\in E(U)}x_e+
+ \sum_{e\in\delta(U)}x_e.
+\end{equation}
+With parity-exception set $X$, the last sum has parity
+$|U\cap T|+|U\cap X|$. A single bridge of odd required parity
+must therefore be mixed. This is a necessary boundary constraint,
+not a guarantee of an extendible interface.
+
+\begin{proposition}\label{prop:cutobstruction}
+For every odd $r\ge3$, take a triangle $abc$ and attach one copy
+of $K_{r,r}$ to each triangle vertex by a bridge to a distinguished
+module root. The resulting graph $G_r$ has minimum degree three
+and a legal doubled two-colouring, but no maximum cut admits the
+zero-exception template above. Exactly one exception suffices.
+\end{proposition}
+\begin{proof}
+The graph has $3+6r$ vertices and $3r^2+6$ edges. A maximum cut
+has size $3r^2+5$, since each module contributes at most $r^2$,
+each bridge at most one, and the triangle at most two; orienting
+the module bipartitions independently attains all these bounds.
+Every maximum cut therefore cuts every module edge and every bridge.
+Each module has $r$ vertices in $T$, odd. With no exceptions,
+\eqref{eq:boundaryhandshake} forces each module bridge to have
+weight 1. The total red sum is even; the three modules contribute
+an odd number of $T$ vertices, so precisely one triangle vertex is
+in $T$. The other two triangle vertices lie in $S$, their common
+edge has weight zero, and their edges to the $T$ vertex must both
+have weight 1 to give them even red sums after the mixed bridges.
+They both have counts $(2,4)$, contradicting their common blue edge.
+
+Here is a full legal colouring. Give $ab,bc,ca$ weights $0,1,2$
+and all bridges weight 1. Then
+$a:(3,3), b:(2,4), c:(4,2)$. In each module use rows and columns
+$0,\ldots,r-1$, with root at row zero. In the $a$ module give the
+root row all weights 1 and all other entries zero; the root is
+$(r+1,r+1)$, other rows $(0,2r)$ and columns $(1,2r-1)$.
+For the $b$ module start with root entry $(0,0)$ of weight 1,
+row 1 entries in all other columns of weight 1, all remaining
+entries zero, and complement its internal weights. The root is
+then $(2r,2)$; row counts are even and column counts odd. For the
+$c$ module give the root row zero, every other row weight 1 only
+in column zero, and all other entries zero. Its root is
+$(1,2r+1)$; other rows $(1,2r-1)$, column zero $(r-1,r+1)$,
+other columns $(0,2r)$. Row--column parity verifies every module
+edge and the displayed root pairs verify the bridges. The triangle
+edges are checked directly.
+
+Choose the maximum cut with $a,b\in T,c\in S$, module roots on
+opposite sides to their triangle neighbours. The module patterns
+have precisely the cut parities, as do $a,c$. Only $b$ is an
+exception. Thus the minimum exception count in this template is one.
+\end{proof}
+
+The same graph also excludes the different prescription
+$R(v)\equiv d_G(v)\pmod2$ at \emph{every} vertex, without mentioning
+a cut. Each module has odd sum of original degrees, so its bridge
+would again be mixed. The three triangle vertices would then have
+distinct odd red degrees, necessarily $1,3,5$, because they have
+equal original degree three. Subtracting the mixed bridge contribution
+would require internal triangle red sums $0,2,4$, impossible at the
+edge between the zero and four vertices. This new restriction also
+fails despite the explicit legal colouring in the proof.
+
+\subsection{Small boundary modules and parity transfer}
+
+There is a seven-vertex module consisting of triangle $abc$,
+two-edge pendant paths at $b,c$, and a fixed mixed outside edge
+at $a$. If its internal cut is maximum, all four path edges cross
+and two triangle edges cross. Under the zero-exception template,
+the first edge of a two-edge pendant must be mixed: its leaf and
+triangle vertex lie on the same side, and the middle parity forces
+that first weight odd. The module has an odd number of $T$ vertices
+by its mixed boundary, hence one triangle vertex in $T$. Each of
+the two $S$ vertices has one mixed outside contribution, so its
+edge to the $T$ vertex is mixed too. Their common blue edge again
+joins counts $(2,4)$. Thus fixed mixed boundaries need not extend
+even when total parity is compatible.
+
+Put two-edge pendant paths at all three triangle vertices to obtain
+a nine-vertex graph $O$. Every maximum cut and zero-exception
+template fails by the same argument. For clarity, in edge order
+$ab,ac,bc,aa_1,a_1a_2,bb_1,b_1b_2,cc_1,c_1c_2$ a legal word is
+$(1,2,0,1,0,0,0,1,1)$. With
+$T=\{b,c,a_1,b_2,c_2\}$ it has exactly the one exception $b_2$.
+This small existence statement is subsumed by the stronger
+minimum-degree-three family above, but its boundary properties differ.
+
+In $O$ choose root $a_2$ and give it arbitrary outside total red
+contribution $A$. Internal maximum-cut template feasibility with no
+exceptions requires $A$ odd. If the pendant at $a$ instead has
+length four and its endpoint is the root, feasibility requires $A$
+even. To see both assertions, for a pendant of length $2t$ apply
+\eqref{eq:boundaryhandshake} to its $2t$ nontriangle vertices.
+Its first weight $q$ satisfies $q+A\equiv t\pmod2$. The wrong
+boundary parity in either case forces $q=1$ and one triangle vertex
+in $T$, repeating the $(2,4)$ conflict. These are necessary
+conditions only; sufficiency of every boundary with that parity is
+not claimed.
+
+\subsection{A six-vertex modulo-three obstruction}
+
+Take triangles $uab$ and $vcd$ joined by bridge $uv$. Even though
+this cactus is three-colourable, one cannot require every present
+red and blue comparison to be nonzero modulo three. Write the left
+weights $ua,ub,ab,uv$ as $p,q,t,z$ and put $h=z-t\pmod3$.
+The degree-two edge $ab$ forces $p\ne q$. On $ua$ the restrictions
+are respectively $q+h\ne2$, $q+h=1$, $q+h\ne0$ when
+$p=0,1,2$. The $ub$ conditions interchange $p,q$. Unordered pairs
+$\{0,1\}$ and $\{1,2\}$ immediately contradict these restrictions;
+only $\{p,q\}=\{0,2\}$ remains. The right triangle obeys the
+same rule, so $R(u)\equiv R(v)\equiv2+z$ and
+$B(u)\equiv B(v)\equiv1-z$. Every bridge weight then fails.
+In contrast the actual legal word in order
+$ua,ub,uv,ab,vc,vd,cd$ is $(1,2,2,0,2,0,1)$, giving counts
+$u:(5,1),a:(1,3),b:(2,2),v:(4,2),c:(3,1),d:(1,3)$.
+For instance a legitimate red degree difference of three need not
+survive modulo three. The modulo-two certificate has its own
+independent restrictions in Section~\ref{sec:mod2limits}.
+
+\section{Barriers to nonincreasing local descent}\label{sec:descent}
+
+\subsection{A closed two-state single-edge plateau}
+
+On the wheel with centre 0 and rim $123451$, use edge order
+\[
+ 01,02,03,04,05,12,15,23,34,45.
+\]
+The words
+$x=(1,2,1,1,0,0,2,2,0,0)$ and
+$y=(1,2,1,1,0,0,2,2,2,0)$ both have $\Psi=1$.
+All single-edge changes, allowing even direct $0\leftrightarrow2$
+changes, have the following conflict values. Each triple gives the
+result for new weights $0,1,2$.
+\begin{center}\small
+\begin{tabular}{ccc}\toprule Edge&From $x$&From $y$\\\midrule
+$01$&$(4,1,4)$&$(4,1,4)$\\
+$02$&$(2,4,1)$&$(2,2,1)$\\
+$03$&$(2,1,4)$&$(4,1,4)$\\
+$04$&$(4,1,4)$&$(4,1,2)$\\
+$05$&$(1,2,2)$&$(1,4,2)$\\
+$12$&$(1,3,2)$&$(1,5,2)$\\
+$15$&$(2,5,1)$&$(2,3,1)$\\
+$23$&$(4,3,1)$&$(2,2,1)$\\
+$34$&$(1,4,1)$&$(1,4,1)$\\
+$45$&$(1,2,2)$&$(1,3,4)$\\\bottomrule
+\end{tabular}
+\end{center}
+The only nontrivial nonincreasing steps exchange $x,y$. By induction
+every such process remains in this two-state set. A simultaneous
+change of $01$ from 1 to zero and $12$ from zero to 1 gives
+$(0,2,1,1,0,1,2,2,0,0)$ with $\Psi=0$. The complete finite table
+proves a barrier for single-edge monotonicity, including neutral
+steps; it does not exclude larger simultaneous repairs.
+
+\subsection{Strict positive minima after fixed-target optimisation}
+
+On a $d$-regular graph every assignment realising $q$ has
+\[
+ F(q)=2|\{uv:q(u)=q(v)\}|.
+\]
+Suppose equal-target edges are a perfect matching, every available
+target $q(v)\pm1$ occurs on at least three neighbours, and every
+available $q(v)\pm2$ on at least two. Then $F(q)=n>0$ and
+every realisable target at $\ell_1$ distance two has larger $F$.
+Changing one coordinate by two creates at least two equalities and
+removes at most one. Changing two coordinates by one creates at
+least two equalities to unchanged neighbours at each coordinate,
+removing at most the two old matching edges. Thus no neutral first
+step is available, even after completely optimising each fibre.
+
+Here is an explicit infinite realisable family for that criterion.
+For any even $N\ge4$, take vertices $(i,t)$ with $0\le i\le26$
+and $t\in\mathbb Z_N$, target $q(i,t)=i$. Put a perfect matching
+within each layer by pairing consecutive even/odd $t$ labels. Between
+layers start with $a_{ij}=3$ when $|i-j|=1$, 2 when $|i-j|=2$,
+and zero otherwise. Add each increment in the first table below and
+its reflection $(26-j,26-i)$, then make $a$ symmetric.
+\begin{center}\small
+\begin{tabular}{rrr@{\qquad}rrr}\toprule
+$i$&$j$&increment&$i$&$j$&increment\\\midrule
+0&1&1&0&2&1\\0&4&2&0&11&2\\0&24&1&1&3&2\\
+1&20&1&5&14&2\\6&13&1&7&9&2\\8&10&2&&&\\\bottomrule
+\end{tabular}
+\end{center}
+Its rows sum to 12 and $0\le a_{ij}\le4$. For $i<j$, add the
+$a_{ij}$ matchings $(i,t)(j,t+s)$, $s=0,\ldots,a_{ij}-1$.
+They are distinct for $N\ge4$. Together with the within-layer edge
+the graph is 13-regular. Shifts zero and one between consecutive
+layers make it connected. Equal targets occur exactly on the
+within-layer perfect matching and the required neighbour counts hold.
+
+To realise $q$, for $i<j,i+j\le26$ set $b_{ij}=0$ except
+\[
+\begin{array}{c|rrrrrrrrr}
+(i,j)&(3,4)&(5,7)&(6,7)&(8,9)&(9,11)&(10,11)&(10,12)&(11,13)&(12,14)\\
+b_{ij}&2&3&4&6&1&6&4&4&2
+\end{array}
+\]
+and define $b_{ij}=2a_{ij}-b_{26-j,26-i}$ for $i+j>26$;
+symmetrise. Within-layer weights at $i=0,\ldots,13$ are
+\[
+ (c_0,\ldots,c_{13})=(0,1,0,1,2,2,0,0,2,2,0,0,2,1),
+\]
+with $c_{26-i}=2-c_i$. Direct row addition verifies
+$0\le b_{ij}\le2a_{ij}$ and $c_i+\sum_{j\ne i}b_{ij}=i$.
+Give shift-$s$ edges between layers weight
+$\min\{2,\max\{0,b_{ij}-2s\}\}$ and within-layer edges weight
+$c_i$. Each vertex receives total $i$, as required. The tables are
+a fixed integer certificate, independently checked in the artifact.
+Thus for this connected infinite family of order $27N$,
+$F(q)=27N$ and every two-unit neighbour has $F\ge27N+2$.
+These regular graphs have other legal targets by~\cite{GOW26}.
+This bad initial target cannot itself arise by subtracting degrees
+from a proper 1--2--3 neighbour-sum weighting, since its equal-target
+matching edges have equal original degrees.
+
+\subsection{A proper 1--2--3 initialisation can also be trapped}
+
+On the five-vertex path use $x=(1,0,0,1)$. Then $w=x+1$ has
+proper neighbouring sums $(2,3,2,3,2)$, but the doubled target
+$q=(1,1,0,1,1)$ has $F(q)=2$. A path target determines its weights
+uniquely by leaf recursion. Its alternating bipartition sum is zero,
+so a two-unit target change must be two opposite-balanced unit
+changes, corresponding to an alternating contiguous path of weight
+changes. The two adjacent internal zero weights preclude all such
+paths except the following eight:
+\begin{center}\small
+\begin{tabular}{cc@{\qquad}cc}\toprule
+New word&$F$&New word&$F$\\\midrule
+$(0,0,0,1)$&3&$(2,0,0,1)$&3\\
+$(1,1,0,1)$&3&$(1,0,1,1)$&3\\
+$(1,0,0,0)$&3&$(1,0,0,2)$&3\\
+$(0,1,0,1)$&5&$(1,0,1,0)$&5\\\bottomrule
+\end{tabular}
+\end{center}
+No nonincreasing two-unit first step exists, even with an initially
+proper 1--2--3 weighting. The word $(0,0,1,1)$ is legal and has
+target distance four from $q$, attaining the least possible
+nonincreasing first-step distance. This does not prove that distance
+four is sufficient for general graphs or specially selected initialisations.
+
+\section{Fixed-target and radius obstructions}\label{sec:targetbarriers}
+
+\subsection{Bridge locking, capacity and pure odd defects}
+
+For a bridge $e=uv$ whose $u$ side $U$ is bipartite with signs
+$\varepsilon$, fixed internal target demands give
+\[
+ x_e=\varepsilon(u)\sum_{v\in U}\varepsilon(v)q(v).
+\]
+Internal contributions cancel. Thus a bridge may be fixed uniquely;
+on a forest the entire weighting is unique for a fixed target.
+Take a triangle $uab$ with path $u w l$, in edge order
+$ua,ub,uw,ab,wl$. The word $(0,1,1,1,1)$ is realisable and
+comes from a proper 1--2--3 weighting, but the bridge $uw$ joins
+equal red degree two, so legality would require $x_{uw}=0$.
+Its bipartite side forces $x_{uw}=q(w)-q(l)=1$. No fixed-target
+repair exists. The same graph has the legal word $(1,0,0,2,0)$.
+
+For a purely integer obstruction, take triangles $012,345$, bridge
+$03$, and leaves $26,57,38$. In edge order
+\[
+ 01,02,12,34,35,45,03,26,57,38
+\]
+use $(0,1,1,0,1,1,1,2,2,0)$. Its targets and blue degrees are
+\[
+ q=(2,1,4,2,1,4,2,2,0),\quad B=(4,3,2,6,3,2,0,0,2).
+\]
+The sums $q+d=(5,3,7,6,3,7,3,3,1)$ distinguish all neighbours.
+Only bridge $03$ is forced blue, and there are no forced red edges.
+After deleting that bridge, the two free components each have target
+sum nine. At $S=T=\varnothing$ the factor certificate is
+$g=0,o=2$. However giving each triangle the word
+$(1/2,3/2,1/2)$, setting the bridge zero and retaining the leaf
+weights is a continuous legal realisation of exactly $q$. Hence
+continuous feasibility at integer targets need not permit integer
+rounding. A legal integer repair changes $02,35$ to 2 and the
+bridge to zero, changing the targets at 2 and 5 by one. The actual
+new red degrees are $(2,1,5,2,1,5,2,2,0)$.
+
+The parity lower bound alone can also be strict. On edge set
+$01,02,03,12,34$ the word $(1,0,0,0,0)$ has all free-component
+target sums even, but vertex 1 needs red degree one through its
+only free neighbour 2 of red target zero. The capacity pair
+$S=\{2\},T=\{1\}$ has $g=-1$. Thus its quotient join bound is
+zero while $F(q)=1$.
+
+\subsection{Failure of exchange convexity}
+
+For a triangle the targets uniquely determine weights by
+$x_{ij}=(q_i+q_j-q_k)/2$. The targets $(1,2,3)$ and $(3,2,1)$
+are legal. Starting from the first toward the second with step
+$e_0$, the possible second steps are $e_0$ and $-e_2$.
+The first gives target pair $(3,2,3),(1,2,1)$, each with $F=2$;
+the second gives two copies of $(2,2,2)$, each with $F=6$.
+Neither satisfies the fixed-cost exchange inequality with initial
+total zero. In particular the midpoint of two legal targets can
+be realisable with positive conflict. The favourable classical
+exchange properties in Section~\ref{sec:targets} cannot be assigned
+to the changing conflict-cost function $F$.
+
+\subsection{An unbounded fixed-parity repair radius}\label{sec:radius}
+
+\begin{proposition}\label{prop:radius}
+Let even $c\ge2$ and $k\ge1$. Take $c$ disjoint cycles of length
+$L=4k+2$ and two nonadjacent hubs $a,b$, each joined to every cycle
+vertex. Put $N=cL$. Give the hubs target zero and every cycle
+vertex target four, realised by cycle weights 2 and hub weights
+zero. Fix the maximum cut with both hubs in $S$ and alternate
+$S,T$ around each cycle, and require final red parity zero on $S$,
+one on $T$. The least maximum coordinate change from those targets is
+\[
+ \rho_{\min}=2\lceil c/4\rceil,
+\]
+and this bound is achieved by legal doubled colourings. With $E$
+parity exceptions and maximum change at most $M$, necessarily
+$2M+E\ge c$.
+\end{proposition}
+\begin{proof}
+The cut has size $2N$ and is maximum. If hubs are on opposite sides,
+the hub edges contribute $N$ and cycle edges at most $N$. If hubs
+share a side and $t$ cycle vertices share it, hub edges contribute
+$2(N-t)$ and cycle edges at most $2t$. The alternating cut reaches
+$2N$. Each cycle has $2k+1$ odd-labelled vertices. Its red boundary
+sum is therefore a positive odd integer by
+\eqref{eq:boundaryhandshake}. Hence $R(a)+R(b)\ge c$. Both hub
+targets have required even parity, forcing the larger to be at
+least $2\lceil c/4\rceil$.
+
+Write each cycle $s_0,t_0,\ldots,s_{2k},t_{2k},s_0$, starting
+with all cycle weights 2. Change one hub edge to $t_0$ to weight
+1. For $i=1,\ldots,k$ change both edges incident with $s_{2i}$
+along its two adjacent $t$ vertices to 1. The counts are
+$t_0:(5,3)$, other $t$ vertices $(3,5)$, even positive-index
+$s$ vertices $(2,6)$, and other $s$ vertices $(4,4)$.
+Assign $2\lfloor c/4\rfloor$ mixed hub edges to $a$ and the rest
+to $b$. Hub red degrees are those two even numbers, with blue
+degrees at least $2N-c\ge22$. All cycle and mixed hub comparisons
+are parity-separated. The pure blue hub edges to same-side $s$
+vertices compare a degree at least 22 to one at most six. The
+maximum change is exactly the asserted radius.
+
+With $E$ exceptions, at least $c-E$ cycles have no exception and
+each still needs at least one boundary red copy. The two hub red
+degrees are each at most $M$, giving $2M\ge c-E$ independently
+of any local irregularity requirement.
+\end{proof}
+
+This is a minimum-degree-four, 2-connected family with no peripheral
+trees or degree-two chains. The starting target is feasible but is
+not a legal colouring. The radius conclusion fixes the stated cut
+parities. Without fixing them, keep hub weights zero and use the
+cyclic word $(0,1,2,0,1,2)(0,1,1,0)^{k-1}$ on each cycle.
+Positions two apart differ, so these words are legal; all changes
+from the initial target are at most four, with unrestricted parity
+exceptions. Thus the lower bound is not a distance statement about
+all legal colourings.
+
+Even an everywhere-one centre window is too narrow on $C_5$:
+some red degree in any legal colouring is zero or four. If all red
+degrees were in $\{1,2,3\}$, the number of degree-two vertices
+would be odd by the handshake sum, and at most two by independence,
+hence exactly one. The other four form an alternating 1--3 path.
+An internal degree-one vertex between two degree-three vertices
+would need two incident weights each at least one, impossible.
+The word $(0,0,1,1,2)$ supplies a legal colouring. Translating all
+degrees by fixed equal external offsets gives the corresponding
+fixed-interface small-window obstruction.
+
+\section{Sharp interface limits and multiple marks}\label{sec:interfacebarriers}
+
+The path-length-six threshold in Theorem~\ref{thm:decorated} is
+sharp for arbitrary fixed physical endpoint data. On a five-edge
+bare path with end weights 1 and both endpoint counts $(3,3)$,
+write the word $(1,a,b,c,1)$. Each mixed end edge forces $a=c=1$.
+The middle edge then joins identical counts $(1+b,3-b)$ for any
+$b$, and fails. The data are physically realised by adding two
+mixed leaf edges at each endpoint. That whole ten-vertex tree is
+colourable by Lemma~\ref{lem:treeports}; only the fixed interface
+is impossible. The tree and clique capacity obstructions of
+Sections~\ref{sec:treecapacity} and~\ref{sec:cliquecapacity} independently
+show sharpness of their preserved-colour thresholds.
+
+An arbitrary-root-sum interface also fails for general graphs. On
+triangle $vabv$ with leaf $vz$, requiring the internal root red
+sum zero forces all three incident weights zero. The endpoints of
+$ab$ then have identical red and blue degrees whatever its weight.
+Sum six is impossible by complementation. Nonetheless the word
+$(x_{va},x_{vb},x_{ab},x_{vz})=(0,2,1,0)$ is legal, with
+$(R(v),R(a),R(b),R(z))=(2,1,3,0)$ and blue degrees $(4,3,1,2)$.
+The full clique interface is stronger than ordinary colourability.
+
+Multiple fixed bridges need not preserve the one-bridge candidate
+counts. On rooted path $r-u-v$, give $r$ external counts $(2,2)$
+from two mixed bridges. If the internal word is $(a,b)$, the red
+degrees are $(2+a,a+b,b)$ and blue degrees $(4-a,4-a-b,2-b)$.
+At $a=0$ the edge $uv$ forces $b=0$, then $ru$ fails in blue;
+at $a=2$ it forces $b=2$, then $ru$ fails in red. At $a=1$
+the first edge excludes $b=0,2$, leaving exactly $(1,1)$.
+Thus the internal root candidate set is the singleton $\{1\}$.
+
+Finally consider a cubic-root safe-core requirement that every root
+red degree belong to $\safe=\{0,1,3,5,6\}$ and every marked
+mixed port have root red degree in $\{1,5\}$. It cannot accept
+arbitrary many marks. For a two-vertex core with one mixed mark
+and one pure port at each vertex, a central edge of weight 0 forces
+both red sums 1, weight 1 allows neither strong marked sum, and
+weight 2 forces both red sums 5. No choice is legal.
+
+The failure persists with four independent marked roots: take a
+double-star core with centres $u,v$, two leaves at each centre,
+and one mixed and one pure port at every leaf. A strong marked leaf
+forces its core edge and its pure port to be both zero (red sum 1)
+or both 2 (red sum 5). If the central edge has weight zero, safety
+forces both centre red sums zero; if it has weight 2, safety forces
+both centre sums six. Both cases conflict on the central edge.
+If its weight is 1, each centre with two zero leaf edges has sum
+1, conflicting with those leaves, and with two 2-edges has sum 5,
+also conflicting. Its only possible choice is one of each, giving
+sum three at both centres, again a central conflict. This is a
+complete parameter argument; its finite assignment domain has
+$3^5\cdot2^4=3888$ members. The weak two-mark lemma in A1 imposes
+different hypotheses and permits certain unexposed roots to have
+red sums 2 or 4. These strong-mark obstructions therefore do not
+contradict the subcubic proof.
